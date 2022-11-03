@@ -1,4 +1,5 @@
-export const constantRoutes = [
+import { RouteRecordRaw } from 'vue-router';
+export const constantRoutes: RouteRecordRaw[] = [
   {
     name: 'loginPage',
     path: '/login',

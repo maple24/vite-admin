@@ -1,19 +1,30 @@
+import { RouteRecordRaw } from 'vue-router';
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [
+export const asyncRoutes: RouteRecordRaw[] = [
   {
-    name: 'userProfile',
     path: '/profile',
-    component: '',
+    name: 'userProfile',
+    component: () => import('@/views/profile/index.vue'),
     meta: {
-      role: 'admin',
+      roles: ['admin'],
       title: 'profile',
     },
   },
   {
-    path: '*',
+    path: '/helloworld',
+    name: 'helloworld',
+    component: () => import('@/components/HelloWorld.vue'),
+    meta: {
+      roles: ['admin', 'visitor'],
+    },
+  },
+  {
+    // path: '/:pathMatch(.*)*',
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
     redirect: '/404',
   },
 ];

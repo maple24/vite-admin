@@ -1,6 +1,6 @@
 <template>
   <div class="dark:bg-slate-600 dark:text-white">
-    <form @submit.prevent="handleClick" class="border-solid border-emerald-300">
+    <form @submit.prevent="handleLogin" class="border-solid border-emerald-300">
       <div>
         <label class="text-lg mx-10">username</label>
         <input
@@ -9,6 +9,7 @@
           autofocus
           placeholder="admin"
           v-model.trim="loginform.username"
+          autocomplete="username"
         />
       </div>
       <div>
@@ -19,6 +20,7 @@
           autofocus
           placeholder="admin"
           v-model.trim="loginform.password"
+          autocomplete="current-password"
         />
       </div>
       <div>
@@ -38,7 +40,6 @@
   import { reactive, ref, watch, computed } from 'vue';
   import { useRouter } from 'vue-router';
   import { useUserStore } from '@/store/user';
-  import { setToken } from '@/utils/auth';
   const router = useRouter();
   const store = useUserStore();
 
@@ -50,16 +51,12 @@
     username: '',
     password: '',
   });
-  const handleClick = (e: Event): void => {
-    handleLogin();
-  };
 
-  function handleLogin() {
+  const handleLogin = (e: Event): void => {
     const token = 'testtoken';
-    setToken(token);
-    store.setToken(token);
+    store.login(token);
     router.push('/');
-  }
+  };
 
   const isValid = computed(() => {
     if (
