@@ -25,7 +25,7 @@
         <input
           type="submit"
           class="text-lg border-"
-          :disabled="loginform.valid"
+          :disabled="isValid"
           value="Sign In"
         />
       </div>
@@ -35,40 +35,53 @@
 
 <script setup lang="ts">
   import { validEmail, validPassword, validUsername } from '@/utils/validate';
-  import { reactive, ref, watch } from 'vue';
+  import { reactive, ref, watch, computed } from 'vue';
   import { useRouter } from 'vue-router';
+  import { useUserStore } from '@/store/user';
+  import { setToken } from '@/utils/auth';
   const router = useRouter();
+  const store = useUserStore();
 
   interface loginformInterface {
     username: string;
     password: string;
-    valid: boolean;
   }
   let loginform: loginformInterface = reactive({
     username: '',
     password: '',
-    valid: true,
   });
   const handleClick = (e: Event): void => {
     handleLogin();
   };
 
   function handleLogin() {
+    const token = 'testtoken';
+    setToken(token);
+    store.setToken(token);
     router.push('/');
-    console.log('submited');
   }
 
-  // watch source need to be a getter/effect function, actually do not know why, but it works
-  watch(
-    [() => loginform.username, () => loginform.password],
-    ([username, password]) => {
-      if (validUsername(username) && validPassword(password)) {
-        loginform.valid = false;
-      } else {
-        loginform.valid = true;
-      }
+  const isValid = computed(() => {
+    if (
+      validUsername(loginform.username) &&
+      validPassword(loginform.password)
+    ) {
+      return false;
+    } else {
+      return true;
     }
-  );
+  });
+  // watch source need to be a getter/effect function, actually do not know why, but it works
+  //   watch(
+  //     [() => loginform.username, () => loginform.password],
+  //     ([username, password]) => {
+  //       if (validUsername(username) && validPassword(password)) {
+  //         loginform.valid = false;
+  //       } else {
+  //         loginform.valid = true;
+  //       }
+  //     }
+  //   );
 </script>
 
 <style scoped></style>
