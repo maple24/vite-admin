@@ -20,8 +20,8 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 - VScode
 - Yarn: package management
 - Vue 3 + Typescript + Vite
-- Pinia: Vue store plugin
-- Vue router x4
-- Tailwindcss
-- Font awesome: icons
+- Pinia
+- Vue router: v4.x
+- Tailwindcss: v3.2.1
+- Font awesome: v6.2.0
 - Element-plus: Ui framework
