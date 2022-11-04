@@ -1,11 +1,9 @@
 <template>
-  <nav
-    class="bg-blue-300 w-full border-red-500 flex justify-center border-solid border-4 mt-0"
-  >
-    <ul class="inline-flex p-3">
-      <li>Home</li>
-      <li>About</li>
-      <li>Contact</li>
+  <nav class="bg-blue-300 border-red-500 flex border-solid border-4 m-auto">
+    <ul class="p-3">
+      <li class="inline-block mr-20">Home</li>
+      <li class="inline-block mr-20">About</li>
+      <li class="inline-block mr-20">Contact</li>
     </ul>
   </nav>
 </template>
