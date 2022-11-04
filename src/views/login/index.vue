@@ -1,11 +1,14 @@
 <template>
-  <div class="dark:bg-slate-600 dark:text-white">
-    <form @submit.prevent="handleLogin" class="border-solid border-emerald-300">
+  <div class="dark:bg-slate-600 dark:text-white ml-10 mt-10">
+    <form
+      @submit.prevent="handleLogin"
+      class="border-solid border-emerald-300 border-2"
+    >
       <div>
         <label class="text-lg mx-10">username</label>
         <input
           type="text"
-          class="form-input px-4 py-3 rounded-full"
+          class="form-input px-4 py-3 border border-black rounded-md"
           autofocus
           placeholder="admin"
           v-model.trim="loginform.username"
@@ -16,7 +19,7 @@
         <label class="text-lg mx-10">password</label>
         <input
           type="password"
-          class="form-input px-4 py-3 rounded-full"
+          class="form-input px-4 py-3 border border-black rounded-md"
           autofocus
           placeholder="admin"
           v-model.trim="loginform.password"
@@ -26,7 +29,7 @@
       <div>
         <input
           type="submit"
-          class="text-lg border-"
+          class="text-lg border border-solid border-black bg-slate-100 p-1 rounded-lg disabled:border-none disabled:text-slate-300"
           :disabled="isValid"
           value="Sign In"
         />
