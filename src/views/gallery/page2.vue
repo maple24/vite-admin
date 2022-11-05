@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-block border">
+  <div class="relative border overflow-auto w-screen">
     <h1>page content 2</h1>
     <input type="text" class="border border-black" v-model="text" />
   </div>

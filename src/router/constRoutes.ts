@@ -6,6 +6,11 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: () => import('@/views/login/index.vue'),
   },
   {
+    name: 'flexBox',
+    path: '/flexbox',
+    component: () => import('@/views/gallery/flexBox.vue'),
+  },
+  {
     name: 'layout',
     path: '/layout',
     component: () => import('@/views/layout/index.vue'),
@@ -19,6 +24,11 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: 'page2',
         path: 'page2',
         component: () => import('@/views/gallery/page2.vue'),
+      },
+      {
+        name: 'page3',
+        path: 'page3',
+        component: () => import('@/views/gallery/page3.vue'),
       },
     ],
   },

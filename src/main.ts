@@ -24,5 +24,9 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 /* add icons to the library */
 library.add(faUserSecret, faTwitter, faHouse)
 
+/* import element-plus */
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
-createApp(App).use(router).use(createPinia()).component('font-awesome-icon', FontAwesomeIcon).mount('#app');
+
+createApp(App).use(router).use(createPinia()).component('font-awesome-icon', FontAwesomeIcon).use(ElementPlus).mount('#app');

@@ -1,20 +1,13 @@
 <template>
   <div>
     <navBar />
-    <sideBar />
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <KeepAlive>
-          <component :is="Component" />
-        </KeepAlive>
-      </transition>
-    </router-view>
+    <mainSection />
   </div>
 </template>
 
 <script setup lang="ts">
-  import navBar from '@/components/navBar/index.vue';
-  import sideBar from '@/components/sideBar/index.vue';
+import navBar from "@/components/navBar/index.vue";
+import mainSection from "@/components/mainSection/index.vue";
 </script>
 
 <style scoped></style>

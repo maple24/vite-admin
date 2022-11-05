@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@layer components {
+  .siderbar-icon {
+    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto text-3xm text-white
+  }
+}
+
+
+/* :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
@@ -29,8 +36,8 @@ a:hover {
 }
 
 body {
-  /* margin: 0; */
-  /* display: flex; */
+  margin: 0;
+  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -64,12 +71,12 @@ button:focus-visible {
   padding: 2em;
 }
 
-/* #app {
+#app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-} */
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -82,4 +89,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
