@@ -13,7 +13,9 @@
   </nav>
 
   <header class="bg-blue-700">
-    <div class="flex flex-row justify-between items-center mx-4 h-80">
+    <div
+      class="flex flex-col md:flex-row justify-between items-center mx-4 h-80"
+    >
       <div id="intro" class="flex flex-col w-2/3 text-left">
         <h1 class="text-white text-3xl font-bold my-4">Flexbox crash course</h1>
         <p class="text-white leading-4">

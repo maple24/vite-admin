@@ -1,5 +1,6 @@
 <template>
   <div
+    id="sidebar"
     class="fixed top-0 left-0 m-0 h-screen w-16 flex flex-col bg-gray-900 text-white"
   >
     <ul class="">
@@ -24,6 +25,12 @@
       </li>
     </ul>
   </div>
+  <button
+    class="ml-20 border-2 border-black rounded-md bg-gray-200"
+    @click="toggleSideBar"
+  >
+    toggle
+  </button>
   <router-view v-slot="{ Component }">
     <transition name="fade">
       <KeepAlive>
@@ -33,6 +40,11 @@
   </router-view>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+function toggleSideBar() {
+  const sidebar = document.querySelector("#sidebar");
+  sidebar?.classList.toggle("hidden");
+}
+</script>
 
 <style scoped></style>

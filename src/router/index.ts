@@ -28,24 +28,24 @@ router.beforeEach(async (to, from, next) => {
   const isAuthenticated: string | null = getToken();
   if (isAuthenticated) {
     if (to.path === '/login') {
-      next({ path: '/' });
+      return next({ path: '/' });
     }
     // need a next() to letgo
     if (hasRoles) {
-      next();
+      return next();
     } else {
       hasRoles = true;
       asyncRoutes.forEach((route) => {
         router.addRoute(route);
       });
-      next({ ...to, replace: true });
+      return next({ ...to, replace: true });
     }
   } else {
     // next need to be a pair
     if (to.path !== '/login') {
-      next({ path: '/login' });
+      return next({ path: '/login' });
     } else {
-      next();
+      return next();
     }
   }
 });
