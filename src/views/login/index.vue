@@ -1,35 +1,35 @@
 <template>
-  <div class="dark:bg-slate-600 dark:text-white ml-10 mt-10">
+  <div id="loginform" class="dark:bg-slate-600 dark:text-white h-full">
     <form
       @submit.prevent="handleLogin"
-      class="border-solid border-emerald-300 border-2"
+      class="border-solid border-emerald-300 border-2 left-1/3 top-1/3 w-1/2 md:w-1/4 absolute"
     >
-      <div>
-        <label class="text-lg mx-10">username</label>
+      <div class="flex justify-between">
+        <label class="text-lg font-serif capitalize">username</label>
         <input
           type="text"
-          class="form-input px-4 py-3 border border-black rounded-md"
+          class="form-input border border-black rounded-md dark:text-black"
           autofocus
           placeholder="admin"
           v-model.trim="loginform.username"
           autocomplete="username"
         />
       </div>
-      <div>
-        <label class="text-lg mx-10">password</label>
+      <div class="flex justify-between">
+        <label class="text-lg font-serif capitalize">password</label>
         <input
           type="password"
-          class="form-input px-4 py-3 border border-black rounded-md"
+          class="form-input border border-black rounded-md dark:text-black"
           autofocus
           placeholder="admin"
           v-model.trim="loginform.password"
           autocomplete="current-password"
         />
       </div>
-      <div>
+      <div class="flex justify-center">
         <input
           type="submit"
-          class="text-lg border border-solid border-black bg-slate-100 p-1 rounded-lg disabled:border-none disabled:text-slate-300"
+          class="text-lg border border-solid border-black bg-slate-100 p-1 rounded-lg disabled:border-white disabled:text-slate-300"
           :disabled="isValid"
           value="Sign In"
         />
@@ -43,6 +43,7 @@
   import { reactive, ref, watch, computed } from 'vue';
   import { useRouter } from 'vue-router';
   import { useUserStore } from '@/store/user';
+  import { faL } from '@fortawesome/free-solid-svg-icons';
   const router = useRouter();
   const store = useUserStore();
 
@@ -71,6 +72,7 @@
       return true;
     }
   });
+
   // watch source need to be a getter/effect function, actually do not know why, but it works
   //   watch(
   //     [() => loginform.username, () => loginform.password],

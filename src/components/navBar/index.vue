@@ -1,13 +1,45 @@
 <template>
-  <nav class="bg-blue-300 border-red-500 flex border-solid border-4 m-auto">
-    <ul class="p-3">
-      <li class="inline-block mr-20">Home</li>
-      <li class="inline-block mr-20">About</li>
-      <li class="inline-block mr-20">Contact</li>
+  <div
+    class="flex border-2 px-5 bg-white dark:bg-slate-700 text-black dark:text-white justify-between items-center"
+  >
+    <div id="logo">
+      <h1>Vite-Admin</h1>
+    </div>
+    <ul class="flex items-center">
+      <li class="mx-2"><RouterLink to="/">Home</RouterLink></li>
+      <li class="mx-2"><RouterLink to="/layout">Guide</RouterLink></li>
+      <li class="mx-2"><RouterLink to="">Contact</RouterLink></li>
+      <div id="tool" class="border-l-2 flex items-center">
+        <el-switch
+          v-model="value.darkMode"
+          class="mx-4"
+          style="--el-switch-on-color: grey"
+          inline-prompt
+          :active-icon="Sunny"
+          :inactive-icon="Moon"
+        />
+        <a href="https://github.com/maple24/vite-admin">
+          <font-awesome-icon icon="fa-brands fa-github" class="text-lg" />
+        </a>
+      </div>
     </ul>
-  </nav>
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { reactive, ref } from 'vue';
+  import { watch } from 'vue';
+  import { Sunny, Moon } from '@element-plus/icons-vue';
+  const value = reactive({
+    darkMode: false,
+  });
+
+  watch(
+    () => value.darkMode,
+    () => {
+      document.documentElement.classList.toggle('dark');
+    }
+  );
+</script>
 
 <style scoped></style>
