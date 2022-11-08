@@ -43,15 +43,11 @@
   import { reactive, ref, watch, computed } from 'vue';
   import { useRouter } from 'vue-router';
   import { useUserStore } from '@/store/user';
-  import { faL } from '@fortawesome/free-solid-svg-icons';
+  import loginformInterface from '@/types/loginform';
   const router = useRouter();
   const store = useUserStore();
 
-  interface loginformInterface {
-    username: string;
-    password: string;
-  }
-  let loginform: loginformInterface = reactive({
+  const loginform: loginformInterface = reactive({
     username: '',
     password: '',
   });

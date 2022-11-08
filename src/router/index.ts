@@ -1,12 +1,10 @@
-import {
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
-} from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import { constantRoutes } from './constRoutes';
 import { getToken, removeToken } from '@/utils/auth';
 import { NavigationFailureType, isNavigationFailure } from 'vue-router';
 import { asyncRoutes } from './asyncRoutes';
+import { generateRoutes } from '@/utils/route';
+import { useUserStore } from '@/store/user';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -19,33 +17,33 @@ const router = createRouter({
     }
   },
 });
-/**
- * @param { to } target route location in a normalized format being navigated to
- * @param { from } current route location in a normalized format being navigated away from
- */
-let hasRoles = false;
+
 router.beforeEach(async (to, from, next) => {
+  const store = useUserStore(); // pinia cannot be used outside a component
   const isAuthenticated: string | null = getToken();
   if (isAuthenticated) {
     if (to.path === '/login') {
-      return next({ path: '/' });
+      next({ path: '/' });
     }
-    // need a next() to letgo
+
+    const hasRoles = store.roles.length > 0;
+    // need a next() to letgo, if hasrole, dynamical route has registered
     if (hasRoles) {
-      return next();
+      next();
     } else {
-      hasRoles = true;
-      asyncRoutes.forEach((route) => {
+      store.getUserInfo();
+      const accessedRoutes = generateRoutes(store.roles, asyncRoutes);
+      accessedRoutes.forEach((route) => {
         router.addRoute(route);
       });
-      return next({ ...to, replace: true });
+      next({ ...to, replace: true });
     }
   } else {
     // next need to be a pair
     if (to.path !== '/login') {
-      return next({ path: '/login' });
+      next({ path: '/login' });
     } else {
-      return next();
+      next();
     }
   }
 });

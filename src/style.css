@@ -25,6 +25,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
+:root.dark {
+  color: white;
+  background-color: black;
+}
+
 /*
 a {
   font-weight: 500;

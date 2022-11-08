@@ -20,9 +20,18 @@ export const asyncRoutes: RouteRecordRaw[] = [
     meta: {
       roles: ['admin', 'visitor'],
     },
+    children: [
+      {
+        path: 'page4',
+        name: 'test',
+        component: () => import('@/views/gallery/page4.vue'),
+        meta: {
+          roles: ['visitor'],
+        },
+      },
+    ],
   },
   {
-    // path: '/:pathMatch(.*)*',
     path: '/:catchAll(.*)',
     name: 'NotFound',
     redirect: '/404',
