@@ -40,13 +40,13 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: 'dashboard',
         name: 'dashboard',
-        component: () => import('@/views/dashBoard/index.vue'),
+        component: () => import('@/views/dashboard/index.vue'),
       },
     ],
   },
   {
     name: '404',
     path: '/404',
-    component: () => import('@/views/errorPage/404.vue'),
+    component: () => import('@/views/errorpage/404.vue'),
   },
 ];

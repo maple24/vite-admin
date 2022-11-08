@@ -18,10 +18,10 @@
 </template>
 
 <script setup lang="ts">
-  import navBar from '@/components/navBar/index.vue';
-  import sideBar from '@/components/sideBar/index.vue';
-  import mainSection from '@/components/mainSection/index.vue';
-  import footBar from '@/components/footBar/index.vue';
+  import navBar from '@/components/navbar/index.vue';
+  import sideBar from '@/components/sidebar/index.vue';
+  import mainSection from '@/components/mainsection/index.vue';
+  import footBar from '@/components/footer/index.vue';
 </script>
 
 <style scoped></style>
