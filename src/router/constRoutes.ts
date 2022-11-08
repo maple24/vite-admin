@@ -33,9 +33,16 @@ export const constantRoutes: RouteRecordRaw[] = [
     ],
   },
   {
-    name: 'dashBoard',
     path: '/',
-    component: () => import('@/views/dashBoard/index.vue'),
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        component: () => import('@/views/dashBoard/index.vue'),
+      },
+    ],
   },
   {
     name: '404',
