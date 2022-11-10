@@ -22,9 +22,9 @@ export const asyncRoutes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: 'page4',
+        path: 'draft',
         name: 'test',
-        component: () => import('@/views/gallery/page4.vue'),
+        component: () => import('@/views/gallery/draft.vue'),
         meta: {
           roles: ['visitor'],
         },

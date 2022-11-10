@@ -23,7 +23,14 @@
       <li class="siderbar-icon">
         <RouterLink to="/layout/page3"
           ><font-awesome-icon
-            icon="fa-solid fa-user-secret"
+            icon="fa-solid fa-download"
+            class="text-3xl dark:text-white"
+        /></RouterLink>
+      </li>
+      <li class="siderbar-icon">
+        <RouterLink to="/layout/page4"
+          ><font-awesome-icon
+            icon="fa-solid fa-dashboard"
             class="text-3xl dark:text-white"
         /></RouterLink>
       </li>

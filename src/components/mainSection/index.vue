@@ -7,7 +7,7 @@
       toggle
     </button>
     <router-view v-slot="{ Component }">
-      <transition name="fade">
+      <transition name="fade" mode="out-in">
         <KeepAlive>
           <component :is="Component" />
         </KeepAlive>
@@ -17,10 +17,20 @@
 </template>
 
 <script setup lang="ts">
-  function toggleSideBar() {
-    const sidebar = document.querySelector('#sidebar');
-    sidebar?.classList.toggle('hidden');
-  }
+function toggleSideBar() {
+  const sidebar = document.querySelector("#sidebar");
+  sidebar?.classList.toggle("hidden");
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

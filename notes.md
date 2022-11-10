@@ -26,3 +26,8 @@
    If you set box-sizing: border-box; on an element, padding and border are included in the width and height:
 2. center element
    the best way to center a container is flexbox, however absolute postion with left-top-50% is doable
+
+### group-hover
+
+How to show a child or another depending on parent hover state?
+Add `hidden group-hover:block` classes for child element, parent a element should have `group` class to work.
