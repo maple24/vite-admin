@@ -21,7 +21,7 @@
         /></RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="#"
+        <RouterLink to="/layout/page3"
           ><font-awesome-icon
             icon="fa-solid fa-user-secret"
             class="text-3xl dark:text-white"
