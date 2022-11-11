@@ -6,7 +6,7 @@
     <section class="flex h-screen flex-col md:flex-row">
       <div id="sidebar">
         <sideBar class="max-[768px]:hidden" />
-        <sideBarSmall class="min-[768px]:hidden" />
+        <sideBarMD class="min-[768px]:hidden" />
       </div>
       <div id="content">
         <mainSection />
@@ -21,7 +21,7 @@
 <script setup lang="ts">
   import navBar from '@/components/navbar/index.vue';
   import sideBar from '@/components/sidebar/index.vue';
-  import sideBarSmall from '@/components/sidebar/index_sm.vue';
+  import sideBarMD from '@/components/sidebar/index_md.vue';
   import mainSection from '@/components/mainsection/index.vue';
   import footBar from '@/components/footer/index.vue';
 </script>

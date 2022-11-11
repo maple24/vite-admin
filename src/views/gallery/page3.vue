@@ -12,9 +12,24 @@
     </div>
     <div class="flex items-center">
       <h1>hello world</h1>
+      <h1>{{ todos }}</h1>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { fetchPosts } from '@/api/placeholder';
+  import { ref } from 'vue';
+  import axios from 'axios';
+  const todos = ref('hello');
+  const response = await fetchPosts();
+  // console.log(response?.data);
+  todos.value = response.data.results;
+  // function fetchdata(): void {
+  //   axios.get('https://pokeapi.co/api/v2/pokemon?offset=0').then((response) => {
+  //     todos.value = response.data.results; // 👈 get just results
+  //   });
+  // }
+  // fetchdata();
+</script>
 <style scoped></style>
