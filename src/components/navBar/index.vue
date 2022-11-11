@@ -1,15 +1,19 @@
 <template>
   <div
-    class="flex border-2 px-5 bg-white dark:bg-slate-700 text-black dark:text-white justify-between items-center"
+    class="flex border-2 px-10 bg-white dark:bg-slate-700 text-gray-700 dark:text-white justify-between items-center h-14"
   >
     <div id="logo">
       <h1>Vite-Admin</h1>
     </div>
-    <ul class="flex items-center">
-      <li class="mx-2"><RouterLink to="/">Home</RouterLink></li>
-      <li class="mx-2"><RouterLink to="/layout">Guide</RouterLink></li>
-      <li class="mx-2"><RouterLink to="">Contact</RouterLink></li>
-      <div id="tool" class="border-l-2 flex items-center">
+    <ul class="flex items-center font-bold font-mono">
+      <li class="mx-2 hover:underline"><RouterLink to="/">Home</RouterLink></li>
+      <li class="mx-2 hover:underline">
+        <RouterLink to="/layout">Guide</RouterLink>
+      </li>
+      <li class="mx-2 hover:underline">
+        <RouterLink to="">Contact</RouterLink>
+      </li>
+      <div id="tool" class="border-l-2 flex items-center capitalize">
         <el-switch
           v-model="value.darkMode"
           class="mx-4"
@@ -19,7 +23,7 @@
           :inactive-icon="Moon"
         />
         <a href="https://github.com/maple24/vite-admin">
-          <font-awesome-icon icon="fa-brands fa-github" class="text-lg" />
+          <font-awesome-icon icon="fa-brands fa-github" class="text-lg pt-1" />
         </a>
       </div>
     </ul>

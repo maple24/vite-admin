@@ -4,7 +4,7 @@
 
 @layer components {
   .siderbar-icon {
-    @apply border text-center m-2 rounded-lg hover:bg-slate-200 hover:shadow-xl dark:bg-gray-800;
+    @apply text-center mb-5 rounded-lg hover:shadow-md hover:shadow-blue-300 dark:bg-gray-800;
   }
 }
 
