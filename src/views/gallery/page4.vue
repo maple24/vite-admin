@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import dropDown from "@/components/dropdown/index.vue";
+  import dropDown from '@/components/dropdown/index.vue';
 </script>
 
 <style scoped></style>
