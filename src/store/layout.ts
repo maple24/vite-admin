@@ -17,6 +17,9 @@ export const useLayoutStore = defineStore('count', {
   actions: {
     toggleHamburgerBar() {
       this.hamburgerBar = !this.hamburgerBar
+    },
+    closeHamburgerBar() {
+      this.hamburgerBar = true
     }
   },
 });

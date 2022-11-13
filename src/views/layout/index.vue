@@ -12,7 +12,11 @@
           class="fixed h-screen mt-12"
         />
       </div>
-      <div id="content" class="flex mt-12 md:ml-20 md:mt-0">
+      <div
+        id="content"
+        class="flex mt-12 md:ml-20 md:mt-0"
+        @click="store.closeHamburgerBar"
+      >
         <mainSection />
       </div>
     </section>

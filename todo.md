@@ -11,4 +11,4 @@
 11. hamburger drop animation cross -> done : tailwind customisez theme
 12. hamburger -> done
 13. sidebar fixed -> done : use margin layout fixed content
-14. navbar media size
+14. navbar media size, drop down
