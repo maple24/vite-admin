@@ -1,8 +1,10 @@
 <template>
-  <div class="p-4 space-y-2 bg-gray-600 rounded shadow">
-    <span class="block w-8 h-0.5 bg-gray-100"></span>
-    <span class="block w-8 h-0.5 bg-gray-100"></span>
-    <span class="block w-8 h-0.5 bg-gray-100"></span>
+  <div id="hamburger">
+    <ul class="text-center my-4 space-y-2">
+      <li>Home</li>
+      <li>About</li>
+      <li>Contact</li>
+    </ul>
   </div>
 </template>
 

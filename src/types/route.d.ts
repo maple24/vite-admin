@@ -7,5 +7,6 @@ declare module 'vue-router' {
     // is optional
     roles?: role[];
     title?: string;
+    keepAlive?: boolean
   }
 }

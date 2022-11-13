@@ -6,10 +6,10 @@
     >
       toggle
     </button>
-    <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component, route }">
       <transition name="fade" mode="out-in">
         <KeepAlive>
-          <component :is="Component" :key="Component" />
+          <component :is="Component" :key="route.name" />
         </KeepAlive>
       </transition>
     </router-view>

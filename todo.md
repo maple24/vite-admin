@@ -5,8 +5,10 @@
 5. typescript -> done
 6. dashboard to layout -> done
 7. scroll opacity navbar
-8. hamburger
-9. toggle sidebar?
-10. sidebar item dropdown
-11. Breadcrumb with media size
-12. tailwind style
+8. toggle sidebar? -> done
+9. sidebar item dropdown -> done
+10. Breadcrumb with media size -> done
+11. tailwind style -> done
+12. hamburger drop animation cross -> done
+13. hamburger -> done
+14. sidebar fixed
