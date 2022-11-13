@@ -4,11 +4,11 @@
 4. dark mode toggle on navbar -> done
 5. typescript -> done
 6. dashboard to layout -> done
-7. scroll opacity navbar
-8. toggle sidebar? -> done
-9. sidebar item dropdown -> done
-10. Breadcrumb with media size -> done
-11. tailwind style -> done
-12. hamburger drop animation cross -> done
-13. hamburger -> done
-14. sidebar fixed
+7. toggle sidebar? -> done : store
+8. sidebar item dropdown -> done
+9. Breadcrumb with media size -> done : min/max
+10. tailwind style -> done
+11. hamburger drop animation cross -> done : tailwind customisez theme
+12. hamburger -> done
+13. sidebar fixed -> done : use margin layout fixed content
+14. navbar media size

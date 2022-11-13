@@ -1,5 +1,5 @@
 <template>
-  <div class="flex px-5 items-center">
+  <div class="flex px-5 items-center bg-white w-screen border">
     <hamBurgerLogo />
     <breadCrumb />
   </div>

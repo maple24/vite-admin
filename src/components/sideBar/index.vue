@@ -1,5 +1,5 @@
 <template>
-  <div id="sidebar">
+  <div id="sidebar" class="dark:bg-gray-700 dark:text-white border-2">
     <ul class="py-5 flex flex-col">
       <li class="siderbar-icon">
         <RouterLink to="/layout/page1"

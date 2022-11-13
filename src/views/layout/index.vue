@@ -1,19 +1,15 @@
 <template>
   <div>
-    <nav class="sticky top-0 opacity-1">
+    <nav class="sticky top-0 left-0">
       <navBar />
     </nav>
     <section class="h-screen md:flex-row flex">
       <div id="sidebar">
-        <sideBar
-          class="max-[768px]:hidden h-screen w-20 dark:bg-gray-700 dark:text-white border-2 fixed"
-        />
-        <sideBarMD
-          class="min-[768px]:hidden h-12 border fixed bg-white w-screen"
-        />
+        <sideBar class="max-[768px]:hidden h-screen w-20 fixed" />
+        <sideBarMD class="min-[768px]:hidden h-12 fixed" />
         <hamburgerBar
           :class="{ hidden: store.hamburgerBar }"
-          class="fixed h-screen overflow-scroll w-1/2 bg-white mt-12"
+          class="fixed h-screen mt-12"
         />
       </div>
       <div id="content" class="flex mt-12 md:ml-20 md:mt-0">
