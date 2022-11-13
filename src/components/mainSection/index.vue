@@ -9,7 +9,7 @@
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <KeepAlive>
-          <component :is="Component" />
+          <component :is="Component" :key="Component" />
         </KeepAlive>
       </transition>
     </router-view>
