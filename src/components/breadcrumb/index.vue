@@ -1,10 +1,14 @@
 <template>
   <div class="">
-    <span v-for="(p, i) in path" class="mx-2">
+    <span
+      v-for="(p, i) in path"
+      class="mx-2"
+      v-if="typeof path[0].redirect === 'undefined'"
+    >
       <button
         v-if="p.path !== route.fullPath"
         class="text-gray-400 border hover:underline capitalize"
-        @click="handleRoute(p.path)"
+        @click="router.push(p.path)"
       >
         {{ p.path.split("/")[i + 1] }}
       </button>
@@ -13,6 +17,9 @@
       </button>
       <span v-if="i !== path.length - 1" class="ml-4">></span>
     </span>
+    <span v-else class="mx-2 capitalize">{{
+      (path[0].redirect as string).split("/")[1]
+    }}</span>
   </div>
 </template>
 
@@ -22,9 +29,6 @@ import { computed } from "vue";
 const route = useRoute();
 const router = useRouter();
 const path = computed(() => route.matched);
-function handleRoute(route: string) {
-  router.push(route);
-}
 </script>
 
 <style scoped></style>
