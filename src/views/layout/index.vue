@@ -1,7 +1,8 @@
 <template>
   <div>
     <nav class="sticky top-0 left-0">
-      <navBar />
+      <navBar class="max-[768px]:hidden" />
+      <navBarMD class="min-[768px]:hidden" />
     </nav>
     <section class="h-screen md:flex-row flex">
       <div id="sidebar">
@@ -28,6 +29,7 @@
 
 <script setup lang="ts">
 import navBar from "@/components/navbar/index.vue";
+import navBarMD from "@/components/navbar/index_md.vue";
 import sideBar from "@/components/sidebar/index.vue";
 import sideBarMD from "@/components/sidebar/index_md.vue";
 import mainSection from "@/components/mainsection/index.vue";

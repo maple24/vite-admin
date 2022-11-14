@@ -10,6 +10,7 @@ export const useLayoutStore = defineStore('count', {
       mainSection: <boolean>false,
       footBar: <boolean>false,
       hamburgerBar: <boolean>true,
+      ellipsis: <boolean>true
     };
   },
   getters: {
@@ -20,6 +21,12 @@ export const useLayoutStore = defineStore('count', {
     },
     closeHamburgerBar() {
       this.hamburgerBar = true
+    },
+    toggleEllipsis() {
+      this.ellipsis = !this.ellipsis
+    },
+    closeEllipsis() {
+      this.ellipsis = true
     }
   },
 });
