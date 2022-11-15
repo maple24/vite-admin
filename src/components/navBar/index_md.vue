@@ -18,13 +18,20 @@
         />
       </svg>
     </div>
-    <button>
-      <font-awesome-icon
-        icon="fa-solid fa-ellipsis-vertical"
-        class="text-xl"
-        @click="store.toggleEllipsis"
-      />
-    </button>
+    <div class="">
+      <button>
+        <font-awesome-icon
+          icon="fa-solid fa-ellipsis-vertical"
+          class="text-xl"
+          @click="store.toggleEllipsis"
+        />
+      </button>
+      <div class="absolute bg-red-200" :class="{ hidden: store.ellipsis }">
+        <h2 class="">hello</h2>
+        <h2>hello</h2>
+        <h2>hello</h2>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -3,20 +3,20 @@
     <nav class="sticky top-0 left-0">
       <navBar class="max-[768px]:hidden" />
       <navBarMD class="min-[768px]:hidden" />
+      <sideBarMD class="min-[768px]:hidden h-12" />
     </nav>
     <section class="h-screen md:flex-row flex">
       <div id="sidebar">
         <sideBar class="max-[768px]:hidden h-screen w-20 fixed" />
-        <sideBarMD class="min-[768px]:hidden h-12 fixed" />
         <hamburgerBar
           :class="{ hidden: store.hamburgerBar }"
-          class="fixed h-screen mt-12"
+          class="fixed h-screen"
         />
       </div>
       <div
         id="content"
-        class="flex mt-12 md:ml-20 md:mt-0"
-        @click="store.closeHamburgerBar"
+        class="flex md:ml-20 md:mt-0 w-full"
+        @click="store.closeBar"
       >
         <mainSection />
       </div>

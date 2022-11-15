@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useLayoutStore = defineStore('count', {
+export const useLayoutStore = defineStore('layout', {
   state: () => {
     return {
       navBar:<boolean>false,
@@ -19,14 +19,12 @@ export const useLayoutStore = defineStore('count', {
     toggleHamburgerBar() {
       this.hamburgerBar = !this.hamburgerBar
     },
-    closeHamburgerBar() {
+    closeBar() {
       this.hamburgerBar = true
+      this.ellipsis = true
     },
     toggleEllipsis() {
       this.ellipsis = !this.ellipsis
-    },
-    closeEllipsis() {
-      this.ellipsis = true
     }
   },
 });
