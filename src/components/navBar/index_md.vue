@@ -18,7 +18,7 @@
         />
       </svg>
     </div>
-    <div class="">
+    <div class="relative">
       <button>
         <font-awesome-icon
           icon="fa-solid fa-ellipsis-vertical"
@@ -26,10 +26,52 @@
           @click="store.toggleEllipsis"
         />
       </button>
-      <div class="absolute bg-red-200" :class="{ hidden: store.ellipsis }">
-        <h2 class="">hello</h2>
-        <h2>hello</h2>
-        <h2>hello</h2>
+      <div
+        id="dropdownDivider"
+        class="absolute right-0 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+        :class="{ hidden: store.ellipsis }"
+      >
+        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
+          <li>
+            <a
+              href="#"
+              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Settings</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Earnings</a
+            >
+          </li>
+        </ul>
+        <div class="py-1">
+          <div id="tool" class="flex items-center capitalize">
+            <el-switch
+              v-model="value.darkMode"
+              class="mx-4"
+              style="--el-switch-on-color: grey"
+              inline-prompt
+              :active-icon="Sunny"
+              :inactive-icon="Moon"
+            />
+            <a href="https://github.com/maple24/vite-admin">
+              <font-awesome-icon
+                icon="fa-brands fa-github"
+                class="text-lg pt-1"
+              />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +79,19 @@
 
 <script setup lang="ts">
 import { useLayoutStore } from "@/store/layout";
+import { reactive, ref } from "vue";
+import { watch } from "vue";
+import { Sunny, Moon } from "@element-plus/icons-vue";
+const value = reactive({
+  darkMode: false,
+});
+
+watch(
+  () => value.darkMode,
+  () => {
+    document.documentElement.classList.toggle("dark");
+  }
+);
 const store = useLayoutStore();
 </script>
 
