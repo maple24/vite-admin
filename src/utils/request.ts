@@ -4,7 +4,7 @@ import axios from 'axios';
 const service = axios.create({
   // TBD... more config options
   timeout: 10000,
-  baseURL: 'https://jsonplaceholder.typicode.com/',
+  // baseURL: 'https://jsonplaceholder.typicode.com/',
   headers: {},
 });
 
