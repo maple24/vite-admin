@@ -1,5 +1,5 @@
 <template>
-  <div id="hamburger" class="overflow-scroll w-1/2 bg-white">
+  <div id="hamburger" class="overflow-scroll w-52 bg-white md:hidden">
     <ul class="text-center my-4 space-y-2">
       <li>Home</li>
       <li>About</li>
