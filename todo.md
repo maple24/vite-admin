@@ -12,6 +12,7 @@
 12. hamburger -> done
 13. sidebar fixed -> done : use margin layout fixed content
 14. navbar media size, drop down, no need store in the same component
-15. filter table 
+15. filter table
 16. more rqm fields, with link
-17. frontend deployment
+17. deployment with docker -> done
+18. push images to repo

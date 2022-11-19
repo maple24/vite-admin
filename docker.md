@@ -2,6 +2,24 @@
 
 https://groupe-sii.github.io/cheat-sheets/docker/index.html
 
+### Docker images
+
+`stretch/buster/jessie`
+
+> Images tagged with stretch, buster, or jessie are codenames for _different Debian releases_.
+
+`-alpine`
+
+> This image is the most highly recommended if space is a concern.
+
+> Alpine images are based on the _Alpine Linux Project_, which is an operating system that was built specifically for use inside of containers.
+
+> The main reason to use an Alpine image is to make your resulting image as small as possible.
+
+`-slim`
+
+> This image generally only installs the minimal packages needed to run your particular tool.
+
 ### Dockerfiles
 
 > Dockerfiles are how we containerize our application, or how we build a new container from an already pre-built image and add custom logic to start our application. From a Dockerfile, we use the Docker build command to create an image.
@@ -57,6 +75,8 @@ services:
     # is executed as soon as container is up nd running.
     volumes:
       - "/usercode/db/init.sql:/docker-entrypoint-initdb.d/init.sql"
+    depends_on:
+      - redis
 ```
 
 > `version '3': This denotes that we are using version 3 of Docker Compose, and Docker will provide the appropriate features. At the time of writing this article, version 3.7 is latest version of Compose.`
@@ -71,11 +91,15 @@ services:
 
 > `volumes: This is just like the -v option for mounting disks in Docker. In this example, we attach our code files directory to the containers’ ./code directory. This way, we won’t have to rebuild the images if changes are made.`
 
+> `command: command overrides the default command declared by the container image (i.e. by Dockerfile’s CMD).`
+
 > `links: This will link one service to another. For the bridge network, we must specify which container should be accessible to which container using links.`
 
 > `image: If we don’t have a Dockerfile and want to run a service using a pre-built image, we specify the image location using the image clause. Compose will fork a container from that image.`
 
 > `environment: The clause allows us to set up an environment variable in the container. This is the same as the -e argument in Docker when running a container.`
+
+> `depends_on: We kept this service dependent on redis so that untill redis won’t start, backend service will not start.`
 
 ### Build
 

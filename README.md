@@ -4,9 +4,28 @@ This template should help get you started developing with Vue 3 and TypeScript i
 
 ## Quick Start
 
+Production env:
+
 ```sh
-docker build . -t viteadmin
-docker run -d -p 8080:80 viteadmin
+docker compose up -d
+```
+
+use `docker compose build` to rebuild it
+
+`to rebuild image`
+
+```sh
+docker compose stop
+docker compose down
+docker compose build
+docker compose up -d
+```
+
+Development env:
+
+```sh
+docker build . -t viteadmin      # -t name a tag
+docker run -d -p 8080:80 viteadmin     # -d detached mode; -p publish a container's port
 curl localhost:8080
 # <!DOCTYPE html><html lang=en>...</html>
 ```
