@@ -123,6 +123,18 @@ docker image rm alpine:3.4
 
 ### Share
 
+[Deploy to another registry](https://sylhare.github.io/2019/08/05/Docker-private-registry.html)
+
+```sh
+# prepare docker image, tag the image
+# docker tag [OPTIONS] IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
+docker tag python3-pytest artifactory.private.registry.ca:5000/python/python3-pytest:1
+# login
+docker login artifactory.private.registry.ca:5000
+# upload to private registry, push using that same tag
+docker push artifactory.private.registry.ca:5000/python/python3-pytest:1
+```
+
 Pull an image from a registry
 
 ```sh
@@ -177,12 +189,13 @@ Delete all running and stopped containers
 docker container rm -f $(docker ps -aq)
 ```
 
-Print the last 100
-lines of a container’s logs
-docker container
-logs --tail 100 web
+Print the last 100 lines of a container’s logs
 
-### note
+```sh
+docker container logs --tail 100 web
+```
+
+### Note
 
 ```sh
 docker run -it --rm python:rc
