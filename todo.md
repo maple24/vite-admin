@@ -16,3 +16,5 @@
 16. push images to repo -> private registry is expensive
 17. filter table
 18. more rqm fields, with link
+19. test nginx proxy
+20. redis usage with websocket
