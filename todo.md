@@ -18,3 +18,5 @@
 18. more rqm fields, with link
 19. test nginx proxy
 20. redis usage with websocket
+21. apply backdrop-filter to pop-up box with srollbar
+22. footer sticky with scrollbar

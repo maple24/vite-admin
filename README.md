@@ -17,7 +17,7 @@ use `docker compose build` to rebuild it
 ```sh
 docker compose stop
 docker compose down
-docker compose build
+docker compose build --no-cache
 docker compose up -d
 ```
 
