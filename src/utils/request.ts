@@ -5,6 +5,7 @@ const service = axios.create({
   // TBD... more config options
   timeout: 10000,
   // baseURL: 'https://jsonplaceholder.typicode.com/',
+  // baseURL: 'http://localhost:8000/',
   headers: {},
 });
 

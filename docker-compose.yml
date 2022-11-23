@@ -4,6 +4,7 @@ services:
   backend:
     restart: always
     build: ../fastapi
+    container_name: backend
     volumes:
       - ../fastapi:/backend
     ports:
@@ -12,7 +13,10 @@ services:
   frontend:
     restart: always
     build: .
+    container_name: frontend
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 8080:80
+    depends_on:
+      - backend
