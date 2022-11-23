@@ -14,9 +14,10 @@
 14. navbar media size, drop down, no need store in the same component -> done
 15. deployment with docker -> done
 16. push images to repo -> private registry is expensive
-17. filter table
-18. more rqm fields, with link
-19. test nginx proxy
-20. redis usage with websocket
-21. apply backdrop-filter to pop-up box with srollbar
-22. footer sticky with scrollbar
+17. footer sticky with scrollbar -> done main section autoscroll
+18. filter table
+19. more rqm fields, with link
+20. test nginx proxy
+21. redis usage with websocket
+22. apply backdrop-filter to pop-up box with srollbar
+23. enum type
