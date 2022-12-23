@@ -18,11 +18,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 /* import specific icons */
-import { faUserSecret, faHouse, faDashboard, faDownload, faEllipsisVertical, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserSecret, faHouse, faDashboard, faDownload, faEllipsisVertical, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
 
 /* add icons to the library */
-library.add(faUserSecret, faTwitter, faHouse, faGithub, faDashboard, faDownload, faEllipsisVertical, faRightFromBracket);
+library.add(faUser, faUserSecret, faTwitter, faHouse, faGithub, faDashboard, faDownload, faEllipsisVertical, faRightFromBracket);
 
 /* import element-plus */
 import ElementPlus from 'element-plus';

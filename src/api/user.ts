@@ -33,3 +33,10 @@ export function refreshToken(data: token) {
         data
     })    
 }
+
+export function getUserList() {
+    return request({
+        url: '/api/v1/auth/user' as string,
+        method: <string>'get',     
+    })
+}
