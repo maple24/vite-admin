@@ -1,4 +1,4 @@
-const tokenKey: string = 'JWT-Token';
+const tokenKey: string = 'JWT';
 
 function getToken(): string | null {
   return localStorage.getItem(tokenKey);

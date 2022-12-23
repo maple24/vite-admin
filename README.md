@@ -43,14 +43,14 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 
 ## Tools
 - VScode
-- Yarn: package management
+- Yarn
 - Vue 3 + Typescript + Vite
 - Pinia
 - Vue router: v4.x
 - Tailwindcss: v3.2.1
 - Font awesome: v6.2.0
 - Heroicon: v2.0.0
-- Element-plus: Ui framework
+- Element-plus
 - Plugins:
   tailwindcss-forms
 
