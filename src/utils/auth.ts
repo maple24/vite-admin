@@ -1,4 +1,4 @@
-const tokenKey: string = 'Admin-Token';
+const tokenKey: string = 'JWT-Token';
 
 function getToken(): string | null {
   return localStorage.getItem(tokenKey);
