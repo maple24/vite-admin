@@ -20,7 +20,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const store = useUserStore(); // pinia cannot be used outside a component
-  const isAuthenticated: string | null = getToken();
+  const isAuthenticated: string | undefined = getToken();
   if (isAuthenticated) {
     if (to.path === '/login') {
       next({ path: '/' });

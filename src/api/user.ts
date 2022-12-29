@@ -1,6 +1,5 @@
 import request from '@/utils/request';
 import loginformInterface from '@/types/loginform';
-import { AxiosResponse } from 'axios';
 type token = {
     token: string
 }
@@ -20,7 +19,7 @@ export function login(data: loginformInterface) {
 
 export function verifyToken(data: token) {
     return request({
-        url: '/api/v1/auth/api-token-verify/' as string,
+        url: '/api/v1/auth/token-verify/' as string,
         method: <string>'post',
         data
     })
@@ -28,7 +27,7 @@ export function verifyToken(data: token) {
 
 export function refreshToken(data: token) {
     return request({
-        url: '/api/v1/auth/api-token-refresh/' as string,
+        url: '/api/v1/auth/token-refresh/' as string,
         method: <string>'post',
         data
     })    
