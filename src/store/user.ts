@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', {
     getUserInfo() {
       // await request
       this.name = 'maple';
-      this.roles.push('visitor');
+      this.roles.push('admin');
     },
     logout() {
       this.token = '';

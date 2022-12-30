@@ -55,3 +55,9 @@ Add `hidden group-hover:block` classes for child element, parent a element shoul
 `Sticky`
 
 > Sticky positioning is really unique! A sticky element will just sit there like a static element, but as you scroll past it, if it’s parent element has room (usually: extra height) the sticky element will behave as if it’s fixed until that parent element is out of room.
+
+## stop content overlaping sticky header
+```
+<!-- set z-index to 50 -->
+z-50
+```

@@ -17,7 +17,7 @@
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/layout/draft"><font-awesome-icon icon="fa-solid fa-user" class="text-5xl text-red-400" />
+        <RouterLink to="/permission"><font-awesome-icon icon="fa-solid fa-user" class="text-5xl text-red-400" />
         </RouterLink>
       </li>
     </ul>

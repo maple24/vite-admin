@@ -6,12 +6,28 @@ import { RouteRecordRaw } from 'vue-router';
 export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/profile',
-    name: 'userProfile',
+    name: 'profile',
     component: () => import('@/views/profile/index.vue'),
     meta: {
       roles: ['admin'],
       title: 'profile',
     },
+  },
+  {
+    path: '/permission',
+    name: 'permission',
+    redirect: '/permission/index',
+    component: () => import('@/views/layout/index.vue'),
+    meta: {
+      roles: ['admin'],
+      title: 'permission',
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/permission/index.vue')
+      }
+    ]
   },
   {
     path: '/helloworld',

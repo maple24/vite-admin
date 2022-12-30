@@ -1,11 +1,11 @@
 <template>
   <div id="mainContent">
-    <button
+    <!-- <button
       class="border-2 border-black rounded-md bg-gray-200"
       @click="toggleSideBar"
     >
       toggle
-    </button>
+    </button> -->
     <router-view v-slot="{ Component, route }">
       <transition name="fade" mode="out-in">
         <KeepAlive>
