@@ -6,7 +6,7 @@
             class="text-5xl text-green-300" /></RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/layout/page2"><font-awesome-icon icon="fa-brands fa-twitter" class="text-5xl text-blue-400" />
+        <RouterLink to="/layout/RQM"><font-awesome-icon icon="fa-brands fa-twitter" class="text-5xl text-blue-400" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">
@@ -18,6 +18,11 @@
       </li>
       <li class="siderbar-icon">
         <RouterLink to="/permission"><font-awesome-icon icon="fa-solid fa-user" class="text-5xl text-red-400" />
+        </RouterLink>
+      </li>
+      <li class="siderbar-icon">
+        <RouterLink to="/layout/chat"><font-awesome-icon icon="fa-brands fa-rocketchat"
+            class="text-5xl text-green-400" />
         </RouterLink>
       </li>
     </ul>

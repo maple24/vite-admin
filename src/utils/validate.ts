@@ -1,6 +1,6 @@
 // uility functions
 const validUsername = (username: string): boolean => {
-  if (username.length < 6) {
+  if (username.length < 4) {
     return false;
   }
   return true;

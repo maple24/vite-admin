@@ -14,7 +14,7 @@
         <mainSection />
       </div>
     </section>
-    <footer class="sticky left-0 bottom-0">
+    <footer class="sticky left-0 bottom-0 z-50">
       <footBar />
     </footer>
   </div>

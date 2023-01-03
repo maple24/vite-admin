@@ -19,10 +19,20 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 /* import specific icons */
 import { faUser, faUserSecret, faHouse, faDashboard, faDownload, faEllipsisVertical, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faTwitter, faGithub, faRocketchat } from '@fortawesome/free-brands-svg-icons';
 
 /* add icons to the library */
-library.add(faUser, faUserSecret, faTwitter, faHouse, faGithub, faDashboard, faDownload, faEllipsisVertical, faRightFromBracket);
+library.add(
+  faUser,
+  faUserSecret,
+  faTwitter,
+  faHouse,
+  faGithub,
+  faDashboard,
+  faDownload,
+  faEllipsisVertical,
+  faRightFromBracket,
+  faRocketchat);
 
 /* import element-plus */
 import ElementPlus from 'element-plus';
