@@ -31,7 +31,7 @@ router.beforeEach(async (to, from, next) => {
     if (hasRoles) {
       next();
     } else {
-      store.getUserInfo();
+      await store.getUserInfo();
       const accessedRoutes = generateRoutes(store.roles, asyncRoutes);
       accessedRoutes.forEach((route) => {
         router.addRoute(route);

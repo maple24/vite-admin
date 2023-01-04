@@ -8,6 +8,7 @@ type authToken = {
     refresh: string,
     access: string
 }
+
   
 export function login(data: loginformInterface) {
     return request({
@@ -37,5 +38,12 @@ export function getUserList() {
     return request({
         url: '/api/v1/auth/user' as string,
         method: <string>'get',     
+    })
+}
+
+export function getUserInfo() {
+    return request({
+        url: '/api/v1/auth/user/info' as string,
+        method: <string>'get'
     })
 }

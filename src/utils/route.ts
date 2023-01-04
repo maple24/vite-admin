@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
-import { role } from '@/types/role';
+import { role } from '@/types/user';
 
 //
 function hasPermission(roles: role[], route: RouteRecordRaw) {

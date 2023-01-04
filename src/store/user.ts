@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { getToken, setToken, removeToken } from '@/utils/auth';
-import { role } from '@/types/role';
+import { role } from '@/types/user';
+import { getUserInfo } from '@/api/user';
+
 // difference bewteen define object
 // short hand expression of return using bracket
 export const useUserStore = defineStore('user', {
@@ -14,10 +16,14 @@ export const useUserStore = defineStore('user', {
       this.token = token;
       setToken(token);
     },
-    getUserInfo() {
-      // await request
-      this.name = 'maple';
-      this.roles.push('admin');
+    async getUserInfo() {
+      const response = await getUserInfo()
+      const { name, roles, projectDomains, projects, is_superuser } = response.data
+      if (!roles || roles.length <= 0) {
+        console.error('getInfo: roles must be a non-null array!');
+      }
+      this.name = name;
+      this.roles = roles;
     },
     logout() {
       this.token = '';
