@@ -16,12 +16,6 @@
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/store/user';
 const store = useUserStore()
-
-const current = new Date();
-const cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
-const cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
-const dateTime = cDate + ' ' + cTime;
-
 const textArea = ref('')
 const message = ref()
 
@@ -35,7 +29,7 @@ const client = new WebSocket(
 client.onopen = () => {
     console.log("connected to the server")
     client.send(JSON.stringify({
-        'message': `${dateTime} (${store.name}): Entered room`
+        'message': `(${store.name}): Entered room`
     }))
 }
 
@@ -46,6 +40,10 @@ client.onmessage = (event) => {
 }
 
 function onSubmit() {
+    const current = new Date();
+    const cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
+    const cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
+    const dateTime = cDate + ' ' + cTime;
     client.send(JSON.stringify({
         'message': `${dateTime} (${store.name}): ${message.value}`
     }))
