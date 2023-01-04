@@ -1,7 +1,8 @@
 <template>
     <div>
         <div>
-            <textarea name="" id="ws" cols="100" rows="10" class="border" readonly>{{ textArea }}</textarea>
+            <textarea ref="textArea" name="" id="ws" cols="100" rows="10" class="border overflow-scroll"
+                readonly>{{ text }}</textarea>
         </div>
         <div>
             <input id="chat-message-input" type="text" size="100"
@@ -13,11 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useUserStore } from '@/store/user';
 const store = useUserStore()
-const textArea = ref('')
+const text = ref('')
 const message = ref()
+const textArea = ref<HTMLElement | null>(null);
 
 const client = new WebSocket(
     'ws://'
@@ -36,7 +38,7 @@ client.onopen = () => {
 client.onmessage = (event) => {
     console.log(event.data)
     const data = JSON.parse(event.data)
-    textArea.value += data.message + '\n'
+    text.value += data.message + '\n'
 }
 
 function onSubmit() {
@@ -48,8 +50,8 @@ function onSubmit() {
         'message': `${dateTime} (${store.name}): ${message.value}`
     }))
     message.value = ''
+    if (textArea.value?.scrollHeight) textArea.value.scrollTop = textArea.value?.scrollHeight;
 }
-
 </script>
 
 <style scoped>

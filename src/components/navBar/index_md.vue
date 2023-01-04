@@ -53,6 +53,7 @@ const value = reactive({
   darkMode: false,
 });
 
+// whenever value.darkMode changes, toggle the classlist
 watch(
   () => value.darkMode,
   () => {
