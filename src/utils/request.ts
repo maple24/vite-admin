@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AxiosRequestHeaders, AxiosHeaders } from 'axios';
 import { getToken, removeToken } from './auth';
 import { ElMessage } from 'element-plus'
 
@@ -21,8 +22,11 @@ service.interceptors.request.use(
         //     await refreshAccessToken(response);
         //   }
     const token = getToken()
-    config.headers = config.headers ?? {}
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers
+        ? (config.headers.Authorization = `Bearer ${token}`)
+        : (config.headers = { Authorization: `Bearer ${token}` });
+    // config.headers = config.headers ?? {}
+    // config.headers.Authorization = `Bearer ${token}`
     return config
   },
   error => {

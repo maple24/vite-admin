@@ -21,7 +21,7 @@
         <td class="hover:text-blue-600 hover:underline">
           <a href="#">{{ key }}:</a>
         </td>
-        <td>{{ value.trim() }}</td>
+        <td>{{ value }}</td>
       </tr>
     </table>
   </div>

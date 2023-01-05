@@ -3,12 +3,20 @@ version: '3'
 services:
   backend:
     restart: always
-    build: ../fastapi
+    build: ../backendviteadmin
+    # command: daphne backendviteadmin.asgi:application -b 0.0.0.0 -p 8000
+    # build: ../fastapi
     container_name: backend
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     volumes:
-      - ../fastapi:/backend
+      # - ../fastapi:/backend
+      - ../backendviteadmin:/backend
     ports:
       - 8000:8000
+    depends_on:
+      - redis
 
   frontend:
     restart: always
@@ -20,3 +28,9 @@ services:
       - 8080:80
     depends_on:
       - backend
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
