@@ -7,3 +7,11 @@ export function getAllResource(resourceType: string) {
     method: 'get',
   });
 }
+
+export function getTestscript(id: string) {
+  return request({
+    url: `/api/rqm/testscript/${id}`,
+    // url: 'http://localhost:8000/rqm/' + resourceType,
+    method: 'get',
+  });
+}

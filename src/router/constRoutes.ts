@@ -21,9 +21,9 @@ export const constantRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/gallery/page1.vue'),
       },
       {
-        name: 'RQM',
-        path: 'RQM',
-        component: () => import('@/views/RQM/index.vue'),
+        name: 'page2',
+        path: 'page2',
+        component: () => import('@/views/gallery/page2.vue'),
       },
       {
         name: 'page3',
@@ -40,11 +40,6 @@ export const constantRoutes: RouteRecordRaw[] = [
         path: 'draft',
         component: () => import('@/views/gallery/draft.vue'),
       },
-      {
-        name: 'chat',
-        path: 'chat',
-        component: () => import('@/views/chat/index.vue'),
-      },
     ],
   },
   {
@@ -56,6 +51,35 @@ export const constantRoutes: RouteRecordRaw[] = [
         path: 'dashboard',
         name: 'dashboard',
         component: () => import('@/views/dashboard/index.vue'),
+      },
+    ],
+  },
+  {
+    path: '/chat',
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/chat/index',
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/chat/index.vue'),
+      },
+    ],
+  },
+  {
+    path: '/RQM',
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/RQM/search',
+    children: [
+      {
+        path: 'search',
+        name: 'search',
+        component: () => import('@/views/RQM/search.vue'),
+      },
+      {
+        path: 'upload',
+        name: 'upload',
+        component: () => import('@/views/RQM/upload.vue'),
       },
     ],
   },

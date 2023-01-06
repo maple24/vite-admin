@@ -11,3 +11,8 @@ export interface resourceInterface {
 }
 
 export enum resourceType {}
+
+export type testScript = {
+  description: string
+  expectedResult: string
+}

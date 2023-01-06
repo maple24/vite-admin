@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <h1>hello</h1>
-  </div>
+  <el-calendar v-model="value" />
 </template>
 
-<script setup lang="ts"></script>
-
-<style scoped></style>
+<script lang="ts" setup>
+import { ref } from 'vue'
+const value = ref(new Date())
+</script>
