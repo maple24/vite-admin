@@ -1,21 +1,33 @@
 <template>
-    <div>
-        <el-upload ref="uploadRef" v-model:file-list="fileList" class="upload-demo" drag action="/api/rqm/upload"
-            :headers="header" :autoUpload="false" :on-remove="handleRemove" :on-preview="handlePreview"
-            :on-success="handleSuccess">
-            <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-            <div class="el-upload__text">
-                Drop file here or <em>click to upload</em>
+    <div class="flex">
+        <div class="mx-16 border shadow-md flex-col self-center">
+            <div class="flex justify-center">
+                <font-awesome-icon icon="fa-solid fa-file-arrow-down" class="text-8xl text-red-500" />
             </div>
-            <template #tip>
-                <div class="el-upload__tip">
-                    jpg/png files with a size less than 500kb
+            <el-button class="m-2" type="success" @click="handleDownload('template.json')">
+                <font-awesome-icon icon="fa-solid fa-download" class="mx-2" />
+                Download template
+            </el-button>
+        </div>
+        <div class="border shadow-md">
+            <el-upload ref="uploadRef" v-model:file-list="fileList" class="upload-demo" drag action="/api/rqm/upload"
+                :headers="header" :autoUpload="false" :on-remove="handleRemove" :on-preview="handlePreview"
+                :on-success="handleSuccess" :limit=3 :on-exceed="handleExceed" :before-remove="beforeRemove">
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div class="el-upload__text">
+                    Drop file here or <em>click to upload</em>
                 </div>
-                <el-button class="ml-3" type="success" @click="submitUpload">
-                    upload to server
-                </el-button>
-            </template>
-        </el-upload>
+                <template #tip>
+                    <div class="el-upload__tip">
+                        txt/json files with a size less than 500kb are prefered
+                    </div>
+                    <el-button class="ml-14" type="success" @click="submitUpload">
+                        <font-awesome-icon icon="fa-solid fa-upload" class="mx-2" />
+                        Upload to server
+                    </el-button>
+                </template>
+            </el-upload>
+        </div>
     </div>
 </template>
 
@@ -23,6 +35,8 @@
 import { ref, reactive } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { getToken } from '@/utils/auth';
+import { downloadFile } from '@/api/utils'
+import { download } from '@/utils/file'
 import type { UploadProps, UploadUserFile, UploadInstance } from 'element-plus'
 import { ElMessageBox, ElMessage } from 'element-plus'
 
@@ -35,7 +49,7 @@ const header = reactive({
 })
 
 const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
-    console.log(file.name, uploadFiles)
+    ElMessage.success(`Remove ${file.name} successfully!`)
 }
 
 const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
@@ -43,7 +57,23 @@ const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
 }
 
 const handleSuccess: UploadProps['onSuccess'] = () => {
-    console.log();
+    ElMessage.success("Upload successfully!")
+}
+
+const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
+    ElMessage.warning(
+        `The limit is 3, you selected ${files.length} files this time, add up to ${files.length + uploadFiles.length
+        } totally`
+    )
+}
+
+const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
+    return ElMessageBox.confirm(
+        `Cancel the transfert of ${uploadFile.name} ?`
+    ).then(
+        () => true,
+        () => false
+    )
 }
 
 const submitUpload = () => {
@@ -59,6 +89,26 @@ const submitUpload = () => {
         fileList.value = tmp.slice()
     }
 }
+
+const handleDownload = async (filename: string) => {
+    const response = await downloadFile(filename)
+    const data = JSON.stringify(response.data, null, 4);
+
+    // Create a Blob object
+    const blob = new Blob([data], { type: 'application/json' });
+
+    // Create an object URL
+    const url = URL.createObjectURL(blob);
+
+    // Download file
+    download(url, filename);
+
+    // Release the object URL
+    URL.revokeObjectURL(url);
+
+    ElMessage.success(`Download ${filename} successfully!`)
+}
+
 </script>
 
 <style scoped>

@@ -18,7 +18,18 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 /* import specific icons */
-import { faUser, faUserSecret, faHouse, faDashboard, faDownload, faEllipsisVertical, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser,
+  faUserSecret,
+  faHouse,
+  faDashboard,
+  faDownload,
+  faUpload,
+  faFileArrowDown,
+  faEllipsisVertical,
+  faRightFromBracket
+} from '@fortawesome/free-solid-svg-icons';
+
 import { faTwitter, faGithub, faRocketchat } from '@fortawesome/free-brands-svg-icons';
 
 /* add icons to the library */
@@ -30,6 +41,8 @@ library.add(
   faGithub,
   faDashboard,
   faDownload,
+  faUpload,
+  faFileArrowDown,
   faEllipsisVertical,
   faRightFromBracket,
   faRocketchat);
