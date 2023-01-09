@@ -1,5 +1,5 @@
 <template>
-  <div id="mainContent">
+  <div id="mainContent" class="w-full">
     <!-- <button
       class="border-2 border-black rounded-md bg-gray-200"
       @click="toggleSideBar"

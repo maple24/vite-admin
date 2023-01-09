@@ -1,5 +1,5 @@
 <template>
-    <div class="flex">
+    <div class="flex justify-center">
         <div class="mx-16 border shadow-md flex-col self-center">
             <div class="flex justify-center">
                 <font-awesome-icon icon="fa-solid fa-file-arrow-down" class="text-8xl text-red-500" />
@@ -9,7 +9,7 @@
                 Download template
             </el-button>
         </div>
-        <div class="border shadow-md">
+        <div class="border shadow-md flex-col self-center">
             <el-upload ref="uploadRef" v-model:file-list="fileList" class="upload-demo" drag action="/api/rqm/upload"
                 :headers="header" :autoUpload="false" :on-remove="handleRemove" :on-preview="handlePreview"
                 :on-success="handleSuccess" :limit=3 :on-exceed="handleExceed" :before-remove="beforeRemove">
@@ -21,12 +21,24 @@
                     <div class="el-upload__tip">
                         txt/json files with a size less than 500kb are prefered
                     </div>
-                    <el-button class="ml-14" type="success" @click="submitUpload">
-                        <font-awesome-icon icon="fa-solid fa-upload" class="mx-2" />
-                        Upload to server
-                    </el-button>
+                    <div class="flex justify-center">
+                        <el-button type="success" @click="submitUpload">
+                            <font-awesome-icon icon="fa-solid fa-upload" class="mx-2" />
+                            Upload to server
+                        </el-button>
+                    </div>
                 </template>
             </el-upload>
+            <el-divider />
+            <div class="flex justify-center">
+                <el-button type="success" @click="">
+                    Generate testcase
+                    <font-awesome-icon icon="fa-solid fa-square-up-right" class="mx-2" />
+                </el-button>
+            </div>
+            <div>
+                <textarea name="" id="" cols="100" rows="10" class="border">Logs:</textarea>
+            </div>
         </div>
     </div>
 </template>

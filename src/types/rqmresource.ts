@@ -3,6 +3,11 @@ export type resource = {
   name: string;
 };
 
+export type script = {
+  description: string
+  expectedResult: string
+}
+
 export interface resourceInterface {
   success: boolean
   message: string
@@ -13,6 +18,6 @@ export interface resourceInterface {
 export enum resourceType {}
 
 export type testScript = {
-  description: string
-  expectedResult: string
+  title: string,
+  scripts: script[]
 }

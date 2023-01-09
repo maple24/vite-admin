@@ -27,7 +27,8 @@ import {
   faUpload,
   faFileArrowDown,
   faEllipsisVertical,
-  faRightFromBracket
+  faRightFromBracket,
+  faSquareUpRight
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faTwitter, faGithub, faRocketchat } from '@fortawesome/free-brands-svg-icons';
@@ -45,7 +46,9 @@ library.add(
   faFileArrowDown,
   faEllipsisVertical,
   faRightFromBracket,
-  faRocketchat);
+  faRocketchat,
+  faSquareUpRight
+);
 
 /* import element-plus */
 import ElementPlus from 'element-plus';
