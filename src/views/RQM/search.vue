@@ -25,9 +25,9 @@
                     </template>
                     <template #default="scope">
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
-                            :disabled="type === 'testcase' ? false : true">Edit</el-button>
-                        <el-button size="small" type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                            :disabled="type === 'testcase' ? false : true">Check</el-button>
+                        <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)"
+                            :disabled="!store.roles.includes('admin')">Delete</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -49,10 +49,13 @@
                     <el-input v-model="item.expectedResult" type="textarea" :autosize="{ minRows: 1, maxRows: 5 }" />
                 </el-form-item>
             </el-form>
-            <el-form-item>
-                <el-button type="primary" @click="handleUpdate">Update</el-button>
-                <el-button @click="dialogVisible = false">Cancel</el-button>
-            </el-form-item>
+            <div class="flex justify-end">
+                <el-form-item>
+                    <el-button type="primary" @click="handleUpdate"
+                        :disabled="!store.roles.includes('admin')">Update</el-button>
+                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                </el-form-item>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -62,6 +65,8 @@ import { computed, ref, watch, reactive } from 'vue'
 import { getAllResource, getTestscript, updateTestscript } from '@/api/ibmrqm';
 import { resourceInterface, resource, script } from '@/types/rqmresource';
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { useUserStore } from '@/store/user';
+const store = useUserStore()
 
 const currentPage = ref<number>(1)
 const pageSize = ref<number>(10)

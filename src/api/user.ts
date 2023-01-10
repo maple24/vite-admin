@@ -1,5 +1,7 @@
 import request from '@/utils/request';
 import loginformInterface from '@/types/loginform';
+import { Role } from '@/types/user';
+
 type token = {
     token: string
 }
@@ -47,3 +49,32 @@ export function getUserInfo() {
         method: <string>'get'
     })
 }
+
+export function deleteUser(id: string | number) {
+  return request({
+    url: `/api/v1/auth/user/${id}`,
+    method: 'delete',
+  })
+}
+
+export function getUserRole(id: string | number) {
+    return request({
+      url: `api/v1/auth/userrole/${id}`,
+      method: 'get',
+    })
+  }
+  
+  export function deleteUserRole(id : string | number) {
+    return request({
+      url: `api/v1/auth/userrole/${id}`,
+      method: 'delete',
+    })
+  }
+  
+  export function createUserRole(data: Role) {
+    return request({
+      url: 'api/v1/auth/userrole/',
+      method: 'post',
+      data
+    })
+  }

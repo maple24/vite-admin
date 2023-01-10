@@ -10,6 +10,7 @@ export const useUserStore = defineStore('user', {
     token: '' as string,
     name: '' as string,
     roles: [] as role[],
+    is_superuser: false as boolean
   }),
   actions: {
     login(token: string) {
@@ -18,12 +19,13 @@ export const useUserStore = defineStore('user', {
     },
     async getUserInfo() {
       const response = await getUserInfo()
-      const { name, roles, projectDomains, projects, is_superuser } = response.data
+      const { name, roles, is_superuser } = response.data
       if (!roles || roles.length <= 0) {
         console.error('getInfo: roles must be a non-null array!');
       }
       this.name = name;
       this.roles = roles;
+      this.is_superuser = is_superuser
     },
     logout() {
       this.token = '';
