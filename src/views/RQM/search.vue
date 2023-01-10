@@ -15,8 +15,8 @@
                 Search
             </button>
         </div>
-        <div class="flex justify-center">
-            <el-table :data="filterTableData" style="width: 50%;" v-loading.fullscreen.lock="loading" border>
+        <div class="flex justify-center" :class="{ hidden: isHidden }">
+            <el-table :data="filterTableData" style="width: auto;" v-loading.fullscreen.lock="loading" border>
                 <el-table-column label="ID" prop="id" width="120" />
                 <el-table-column label="Name" prop="name" width="600" />
                 <el-table-column align="right" width="200">
@@ -32,9 +32,9 @@
                 </el-table-column>
             </el-table>
         </div>
-        <div class="flex justify-center">
-            <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[5, 10, 15, 20]"
-                layout="sizes, prev, pager, next" :total="total" />
+        <div class="flex justify-center" :class="{ hidden: isHidden }">
+            <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
+                :page-sizes="[5, 10, 15, 20, 50]" layout="sizes, prev, pager, next" :total="total" />
         </div>
         <el-dialog v-model="dialogVisible" title="TestScript" width="50%">
             <el-form label-position="left" label-width="100px" :model="formData" style="max-width: 1000px">
@@ -78,6 +78,8 @@ const data = ref<resourceInterface>();
 const tableData = ref<resource[]>()
 const loading = ref<boolean>()
 const dialogVisible = ref<boolean>(false)
+
+const isHidden = computed(() => tableData.value ? false : true)
 
 watch([() => currentPage.value, () => pageSize.value], () => {
     if (data.value) tableData.value = data.value['data'].slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)

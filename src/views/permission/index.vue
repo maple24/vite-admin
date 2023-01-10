@@ -1,11 +1,12 @@
 <template>
-    <div>
-        <el-table :data="filterTableData" style="width: 100%">
-            <el-table-column label="Account" prop="account" width="200" />
-            <el-table-column label="Username" prop="username" width="120" />
-            <el-table-column label="Email" prop="email" width="200" />
-            <el-table-column label="Office" prop="office" width="120" />
-            <el-table-column label="Last Login" prop="last_login" width="500" />
+    <div class="flex justify-center">
+        <el-table :data="filterTableData" style="width: auto" size="small" border fit>
+            <el-table-column label="Account" prop="account" width="350" />
+            <el-table-column label="Username" prop="username" width="100" />
+            <el-table-column label="Email" prop="email" width="250" />
+            <el-table-column label="Office" prop="office" width="60" />
+            <el-table-column label="Last Login" prop="last_login" width="200" />
+            <el-table-column label="Role" prop="role" width="200" />
             <el-table-column align="right" width="200">
                 <template #header>
                     <el-input v-model="search" size="small" placeholder="Type to search" />

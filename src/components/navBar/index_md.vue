@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex border-2 px-10 bg-white dark:bg-slate-700 text-gray-700 dark:text-white justify-between items-center h-14">
+    class="flex border-2 px-10 bg-white dark:bg-slate-700 text-gray-700 dark:text-white justify-between items-center">
     <div id="logo" class="whitespace-nowrap">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="w-8 h-8 text-blue-500 hover:animate-spin-slow">
