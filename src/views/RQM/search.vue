@@ -96,11 +96,16 @@ async function fetchRQM(resourceType: string) {
         return
     }
     loading.value = true
-    const response = await getAllResource(resourceType);
-    data.value = response.data;
-    if (data.value) {
-        total.value = data.value['number']
-        tableData.value = data.value['data'].slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
+    try {
+        const response = await getAllResource(resourceType);
+        data.value = response.data;
+        if (data.value) {
+            total.value = data.value['number']
+            tableData.value = data.value['data'].slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
+        }
+    } catch {
+        throw 'Fail to get resource'
+    } finally {
         loading.value = false
     }
 }
@@ -116,13 +121,18 @@ const filterTableData = computed(() =>
 const handleEdit = async (index: number, row: resource) => {
     console.log(index, row)
     loading.value = true
-    const response = await getTestscript(row.id)
-    loading.value = false
-    dialogVisible.value = true
-    // copy data
-    formData.id = row.id.slice()
-    formData.title = response.data.title.slice()
-    formData.scripts = response.data.scripts.slice()
+    try {
+        const response = await getTestscript(row.id)
+        dialogVisible.value = true
+        // copy data
+        formData.id = row.id.slice()
+        formData.title = response.data.title.slice()
+        formData.scripts = response.data.scripts.slice()
+    } catch {
+        throw 'Fail to get testscript!'
+    } finally {
+        loading.value = false
+    }
 }
 const handleDelete = (index: number, row: resourceInterface) => {
     console.log(index, row)
@@ -144,10 +154,14 @@ const handleUpdate = async () => {
         scripts: formData.scripts
     }
     console.log(data);
-    await updateTestscript(formData.id, data)
-    dialogVisible.value = false
-    await fetchRQM('testcase')
-    loading.value = false
+    try {
+        await updateTestscript(formData.id, data)
+        dialogVisible.value = false
+    } catch {
+        throw 'Fail to update testscript!'
+    } finally {
+        await fetchRQM('testcase')
+    }
     ElMessage.success('Update successfully!')
 }
 

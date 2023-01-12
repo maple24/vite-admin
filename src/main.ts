@@ -30,7 +30,8 @@ import {
   faRightFromBracket,
   faSquareUpRight,
   faMagnifyingGlass,
-  faUsers
+  faUsers,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faTwitter, faGithub, faRocketchat } from '@fortawesome/free-brands-svg-icons';
@@ -51,7 +52,8 @@ library.add(
   faRocketchat,
   faSquareUpRight,
   faMagnifyingGlass,
-  faUsers
+  faUsers,
+  faCheck
 );
 
 /* import element-plus */

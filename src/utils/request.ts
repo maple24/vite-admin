@@ -9,7 +9,9 @@ const service = axios.create({
   timeout: 20000,
   // baseURL: 'https://jsonplaceholder.typicode.com/',
   // baseURL: 'http://localhost:8000/',
-  headers: {},
+  headers: {
+    'Content-Type': 'application/json'
+  },
 });
 
 // request interceptor
