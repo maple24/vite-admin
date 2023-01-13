@@ -12,7 +12,7 @@
         <div class="border shadow-md flex-col self-center">
             <el-upload ref="uploadRef" v-model:file-list="fileList" class="upload-demo" drag :action="url"
                 :headers="header" :autoUpload="false" :on-remove="handleRemove" :on-preview="handlePreview"
-                :on-success="handleSuccess" :on-error="handleError" :limit=3 :on-exceed="handleExceed"
+                :on-success="handleSuccess" :on-error="handleError" :limit=1 :on-exceed="handleExceed"
                 :before-remove="beforeRemove" :on-progress="handleProgress">
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                 <div class="el-upload__text">
@@ -28,8 +28,8 @@
                             <font-awesome-icon icon="fa-solid fa-check" class="mx-2" />
                             Validate File
                         </el-button>
-                        <el-button type="success" @click="submitUpload('/api/rqm/testscript/')"
-                            :disabled="disableButton || !store.roles.includes('admin')">
+                        <el-button type="success" @click="handleCreate"
+                            :disabled="disableButton || !store.roles.includes('admin') || resourceData === undefined">
                             <font-awesome-icon icon="fa-solid fa-upload" class="mx-2" />
                             Create Testcase
                         </el-button>
@@ -58,7 +58,9 @@ import { downloadFile } from '@/api/utils'
 import { download } from '@/utils/file'
 import type { UploadProps, UploadUserFile, UploadInstance, UploadProgressEvent, UploadFile, UploadFiles, UploadRawFile } from 'element-plus'
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { genFileId } from 'element-plus'
 import { useUserStore } from '@/store/user';
+import { createTestscript } from '@/api/ibmrqm';
 const store = useUserStore()
 
 const disableButton = ref<boolean>(false)
@@ -70,25 +72,26 @@ const logs = ref<string | undefined | UploadFile>(
 )
 const fileList = ref<UploadUserFile[]>()
 const uploadRef = ref<UploadInstance>()
-const token = getToken()
 const header = reactive({
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${getToken()}`,
     "Content-Disposition": "attachment; filename=source.json",
 })
 const url = ref<string>('')
+const resourceData = ref()
 
 const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
     ElMessage.success(`Remove ${file.name} successfully!`)
 }
 
 const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
-    logs.value = uploadFile
+    logs.value = JSON.stringify(uploadFile, null, 4)
 }
 
 const handleSuccess: UploadProps['onSuccess'] = (response) => {
     disableButton.value = false
     ElMessage.success("Upload successfully!")
-    logs.value = response
+    logs.value = JSON.stringify(response, null, 4);
+    resourceData.value = JSON.stringify(response.data)
 }
 
 const handleError: UploadProps['onError'] = (error: Error) => {
@@ -98,17 +101,19 @@ const handleError: UploadProps['onError'] = (error: Error) => {
 }
 
 const handleProgress: UploadProps['onProgress'] = (evt: UploadProgressEvent, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
-    console.log(evt);
-    console.log(uploadFile);
-    console.log(uploadFiles);
+
 }
 
-const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
-    ElMessage.warning(
-        `The limit is 3, you selected ${files.length} files this time, add up to ${files.length + uploadFiles.length
-        } totally`
-    )
+
+const handleExceed: UploadProps['onExceed'] = (files) => {
+    uploadRef.value!.clearFiles()
+    const file = files[0] as UploadRawFile
+    file.uid = genFileId()
+    uploadRef.value!.handleStart(file)
+    resourceData.value = undefined
+    logs.value = 'New file uploaded!'
 }
+
 
 const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
     return ElMessageBox.confirm(
@@ -141,19 +146,23 @@ const submitUpload = (URL: string) => {
     }
 }
 
+const handleCreate = async () => {
+    logs.value = 'Please wait......'
+    const response = await createTestscript(resourceData.value)
+    logs.value = JSON.stringify(response.data, null, 4);
+    resourceData.value = undefined
+}
+
 const handleDownload = async (filename: string) => {
     const response = await downloadFile(filename)
     const data = JSON.stringify(response.data, null, 4);
 
     // Create a Blob object
     const blob = new Blob([data], { type: 'application/json' });
-
     // Create an object URL
     const url = URL.createObjectURL(blob);
-
     // Download file
     download(url, filename);
-
     // Release the object URL
     URL.revokeObjectURL(url);
 

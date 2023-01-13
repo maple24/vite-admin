@@ -24,7 +24,7 @@ export function updateTestscript(id: string, data: testScript) {
   });
 }
 
-export function createTestscript(data: UploadUserFile | testScript) {
+export function createTestscript(data: testScript | testScript[]) {
   return request({
     url: '/api/rqm/testscript/',
     method: 'post',
