@@ -28,4 +28,4 @@ interface Roles extends Role {
     id: number
 }
 
-export type { UserInfo, User, Role };
+export type { UserInfo, User, Role, role };
