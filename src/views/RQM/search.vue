@@ -6,7 +6,7 @@
                 v-model="type">
                 <option value="default" selected>Choose a resourcetype</option>
                 <option v-for="(item, index) in resourceTypes" :value="item" :key="index">
-                    {{ item }}
+                    {{ item.toUpperCase() }}
                 </option>
             </select>
             <button
@@ -52,7 +52,7 @@
             <div class="flex justify-end">
                 <el-form-item>
                     <el-button type="primary" @click="handleUpdate"
-                        :disabled="!store.roles.includes('admin')">Update</el-button>
+                        :disabled="!store.roles.includes('admin') || isChange">Update</el-button>
                     <el-button @click="dialogVisible = false">Cancel</el-button>
                 </el-form-item>
             </div>
@@ -65,6 +65,7 @@ import { computed, ref, watch, reactive } from 'vue'
 import { getAllResource, getTestscript, updateTestscript } from '@/api/ibmrqm';
 import { resourceInterface, resource, script } from '@/types/rqmresource';
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { isObjectEqual } from '@/utils/common'
 import { useUserStore } from '@/store/user';
 const store = useUserStore()
 
@@ -76,15 +77,21 @@ const formData = reactive({
     title: '',
     scripts: <script[]>[]
 })
-
+const tmp = reactive({
+    title: '',
+    scripts: <script[]>[]
+})
 const type = ref<string>('default');
-const resourceTypes: string[] = ['testcase', 'testscript', 'testsuite'];
+const resourceTypes: string[] = ['testcase', 'testscript', 'testsuite', 'buildrecord'];
 const data = ref<resourceInterface>();
 const tableData = ref<resource[]>()
 const loading = ref<boolean>()
 const dialogVisible = ref<boolean>(false)
 
 const isHidden = computed(() => tableData.value ? false : true)
+const isChange = computed(() =>
+    formData.title === tmp.title && isObjectEqual(formData.scripts, tmp.scripts)
+)
 
 watch([() => currentPage.value, () => pageSize.value], () => {
     if (data.value) tableData.value = data.value['data'].slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
@@ -119,7 +126,6 @@ const filterTableData = computed(() =>
     )
 )
 const handleEdit = async (index: number, row: resource) => {
-    console.log(index, row)
     loading.value = true
     try {
         const response = await getTestscript(row.id)
@@ -128,6 +134,8 @@ const handleEdit = async (index: number, row: resource) => {
         formData.id = row.id.slice()
         formData.title = response.data.title.slice()
         formData.scripts = response.data.scripts.slice()
+        tmp.title = response.data.title.slice()
+        tmp.scripts = response.data.scripts.slice()
     } catch {
         throw 'Fail to get testscript!'
     } finally {
@@ -153,7 +161,6 @@ const handleUpdate = async () => {
         title: formData.title,
         scripts: formData.scripts
     }
-    console.log(data);
     try {
         await updateTestscript(formData.id, data)
         dialogVisible.value = false
