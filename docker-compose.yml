@@ -3,7 +3,7 @@ version: '3'
 services:
   backend:
     restart: always
-    build: ../backendviteadmin
+    build: ../vite-admin-backend
     # command: daphne backendviteadmin.asgi:application -b 0.0.0.0 -p 8000
     # build: ../fastapi
     container_name: backend
