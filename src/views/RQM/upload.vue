@@ -80,6 +80,7 @@ const url = ref<string>('')
 const resourceData = ref()
 
 const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
+    resourceData.value = undefined
     ElMessage.success(`Remove ${file.name} successfully!`)
 }
 
