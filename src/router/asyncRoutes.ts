@@ -9,7 +9,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     name: 'profile',
     component: () => import('@/views/profile/index.vue'),
     meta: {
-      roles: ['admin'],
+      roles: ['visitor'],
       title: 'profile',
     },
   },
@@ -28,24 +28,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/permission/index.vue')
       }
     ]
-  },
-  {
-    path: '/helloworld',
-    name: 'helloworld',
-    component: () => import('@/components/HelloWorld.vue'),
-    meta: {
-      roles: ['admin', 'visitor'],
-    },
-    children: [
-      {
-        path: 'draft',
-        name: 'test',
-        component: () => import('@/views/gallery/draft.vue'),
-        meta: {
-          roles: ['visitor'],
-        },
-      },
-    ],
   },
   {
     path: '/:catchAll(.*)',

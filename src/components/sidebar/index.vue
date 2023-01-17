@@ -27,6 +27,10 @@
         <RouterLink to="/layout/page4"><font-awesome-icon icon="fa-solid fa-house" class="text-5xl text-yellow-400" />
         </RouterLink>
       </li>
+      <li class="siderbar-icon">
+        <RouterLink to="/js30"><font-awesome-icon icon="fa-solid fa-book-open" class="text-5xl" />
+        </RouterLink>
+      </li>
     </ul>
   </div>
 </template>

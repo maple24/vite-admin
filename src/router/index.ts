@@ -5,6 +5,7 @@ import { NavigationFailureType, isNavigationFailure } from 'vue-router';
 import { asyncRoutes } from './asyncRoutes';
 import { generateRoutes } from '@/utils/route';
 import { useUserStore } from '@/store/user';
+import { extraRoutes } from './extraRoutes';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -19,7 +20,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const store = useUserStore(); // pinia cannot be used outside a component
+  const store = useUserStore(); // pinia cannot be used outside a component, so store can not be initialized outside
   const isAuthenticated: string | undefined = getToken();
   if (isAuthenticated) {
     if (to.path === '/login') {
