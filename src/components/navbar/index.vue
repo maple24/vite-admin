@@ -16,7 +16,7 @@
         <RouterLink to="/layout">Guide</RouterLink>
       </li>
       <li class="mx-2 hover:underline">
-        <RouterLink to="">Contact</RouterLink>
+        <RouterLink to="/profile">Contact</RouterLink>
       </li>
       <div id="tool" class="border-l-2 flex items-center capitalize">
         <el-switch v-model="value.darkMode" class="mx-4" style="--el-switch-on-color: grey" inline-prompt

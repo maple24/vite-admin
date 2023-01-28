@@ -7,11 +7,18 @@ export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/profile',
     name: 'profile',
-    component: () => import('@/views/profile/index.vue'),
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/profile/index',
     meta: {
       roles: ['visitor'],
       title: 'profile',
     },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index.vue')
+      }
+    ]
   },
   {
     path: '/permission',
