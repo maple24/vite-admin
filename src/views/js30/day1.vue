@@ -1,6 +1,6 @@
 <template>
     <div>
-        day1
+        Day1: Javascript Drum Kit
     </div>
 </template>
 

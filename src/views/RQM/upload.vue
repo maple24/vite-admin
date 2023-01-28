@@ -23,7 +23,7 @@
                         txt/json files with a size less than 500kb are prefered
                     </div>
                     <div class="flex justify-center">
-                        <el-button type="primary" @click="submitUpload('/api/rqm/testscript/validate/')"
+                        <el-button type="primary" @click="submitUpload('/api/v1/app/testscript/validate/')"
                             :disabled="disableButton || !store.roles.includes('admin')">
                             <font-awesome-icon icon="fa-solid fa-check" class="mx-2" />
                             Validate File

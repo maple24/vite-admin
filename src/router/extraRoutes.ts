@@ -65,9 +65,14 @@ export const extraRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/js30/index.vue'),
         children: [
             {
-                name: 'day1',
-                path: 'day1',
+                name: '1',
+                path: '1',
                 component: () => import('@/views/js30/day1.vue')
+            },
+            {
+                name: '2',
+                path: '2',
+                component: () => import('@/views/js30/day2.vue')
             }
         ]
     }

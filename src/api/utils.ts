@@ -3,7 +3,7 @@ import type { UploadUserFile } from 'element-plus'
 
 export function uploadFile(data: UploadUserFile) {
   return request({
-    url: '/api/rqm/upload',
+    url: '/api/v1/app/file',
     method: 'post',
     data
   });
@@ -11,7 +11,7 @@ export function uploadFile(data: UploadUserFile) {
 
 export function downloadFile(filename: string) {
   return request({
-    url: `/api/rqm/download/${filename}`,
+    url: `/api/v1/app/file/${filename}`,
     method: 'get',
-  });  
+  });
 }
