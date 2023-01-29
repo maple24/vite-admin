@@ -34,7 +34,7 @@
         </div>
         <div class="flex justify-center" :class="{ hidden: isHidden }">
             <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
-                :page-sizes="[5, 10, 15, 20, 50]" layout="sizes, prev, pager, next" :total="total" />
+                :page-sizes="[5, 10, 15, 20, 50, 100]" layout="sizes, prev, pager, next" :total="total" />
         </div>
         <el-dialog v-model="dialogVisible" title="TestScript" width="50%">
             <el-form label-position="left" label-width="100px" :model="formData" style="max-width: 1000px">
@@ -67,6 +67,7 @@ import { resourceInterface, resource, script } from '@/types/rqmresource';
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { isObjectEqual } from '@/utils/common'
 import { useUserStore } from '@/store/user';
+import { cloneDeep } from 'lodash'
 const store = useUserStore()
 
 const currentPage = ref<number>(1)
@@ -77,10 +78,10 @@ const formData = reactive({
     title: '',
     scripts: <script[]>[]
 })
-const tmp = reactive({
+const tmp = {
     title: '',
     scripts: <script[]>[]
-})
+}
 const type = ref<string>('default');
 const resourceTypes: string[] = ['testcase', 'testscript', 'testsuite', 'buildrecord'];
 const data = ref<resourceInterface>();
@@ -133,9 +134,9 @@ const handleEdit = async (index: number, row: resource) => {
         // copy data
         formData.id = row.id.slice()
         formData.title = response.data.title.slice()
-        formData.scripts = response.data.scripts.slice()
+        formData.scripts = [...response.data.scripts]
         tmp.title = response.data.title.slice()
-        tmp.scripts = response.data.scripts.slice()
+        tmp.scripts = cloneDeep(response.data.scripts)
     } catch {
         throw 'Fail to get testscript!'
     } finally {
@@ -156,11 +157,11 @@ const handleClose = (done: () => void) => {
 }
 
 const handleUpdate = async () => {
-    loading.value = true
     const data = {
         title: formData.title,
         scripts: formData.scripts
     }
+    loading.value = true
     try {
         await updateTestscript(formData.id, data)
         dialogVisible.value = false
