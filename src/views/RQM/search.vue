@@ -51,9 +51,12 @@
             </el-form>
             <div class="flex justify-end">
                 <el-form-item>
+                    <el-button :disabled="!store.roles.includes('admin')" @click="handleAddStep">Add Step</el-button>
+                    <el-button :disabled="!store.roles.includes('admin')" @click="handleReduceStep">Reduce
+                        Step</el-button>
                     <el-button type="primary" @click="handleUpdate"
                         :disabled="!store.roles.includes('admin') || isChange">Update</el-button>
-                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button type="info" @click="dialogVisible = false">Cancel</el-button>
                 </el-form-item>
             </div>
         </el-dialog>
@@ -88,6 +91,7 @@ const data = ref<resourceInterface>();
 const tableData = ref<resource[]>()
 const loading = ref<boolean>()
 const dialogVisible = ref<boolean>(false)
+const search = ref('')
 
 const isHidden = computed(() => tableData.value ? false : true)
 const isChange = computed(() =>
@@ -118,7 +122,6 @@ async function fetchRQM(resourceType: string) {
     }
 }
 
-const search = ref('')
 const filterTableData = computed(() =>
     tableData.value?.filter(
         (data) =>
@@ -171,6 +174,17 @@ const handleUpdate = async () => {
         await fetchRQM('testcase')
     }
     ElMessage.success('Update successfully!')
+}
+
+const handleAddStep = () => {
+    formData.scripts.push({
+        'description': '',
+        'expectedResult': ''
+    })
+}
+
+const handleReduceStep = () => {
+    formData.scripts.pop()
 }
 
 </script>
