@@ -69,7 +69,7 @@
             <h3 class="text-gray-600 font-lg text-semibold leading-6">Bosch (China) Automotive Innovation&Software
               Engineering Center</h3>
             <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-full w-32" alt="Avatar" /> -->
-            <img src="avatar.png" class="rounded-full w-32" alt="Avatar" />
+            <img src="/avatar.png" class="rounded-full w-32" alt="Avatar" />
             <!-- <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
               consectetur adipisicing elit.
               Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p> -->
