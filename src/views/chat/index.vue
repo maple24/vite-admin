@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { getToken } from '@/utils/auth';
 import { useUserStore } from '@/store/user';
 const store = useUserStore()
 const text = ref('')
@@ -26,11 +27,14 @@ const client = new WebSocket(
     + location.host
     + '/api/ws'
     + '/1/'
+    + "?token="
+    + getToken()
 );
 
 client.onopen = () => {
     console.log("connected to the server")
     client.send(JSON.stringify({
+        'purpose': 'chat',
         'message': `(${store.name}): Entered room`
     }))
 }
@@ -47,6 +51,7 @@ function onSubmit() {
     const cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
     const dateTime = cDate + ' ' + cTime;
     client.send(JSON.stringify({
+        'purpose': 'chat',
         'message': `${dateTime} (${store.name}): ${message.value}`
     }))
     message.value = ''
