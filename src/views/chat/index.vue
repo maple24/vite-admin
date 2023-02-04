@@ -26,7 +26,7 @@ const client = new WebSocket(
     'ws://'
     + location.host
     + '/api/ws'
-    + '/1/'
+    + '/chat/'
     + "?token="
     + getToken()
 );

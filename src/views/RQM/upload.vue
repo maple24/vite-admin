@@ -107,6 +107,7 @@ const handleProgress: UploadProps['onProgress'] = (evt: UploadProgressEvent, upl
 
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
+    // overwriten file if exceeded
     uploadRef.value!.clearFiles()
     const file = files[0] as UploadRawFile
     file.uid = genFileId()

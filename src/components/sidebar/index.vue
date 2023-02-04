@@ -6,12 +6,11 @@
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/RQM/search"><font-awesome-icon icon="fa-solid fa-magnifying-glass"
-            class="text-5xl text-blue-500" />
+        <RouterLink to="/agent"><font-awesome-icon icon="fa-solid fa-computer" class="text-5xl text-red-700" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/RQM/upload"><font-awesome-icon icon="fa-solid fa-download" class="text-5xl text-red-700" />
+        <RouterLink to="/RQM"><font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-5xl text-blue-500" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">
@@ -24,13 +23,14 @@
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/layout/page4"><font-awesome-icon icon="fa-solid fa-house" class="text-5xl text-yellow-400" />
+        <RouterLink to="/layout/calendar"><font-awesome-icon icon="fa-solid fa-house"
+            class="text-5xl text-yellow-400" />
         </RouterLink>
       </li>
-      <li class="siderbar-icon">
+      <!-- <li class="siderbar-icon">
         <RouterLink to="/js30"><font-awesome-icon icon="fa-solid fa-book-open" class="text-5xl" />
         </RouterLink>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

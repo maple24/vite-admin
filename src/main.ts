@@ -32,7 +32,9 @@ import {
   faMagnifyingGlass,
   faUsers,
   faCheck,
-  faBookOpen
+  faBookOpen,
+  faServer,
+  faComputer
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faTwitter, faGithub, faRocketchat } from '@fortawesome/free-brands-svg-icons';
@@ -55,7 +57,9 @@ library.add(
   faMagnifyingGlass,
   faUsers,
   faCheck,
-  faBookOpen
+  faBookOpen,
+  faServer,
+  faComputer
 );
 
 /* import element-plus */

@@ -57,6 +57,14 @@ export const extraRoutes: RouteRecordRaw[] = [
                 path: 'draft',
                 component: () => import('@/views/gallery/draft.vue'),
             },
+            {
+                name: 'calendar',
+                path: 'calendar',
+                component: () => import('@/views/gallery/calendar.vue'),
+                meta: {
+                    title: 'home',
+                },
+            },
         ],
     },
     {

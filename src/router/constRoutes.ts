@@ -14,6 +14,9 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('@/views/layout/index.vue'),
     redirect: '/dashboard',
+    meta: {
+      title: 'dashboard',
+    },
     children: [
       {
         path: 'dashboard',
@@ -25,17 +28,32 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/RQM',
     component: () => import('@/views/layout/index.vue'),
-    redirect: '/RQM/search',
+    redirect: '/RQM/index',
     children: [
+      {
+        path: 'index',
+        // name can not use twice
+        name: 'RQM',
+        component: () => import('@/views/RQM/index.vue'),
+        meta: {
+          title: 'RQM',
+        },
+      },
       {
         path: 'search',
         name: 'search',
         component: () => import('@/views/RQM/search.vue'),
+        meta: {
+          title: 'RQM-Search',
+        },
       },
       {
         path: 'upload',
         name: 'upload',
         component: () => import('@/views/RQM/upload.vue'),
+        meta: {
+          title: 'RQM-create',
+        },
       },
     ],
   },
@@ -43,10 +61,13 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: '/chat',
     component: () => import('@/views/layout/index.vue'),
     redirect: '/chat/index',
+    meta: {
+      title: 'chat',
+    },
     children: [
       {
         path: 'index',
-        name: 'index',
+        name: 'chat',
         component: () => import('@/views/chat/index.vue'),
       },
     ],

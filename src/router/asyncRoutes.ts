@@ -37,6 +37,22 @@ export const asyncRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: '/agent',
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/agent/index',
+    meta: {
+      roles: ['visitor'],
+      title: 'agent',
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'agent',
+        component: () => import('@/views/agent/index.vue'),
+      },
+    ],
+  },
+  {
     path: '/:catchAll(.*)',
     name: 'NotFound',
     redirect: '/404',
