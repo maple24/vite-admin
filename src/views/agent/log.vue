@@ -24,17 +24,19 @@ const client = new WebSocket(
 watch(
     () => store.hostname,
     () => {
+        text.value = 'Welcome to agent log channel!'
         if (store.hostname === '') {
-            text.value += '\n' + 'No host seleced!'
+            text.value += '\n' + 'No host selected!'
         } else {
             text.value += '\n' + `${store.hostname} connected to the channel!`
         }
     }
 );
 
+
 client.onopen = () => {
     if (store.hostname === '') {
-        text.value += '\n' + 'No host seleced!'
+        text.value += '\n' + 'No host selected!'
     } else {
         text.value += '\n' + `${store.hostname} connected to the channel!`
     }
