@@ -6,7 +6,7 @@
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/agent"><font-awesome-icon icon="fa-solid fa-computer" class="text-5xl text-red-700" />
+        <RouterLink to="/task"><font-awesome-icon icon="fa-solid fa-computer" class="text-5xl text-red-700" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">

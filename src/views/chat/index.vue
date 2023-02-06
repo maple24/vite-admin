@@ -1,15 +1,25 @@
 <template>
     <div>
         <div>
-            <textarea ref="textArea" name="" id="ws" cols="100" rows="10" class="border overflow-scroll"
+            <textarea ref="textArea" name="" id="ws" rows="20" class="border overflow-scroll w-full"
                 readonly>{{ text }}</textarea>
         </div>
-        <div>
-            <input id="chat-message-input" type="text" size="100"
-                class="border focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                v-model=message @keyup.enter="onSubmit" autofocus>
+        <div class="border">
+            <div class="p-2 bg-gray-200">
+                <input id="chat-message-input" type="text" size="100" placeholder="Type a message..."
+                    class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                    v-model=message @keyup.enter="onSubmit" autofocus>
+            </div>
+            <button class="bg-blue-500 text-white py-2 px-4 rounded-full float-right mt-2 hover:text-gray-400"
+                @click="onSubmit">submit</button>
         </div>
-        <button class="border rounded-md" @click="onSubmit">submit</button>
+        <!-- <div class="p-4 bg-gray-200">
+                    <input type="text"
+                        class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                        placeholder="Type a message..." v-model="message">
+                    <button class="bg-blue-500 text-white py-2 px-4 rounded-full float-right mt-2"
+                        @click="addMessage">Send</button>
+                </div> -->
     </div>
 </template>
 
@@ -17,6 +27,7 @@
 import { ref } from 'vue'
 import { getToken } from '@/utils/auth';
 import { useUserStore } from '@/store/user';
+// import { WS_log as client } from '@/api/ws'
 const store = useUserStore()
 const text = ref('')
 const message = ref()

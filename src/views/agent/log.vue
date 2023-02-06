@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useAgentStore } from '@/store/agent';
+// import { WS_log as client} from '@/api/ws'
 const store = useAgentStore()
 
 const text = ref<string>('Welcome to agent log channel!')
@@ -25,21 +26,19 @@ watch(
     () => store.hostname,
     () => {
         text.value = 'Welcome to agent log channel!'
-        if (store.hostname === '') {
-            text.value += '\n' + 'No host selected!'
-        } else {
-            text.value += '\n' + `${store.hostname} connected to the channel!`
-        }
+        text.value += store.hostname === '' ? '\n' + 'No host selected!' : '\n' + `${store.hostname} connected to the channel!`
     }
 );
 
 
 client.onopen = () => {
-    if (store.hostname === '') {
-        text.value += '\n' + 'No host selected!'
-    } else {
-        text.value += '\n' + `${store.hostname} connected to the channel!`
-    }
+    console.log("Connected to log channel.");
+    text.value += store.hostname === '' ? '\n' + 'No host selected!' : '\n' + `${store.hostname} connected to the channel!`
+}
+
+client.onclose = () => {
+    text.value += '\n' + "Disconnected!"
+    console.log("Disconnected.");
 }
 
 client.onmessage = (event) => {

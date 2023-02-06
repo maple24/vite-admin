@@ -53,6 +53,22 @@ export const asyncRoutes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/task',
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/task/index',
+    meta: {
+      roles: ['visitor'],
+      title: 'task',
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'task',
+        component: () => import('@/views/task/index.vue'),
+      },
+    ],
+  },
+  {
     path: '/:catchAll(.*)',
     name: 'NotFound',
     redirect: '/404',
