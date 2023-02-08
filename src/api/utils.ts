@@ -9,9 +9,6 @@ export function uploadFile(data: UploadUserFile) {
   });
 }
 
-export function downloadFile(filename: string) {
-  return request({
-    url: `/api/v1/app/file/${filename}`,
-    method: 'get',
-  });
+export function fileURL(filename: string) {
+  return `/api/v1/app/file/${filename}`
 }

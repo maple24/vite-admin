@@ -54,8 +54,8 @@
 import { ref, reactive } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { getToken } from '@/utils/auth';
-import { downloadFile } from '@/api/utils'
-import { download } from '@/utils/file'
+import { fileURL } from '@/api/utils'
+import { downloadbyURL } from '@/utils/common'
 import type { UploadProps, UploadUserFile, UploadInstance, UploadProgressEvent, UploadFile, UploadFiles, UploadRawFile } from 'element-plus'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { genFileId } from 'element-plus'
@@ -155,21 +155,26 @@ const handleCreate = async () => {
     resourceData.value = undefined
 }
 
-const handleDownload = async (filename: string) => {
-    const response = await downloadFile(filename)
-    const data = JSON.stringify(response.data, null, 4);
-
-    // Create a Blob object
-    const blob = new Blob([data], { type: 'application/json' });
-    // Create an object URL
-    const url = URL.createObjectURL(blob);
-    // Download file
-    download(url, filename);
-    // Release the object URL
-    URL.revokeObjectURL(url);
-
-    ElMessage.success(`Download ${filename} successfully!`)
+function handleDownload(filename: string) {
+    const url = fileURL(filename)
+    downloadbyURL(url, filename)
 }
+
+// const handleDownload = async (filename: string) => {
+//     const response = await downloadFile(filename)
+//     const data = JSON.stringify(response.data, null, 4);
+
+//     // Create a Blob object
+//     const blob = new Blob([data], { type: 'application/json' });
+//     // Create an object URL
+//     const url = URL.createObjectURL(blob);
+//     // Download file
+//     download(url, filename);
+//     // Release the object URL
+//     URL.revokeObjectURL(url);
+
+//     ElMessage.success(`Download ${filename} successfully!`)
+// }
 
 </script>
 

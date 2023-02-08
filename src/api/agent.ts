@@ -6,3 +6,15 @@ export function fetchAgentList() {
         method: 'get',
     });
 }
+
+
+// export function downloadRDP(ip: string) {
+//     return request({
+//         url: `/api/v1/agent/executor/${ip}/rdp`,
+//         method: 'get',
+//     });
+// }
+
+export const RDPURL = (ip: string | number) => {
+    return `/api/v1/agent/executor/${ip}/rdp`
+}

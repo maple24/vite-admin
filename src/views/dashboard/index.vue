@@ -27,10 +27,17 @@
       <el-row :gutter="50">
         <el-col :span="6" v-for="item in agents" :key="item.id">
           <el-card shadow="hover" class="my-2 p-2">
-            <font-awesome-icon icon="fa-solid fa-server" class="mr-2" />
-            <button class="underline hover:text-blue-500" @click="handleClick(item.name)">
-              <span>{{ item.name }}</span>
-            </button>
+            <div class="flex justify-between">
+              <div>
+                <font-awesome-icon icon="fa-solid fa-server" class="mr-2" />
+                <button class="underline hover:text-blue-500" @click="handleClick(item.name)">
+                  <span>{{ item.name }}</span>
+                </button>
+              </div>
+              <button @click="hanldeDownload(item.id)">
+                <font-awesome-icon icon="fa-solid fa-desktop" :class="{ 'text-blue-500': item.online === true }" />
+              </button>
+            </div>
             <el-divider class="border-4"
               :class="{ 'border-green-500': item.online === true, 'border-red-700': item.online === false }"></el-divider>
             <ul class="list-disc mx-4">
@@ -52,6 +59,8 @@ import { onMounted, computed } from 'vue';
 import { Agents } from '@/types/agents'
 import { useRouter } from 'vue-router';
 import { useAgentStore } from '@/store/agent'
+import { RDPURL } from '@/api/agent';
+import { downloadbyURL } from '@/utils/common';
 const store = useAgentStore()
 const router = useRouter()
 const loading = ref<boolean>(true)
@@ -86,6 +95,11 @@ async function getAgentList() {
 function handleClick(hostname: string) {
   router.push({ name: 'agent' })
   store.hostname = hostname
+}
+
+function hanldeDownload(ip: string | number) {
+  const url = RDPURL(ip)
+  downloadbyURL(url, `${ip}.rdp`)
 }
 </script>
 
