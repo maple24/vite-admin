@@ -24,7 +24,7 @@
       </el-card>
     </div>
     <div class="m-5" v-loading="loading">
-      <el-row :gutter="50">
+      <el-row :gutter="40">
         <el-col :span="6" v-for="item in agents" :key="item.id">
           <el-card shadow="hover" class="my-2 p-2">
             <div class="flex justify-between">
