@@ -1,7 +1,7 @@
 <template>
     <div>
         <textarea ref="textArea" rows="30"
-            class="w-full overflow-scroll border border-gray-800 rounded-lg p-2 text-white bg-gray-900 font-mono text-sm resize-none focus:outline-none">
+            class="w-full overflow-y-auto border border-gray-800 rounded-lg p-2 text-white bg-gray-900 font-mono text-sm resize-none focus:outline-none">
             {{ text }}
         </textarea>
     </div>

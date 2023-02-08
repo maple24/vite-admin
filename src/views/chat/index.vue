@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div>
-            <textarea ref="textArea" name="" id="ws" rows="20" class="border overflow-scroll w-full"
-                readonly>{{ text }}</textarea>
+        <div class="m-5 round">
+            <textarea ref="textArea" name="" id="ws" rows="20"
+                class="border-2 overflow-y-auto w-full rounded-lg border-black" readonly>{{ text }}</textarea>
         </div>
-        <div class="border">
+        <div class="border m-5 rounded-lg">
             <div class="p-2 bg-gray-200">
                 <input id="chat-message-input" type="text" size="100" placeholder="Type a message..."
                     class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"

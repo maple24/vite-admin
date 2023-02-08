@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <el-tabs v-model="activeName" type="border-card" stretch @tab-click="handleClick">
+    <div class="m-5">
+        <el-tabs v-model="activeName" type="" stretch @tab-click="handleClick">
             <el-tab-pane label="Search" name="search">
                 <Search />
             </el-tab-pane>

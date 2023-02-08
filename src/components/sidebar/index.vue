@@ -19,12 +19,12 @@
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/permission"><font-awesome-icon icon="fa-solid fa-user" class="text-5xl text-red-400" />
+        <RouterLink to="/layout/calendar"><font-awesome-icon icon="fa-solid fa-house"
+            class="text-5xl text-yellow-400" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/layout/calendar"><font-awesome-icon icon="fa-solid fa-house"
-            class="text-5xl text-yellow-400" />
+        <RouterLink to="/permission"><font-awesome-icon icon="fa-solid fa-user" class="text-5xl text-red-400" />
         </RouterLink>
       </li>
       <!-- <li class="siderbar-icon">

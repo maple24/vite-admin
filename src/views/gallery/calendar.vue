@@ -1,5 +1,7 @@
 <template>
-    <el-calendar v-model="value" />
+    <div class="m-5 border rounded-lg">
+        <el-calendar v-model="value" />
+    </div>
 </template>
 
 <script lang="ts" setup>
