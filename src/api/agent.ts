@@ -18,3 +18,10 @@ export function fetchAgentList() {
 export const RDPURL = (ip: string | number) => {
     return `/api/v1/agent/executor/${ip}/rdp`
 }
+
+export function fetchTaskList() {
+    return request({
+        url: '/api/v1/agent/task' as string,
+        method: 'get',
+    });
+}

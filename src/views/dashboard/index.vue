@@ -34,16 +34,28 @@
                   <span>{{ item.name }}</span>
                 </button>
               </div>
-              <button @click="hanldeDownload(item.id)">
-                <font-awesome-icon icon="fa-solid fa-desktop" :class="{ 'text-blue-500': item.online === true }" />
-              </button>
+              <el-tooltip content="Agent Center" placement="top">
+                <button @click="hanldeDownload(item.id)">
+                  <font-awesome-icon icon="fa-solid fa-desktop" :class="{ 'text-blue-500': item.online === true }" />
+                </button>
+              </el-tooltip>
             </div>
             <el-divider class="border-4"
               :class="{ 'border-green-500': item.online === true, 'border-red-700': item.online === false }"></el-divider>
             <ul class="list-disc mx-4">
-              <li>IP: {{ item.ip }}</li>
-              <li>Comments: {{ item.comments }}</li>
-              <li>Location: {{ item.location }}</li>
+              <li>
+                IP:
+                <el-tooltip content="Remote Desktop" placement="top">
+                  <button @click="hanldeDownload(item.id)">
+                    <span class="font-sans font-bold hover:text-blue-500 underline">{{
+                      item.ip
+                    }}</span>
+                  </button>
+                </el-tooltip>
+              </li>
+              <li>Location: <span class="font-sans font-bold">{{ item.location }}</span></li>
+              <li>Last seen: <span class="font-sans font-bold">{{ item.last_online_time }}</span></li>
+              <li>Comments: <span class="font-sans font-bold">{{ item.comments }}</span></li>
             </ul>
           </el-card>
         </el-col>
@@ -56,7 +68,7 @@
 import { ref } from 'vue'
 import { fetchAgentList } from '@/api/agent'
 import { onMounted, computed } from 'vue';
-import { Agents } from '@/types/agents'
+import { Agent } from '@/types/agents'
 import { useRouter } from 'vue-router';
 import { useAgentStore } from '@/store/agent'
 import { RDPURL } from '@/api/agent';
@@ -64,7 +76,7 @@ import { downloadbyURL } from '@/utils/common';
 const store = useAgentStore()
 const router = useRouter()
 const loading = ref<boolean>(true)
-const agents = ref<Agents[]>()
+const agents = ref<Agent[]>()
 const total = computed(() => agents.value ? agents.value.length : 0)
 const onlines = computed(() => {
   let count = 0
