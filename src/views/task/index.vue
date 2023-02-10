@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import Table from './taskTable.vue'
-
 </script>
 
 <style scoped>

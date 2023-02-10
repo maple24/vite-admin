@@ -19,9 +19,10 @@ export const RDPURL = (ip: string | number) => {
     return `/api/v1/agent/executor/${ip}/rdp`
 }
 
-export function fetchTaskList() {
+export function fetchTaskList(query: {}) {
     return request({
         url: '/api/v1/agent/task' as string,
         method: 'get',
+        params: query
     });
 }

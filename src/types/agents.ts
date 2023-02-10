@@ -22,7 +22,7 @@ interface Task {
     comments: string | null,
     executor: number | null,
     created_by: number | null,
-    tags: string[],
+    tags?: string[],
     created_by_account: string | null,
     executor_ip: string | null,
     executor_online: boolean,

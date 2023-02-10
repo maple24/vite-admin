@@ -19,11 +19,12 @@
             </div>
             <div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <span>+</span>
                     Add task
                 </button>
             </div>
         </div>
-        <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+        <table class="w-full border-collapse bg-white text-left text-sm text-gray-500" v-loading="loading">
             <!-- table head -->
             <thead class="bg-gray-50">
                 <tr>
@@ -53,7 +54,7 @@
                         </p>
                     </th>
                     <th scope="col" class="px-6 py-4 font-bold text-gray-900">Duration</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Tags</th>
+                    <!-- <th scope="col" class="px-6 py-4 font-bold text-gray-900">Tags</th> -->
                     <th scope="col" class="px-6 py-4 font-bold text-gray-900">Comments</th>
                     <th scope="col" class="px-6 py-4 font-bold text-gray-900">Created by</th>
                     <th scope="col" class="px-6 py-4 font-bold text-gray-900">Status</th>
@@ -63,7 +64,7 @@
             </thead>
             <!-- table body -->
             <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-                <tr class="hover:bg-gray-50" v-for="item in filteredTasks" :key="item.id">
+                <tr class="hover:bg-gray-50" v-for="item in filteredTasks" :key="filteredTasks?.indexOf(item)">
                     <!-- name -->
                     <td class="px-6 py-4 font-normal text-gray-900">
                         {{ item.name }}
@@ -75,7 +76,7 @@
                                 {{ item.executor_ip }}
                             </p>
                             <span class="absolute left-0 top-0 h-2 w-2 rounded-full ring ring-white"
-                                :class="{ 'bg-green-400': item.executor_online === true, 'animate-ping': item.executor_online === true, 'bg-gray-400': item.executor_online === false }"></span>
+                                :class="{ 'bg-green-400': item.executor_online === true, 'bg-gray-400': item.executor_online === false }"></span>
                         </div>
                     </td>
                     <!-- start time -->
@@ -83,15 +84,15 @@
                     <!-- duration -->
                     <td class="px-6 py-4">{{ item.duration }}</td>
                     <!-- tags -->
-                    <td class="px-6 py-4">
+                    <!-- <td class="px-6 py-4">
                         <div class="flex gap-2">
                             <span
-                                class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600"
-                                v-for="tag in item.tags" :key="item.tags.indexOf(tag)">
+                                class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-indigo-600"
+                                v-for="tag in item.tags" :key="item.tags?.indexOf(tag)">
                                 {{ tag }}
                             </span>
                         </div>
-                    </td>
+                    </td> -->
                     <!-- comments -->
                     <td class="px-6 py-4">{{ item.comments }}</td>
                     <!-- created by -->
@@ -139,117 +140,45 @@
                         </div>
                     </td>
                 </tr>
-                <!-- one item -->
             </tbody>
         </table>
+        <!-- pagination -->
+        <div class="flex justify-end m-2">
+            <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
+                :page-sizes="[5, 10, 15, 20, 50, 100]" background layout="sizes, prev, pager, next" :total="total" />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { Task } from '@/types/agents'
 import { statusColor } from '@/utils/color'
+// import { tasks } from './mock' // mock data for development
+import { fetchTaskList } from '@/api/agent'
 
 const search = ref<string>('')
-let currentSort = ref<keyof Task>('name')
-let currentSortDir = ref<string>('asc')
-const tasks = ref<Task[]>([
-    {
-        id: 1,
-        duration: "1066.00 m",
-        name: "test1",
-        creation_time: "2023-02-08T08:17:08.762333Z",
-        status: "Error",
-        start_time: "2023-02-08T16:59:00Z",
-        end_time: null,
-        scheduled_time: null,
-        executor: 3,
-        executor_ip: "10.161.229.42",
-        executor_online: true,
-        created_by: 1,
-        created_by_account: "maple",
-        tags: ["daily", "scheduled"],
-        comments: "qvta"
-    },
-    {
-        id: 1,
-        duration: "1066.00 m",
-        name: "random",
-        creation_time: "2023-02-08T08:17:08.762333Z",
-        status: "Running",
-        start_time: "2023-02-07T16:59:00Z",
-        end_time: null,
-        scheduled_time: null,
-        executor: 3,
-        executor_ip: "10.161.229.42",
-        executor_online: false,
-        created_by: 1,
-        created_by_account: "maple",
-        tags: ["weekly", "stability"],
-        comments: "Do not terminate!"
-    },
-    {
-        id: 1,
-        duration: "1066.00 m",
-        name: "test1",
-        creation_time: "2023-02-08T08:17:08.762333Z",
-        status: "Completed",
-        start_time: "2023-02-09T16:59:00Z",
-        end_time: null,
-        scheduled_time: null,
-        executor: 3,
-        executor_ip: "10.161.229.42",
-        executor_online: false,
-        created_by: 1,
-        created_by_account: "maple",
-        tags: ["today", "name"],
-        comments: "qvta"
-    },
-    {
-        id: 1,
-        duration: "1066.00 m",
-        name: "test1",
-        creation_time: "2023-02-08T08:17:08.762333Z",
-        status: "Canceled",
-        start_time: "2023-02-06T16:59:00Z",
-        end_time: null,
-        scheduled_time: null,
-        executor: 3,
-        executor_ip: "10.161.229.42",
-        executor_online: false,
-        created_by: 1,
-        created_by_account: "maple",
-        tags: ["today", "name"],
-        comments: "qvta"
+const loading = ref<boolean>(false)
+const currentSort = ref<keyof Task>('name')
+const currentSortDir = ref<string>('asc')
+const pageSize = ref<number>(5)
+const currentPage = ref<number>(1)
+const total = ref<number>(0)
+const tasks = ref<Task[]>()
+
+onMounted(async () => await startSetInterval())
+
+
+const taskQuery = computed(() => {
+    return {
+        page: currentPage.value,
+        limit: pageSize.value,
+        name: undefined,
+        ip: undefined,
+        location: undefined,
+        online: undefined,
+        ordering: 'id'
     }
-])
-
-const filteredTasks = computed(() => {
-    return sortedTasks.value.filter(task => {
-        const name = task.name.toString().toLowerCase();
-        const bench = task.executor_ip?.toLowerCase();
-        const created_by = task.created_by_account?.toLowerCase()
-        const status = task.status.toLowerCase()
-        const searchTerm = search.value.toLowerCase();
-
-        return name.includes(searchTerm) ||
-            status.includes(searchTerm) ||
-            bench?.includes(searchTerm) ||
-            created_by?.includes(searchTerm);
-    })
-})
-
-const sortedTasks = computed(() => {
-    return tasks?.value.sort((a: Task, b: Task) => {
-        let modifier = 1;
-        if (currentSortDir.value === 'desc') modifier = -1;
-        // Type narrowing does not work on a property of an object without assigning the property to an intermediate variable.
-        // assigning to a constant to workaround
-        const value1 = a[currentSort.value]
-        const value2 = b[currentSort.value]
-        if (value1 && value2) return value1 > value2 ? 1 * modifier : -1 * modifier
-        return 0;
-    });
 })
 
 function sort(sortKey: keyof Task) {
@@ -259,6 +188,60 @@ function sort(sortKey: keyof Task) {
     currentSort.value = sortKey;
 }
 
+const sortedTasks = computed(() => {
+    return tasks?.value?.sort((a: Task, b: Task) => {
+        let modifier = 1;
+        if (currentSortDir.value === 'desc') modifier = -1;
+        // Type narrowing does not work on a property of an object without assigning the property to an intermediate variable.
+        // assigning to a constant to workaround
+        const value1 = a[currentSort.value]
+        const value2 = b[currentSort.value]
+        if (value1 && value2) return value1 > value2 ? 1 * modifier : -1 * modifier
+        return 0;
+    })
+    // for client-side pagination
+    // .filter((row, index) => {
+    //     let start = (currentPage.value - 1) * pageSize.value;
+    //     let end = currentPage.value * pageSize.value;
+    //     if (index >= start && index < end) return true;
+    // });
+})
+
+const filteredTasks = computed(() => {
+    return sortedTasks?.value?.filter(task => {
+        const name = task.name.toString().toLowerCase();
+        const bench = task.executor_ip?.toLowerCase();
+        const created_by = task.created_by_account?.toLowerCase()
+        const status = task.status.toLowerCase()
+        const comments = task.comments?.toLowerCase()
+        const searchTerm = search.value.toLowerCase();
+
+        return name.includes(searchTerm) ||
+            status.includes(searchTerm) ||
+            bench?.includes(searchTerm) ||
+            created_by?.includes(searchTerm) ||
+            comments?.includes(searchTerm);
+    })
+})
+
+async function getTasks() {
+    try {
+        const response = await fetchTaskList(taskQuery.value)
+        tasks.value = response.data.results
+        total.value = response.data.count
+    } catch {
+        throw 'Fail to get task list!'
+    }
+}
+
+async function startSetInterval() {
+    await getTasks()
+    setInterval(async () => {
+        await getTasks()
+    }, 2000)
+}
+
+watch([() => currentPage.value, () => pageSize.value], async () => await startSetInterval())
 
 </script>
 

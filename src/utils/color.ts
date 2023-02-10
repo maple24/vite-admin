@@ -6,7 +6,7 @@ export const statusColor = (status: string) => {
         case "Idling":
             fontColor = 'text-gray-500'
             bgColor = 'bg-gray-500'
-            bbgColor = 'bg-gray-60'
+            bbgColor = 'bg-gray-100'
             break;
         case "Starting":
             fontColor = 'text-yellow-500'

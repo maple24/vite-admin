@@ -87,21 +87,23 @@ const onlines = computed(() => {
 })
 const offlines = computed(() => total.value ? total.value - onlines.value : 0)
 
-onMounted(async () => {
-  await getAgentList()
-})
+onMounted(async () => await startSetInterval())
 
 async function getAgentList() {
-  setInterval(async () => {
-    try {
-      const response = await fetchAgentList()
-      agents.value = response.data
-    } catch {
-      throw "Fail to get agent list!"
-    } finally {
-      loading.value = false
-    }
-  }, 2000)
+  try {
+    const response = await fetchAgentList()
+    agents.value = response.data
+  } catch {
+    throw "Fail to get agent list!"
+  } finally {
+    loading.value = false
+  }
+}
+
+async function startSetInterval() {
+  // set interval without delay for the first time
+  await getAgentList()
+  setInterval(async () => await getAgentList(), 2000)
 }
 
 function handleClick(hostname: string) {
