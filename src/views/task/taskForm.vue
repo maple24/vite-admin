@@ -1,0 +1,191 @@
+<template>
+    <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm" size="default"
+        status-icon>
+        <el-form-item label="Name" prop="name">
+            <el-input v-model="ruleForm.name" />
+        </el-form-item>
+
+        <el-form-item label="Agent" prop="executor">
+            <el-select v-model="ruleForm.executor" placeholder="Agent">
+                <el-option v-for="item in agents" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+        </el-form-item>
+
+
+        <el-form-item label="Is scheduled?" prop="is_scheduled">
+            <el-switch v-model="ruleForm.is_scheduled" />
+        </el-form-item>
+
+        <!-- <el-form-item label="Plan" required>
+            <el-col :span="11">
+                <el-form-item prop="date1">
+                    <el-date-picker v-model="ruleForm.date1" type="date" label="Pick a date" placeholder="Pick a date"
+                        style="width: 100%" />
+                </el-form-item>
+            </el-col> -->
+        <!-- <el-col class="text-center" :span="2">
+                <span class="text-gray-500">-</span>
+            </el-col>
+            <el-col :span="11">
+                <el-form-item prop="date2">
+                    <el-time-picker v-model="ruleForm.date2" label="Pick a time" placeholder="Pick a time"
+                        style="width: 100%" />
+                </el-form-item>
+            </el-col> -->
+        <!-- </el-form-item> -->
+
+        <el-form-item label="Comments" prop="comments">
+            <el-input v-model="ruleForm.comments" type="textarea" />
+        </el-form-item>
+
+        <div :class="{ hidden: props.task !== undefined }">
+            <el-form-item>
+                <el-button type="primary" @click="submitForm(ruleFormRef)">
+                    Create
+                </el-button>
+                <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+            </el-form-item>
+        </div>
+        <div :class="{ hidden: props.task === undefined }">
+            <el-form-item>
+                <el-button type="primary" @click="submitForm(ruleFormRef, props.task!.id)">
+                    Update
+                </el-button>
+                <el-button @click="resetForm(ruleFormRef)">
+                    Undo
+                </el-button>
+            </el-form-item>
+        </div>
+    </el-form>
+</template>
+
+<script lang="ts" setup>
+import { reactive, ref, onMounted, computed } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
+import { createTask, fetchAgentList, updateTask } from '@/api/agent';
+import { Agent, Task } from '@/types/agents'
+
+const agents = ref<Agent[]>()
+const ruleFormRef = ref<FormInstance>()
+const props = defineProps<{
+    task: Task | undefined
+}>()
+
+// computed value cannot be v-model, since it is passive value and not gonna be changed
+// current solution: destroy dialog when closing, otherwise the props has to been watched to make changes
+const ruleForm = reactive({
+    id: props.task?.id as number,
+    name: props.task?.name as string,
+    executor: props.task?.executor as number | undefined,
+    date1: '',
+    date2: '',
+    is_scheduled: false,
+    tags: [],
+    comments: '',
+})
+
+// const ruleForm = computed(() => {
+//     return {
+//         id: props.task?.id as number,
+//         name: props.task?.name as string,
+//         executor: props.task?.executor as number | undefined,
+//         date1: '',
+//         date2: '',
+//         is_scheduled: false,
+//         tags: [],
+//         comments: '',
+//     }
+// })
+
+onMounted(async () => await getAgentList())
+
+async function getAgentList() {
+    try {
+        const response = await fetchAgentList()
+        agents.value = response.data
+    } catch {
+        throw "Fail to get agent list!"
+    }
+}
+
+const rules = reactive<FormRules>({
+    name: [
+        { required: true, message: 'Please input task name', trigger: 'blur' },
+        { min: 1, max: 10, message: 'Length should be 1 to 10', trigger: 'blur' },
+    ],
+    executor: [
+        {
+            required: true,
+            message: 'Please select agent',
+            trigger: 'change',
+        },
+    ],
+    date1: [
+        {
+            type: 'date',
+            required: true,
+            message: 'Please pick a date',
+            trigger: 'change',
+        },
+    ],
+    date2: [
+        {
+            type: 'date',
+            required: true,
+            message: 'Please pick a time',
+            trigger: 'change',
+        },
+    ],
+    tags: [
+        {
+            type: 'array',
+            required: true,
+            message: 'Please select at least one activity type',
+            trigger: 'change',
+        },
+    ],
+    comments: [
+        { required: false, message: 'Please input comments', trigger: 'blur' },
+    ],
+})
+
+const submitForm = async (formEl: FormInstance | undefined, id: string | number | undefined = undefined) => {
+    if (!formEl) return
+    await formEl.validate(async (valid, fields) => {
+        if (valid) {
+            ElMessageBox.confirm('Are you sure to create/update this task?')
+                .then(async () => {
+                    const data = {
+                        id: ruleForm.id,
+                        name: ruleForm.name,
+                        status: 'Idling', // default
+                        executor: ruleForm.executor,
+                        comments: ruleForm.comments
+                    }
+                    id === undefined ? await createTask(data) : await updateTask(id, data)
+                    ElMessage.success('Create/Update task successfully!')
+                    window.location.reload()
+                    // TD: emit to close dialog
+                })
+                .catch(() => {
+                    // catch error
+                })
+            console.log('submit!')
+        } else {
+            console.log('error submit!', fields)
+        }
+    })
+}
+
+const resetForm = (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    formEl.resetFields()
+}
+
+const options = Array.from({ length: 10000 }).map((_, idx) => ({
+    value: `${idx + 1}`,
+    label: `${idx + 1}`,
+}))
+
+</script>
