@@ -1,4 +1,6 @@
 import request from '@/utils/request';
+import { Task } from '@/types/agents'
+
 
 export function fetchAgentList() {
     return request({
@@ -6,14 +8,6 @@ export function fetchAgentList() {
         method: 'get',
     });
 }
-
-
-// export function downloadRDP(ip: string) {
-//     return request({
-//         url: `/api/v1/agent/executor/${ip}/rdp`,
-//         method: 'get',
-//     });
-// }
 
 export const RDPURL = (ip: string | number) => {
     return `/api/v1/agent/executor/${ip}/rdp`
@@ -24,5 +18,35 @@ export function fetchTaskList(query: {}) {
         url: '/api/v1/agent/task' as string,
         method: 'get',
         params: query
+    });
+}
+
+export function createTask(data: Task) {
+    return request({
+        url: '/api/v1/agent/task/' as string,
+        method: 'post',
+        data
+    });
+}
+
+export function deleteTask(id: number | string) {
+    return request({
+        url: `/api/v1/agent/task/${id}` as string,
+        method: 'delete',
+    });
+}
+
+export function getTask(id: number | string) {
+    return request({
+        url: `/api/v1/agent/task/${id}` as string,
+        method: 'get',
+    });
+}
+
+export function updateTask(id: string | null, data: Task) {
+    return request({
+        url: `/api/v1/agent/task/${id}/` as string,
+        method: 'put',
+        data
     });
 }

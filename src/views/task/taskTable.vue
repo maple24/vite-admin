@@ -18,7 +18,8 @@
                 </div>
             </div>
             <div>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    @click="handleAddtask">
                     <span>+</span>
                     Add task
                 </button>
@@ -76,7 +77,7 @@
                                 {{ item.executor_ip }}
                             </p>
                             <span class="absolute left-0 top-0 h-2 w-2 rounded-full ring ring-white"
-                                :class="{ 'bg-green-400': item.executor_online === true, 'bg-gray-400': item.executor_online === false }"></span>
+                                :class="{ 'bg-green-400': item.executor_online === true, 'bg-gray-400': item.executor_online === false, hidden: item.executor_ip === undefined }"></span>
                         </div>
                     </td>
                     <!-- start time -->
@@ -114,7 +115,7 @@
                     <!-- task management -->
                     <td class="px-6 py-4">
                         <div class="flex justify-end gap-4">
-                            <a x-data="{ tooltip: 'View' }" href="#" class="text-black">
+                            <button x-data="{ tooltip: 'View' }" class="text-black" @click="handleView">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="h-6 w-6" x-tooltip="tooltip">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -122,21 +123,21 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
-                            </a>
-                            <a x-data="{ tooltip: 'Edite' }" href="#" class="text-blue-500">
+                            </button>
+                            <button x-data="{ tooltip: 'Edite' }" class="text-blue-500" @click="handleEdit(item)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="h-6 w-6" x-tooltip="tooltip">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                                 </svg>
-                            </a>
-                            <a x-data="{ tooltip: 'Delete' }" href="#" class="text-red-500">
+                            </button>
+                            <button x-data="{ tooltip: 'Delete' }" class="text-red-500" @click="handleDelete(item.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="h-6 w-6" x-tooltip="tooltip">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
-                            </a>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -147,16 +148,31 @@
             <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
                 :page-sizes="[5, 10, 15, 20, 50, 100]" background layout="sizes, prev, pager, next" :total="total" />
         </div>
+
+        <!-- dialog -->
+        <el-dialog v-model="addTaskDialogVisible" title="Add a task" width="30%" align-center draggable>
+            <add-task :agents="agents"></add-task>
+        </el-dialog>
+
+        <el-dialog v-model="editTaskDialogVisible" title="Edit task" width="30%" align-center draggable>
+            <edit-task :task="task"></edit-task>
+        </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import { Task } from '@/types/agents'
 import { statusColor } from '@/utils/color'
+import addTask from './addTask.vue'
+import editTask from './editTask.vue'
+import { fetchTaskList, deleteTask, fetchAgentList } from '@/api/agent'
+import { Agent } from '@/types/agents'
 // import { tasks } from './mock' // mock data for development
-import { fetchTaskList } from '@/api/agent'
 
+const addTaskDialogVisible = ref<boolean>(false)
+const editTaskDialogVisible = ref<boolean>(false)
 const search = ref<string>('')
 const loading = ref<boolean>(false)
 const currentSort = ref<keyof Task>('name')
@@ -165,9 +181,12 @@ const pageSize = ref<number>(5)
 const currentPage = ref<number>(1)
 const total = ref<number>(0)
 const tasks = ref<Task[]>()
+const agents = ref<Agent[]>()
+const task = ref<Task>()
 
 onMounted(async () => await startSetInterval())
 
+watch([() => currentPage.value, () => pageSize.value], async () => await getTasks())
 
 const taskQuery = computed(() => {
     return {
@@ -234,6 +253,15 @@ async function getTasks() {
     }
 }
 
+async function getAgentList() {
+    try {
+        const response = await fetchAgentList()
+        agents.value = response.data
+    } catch {
+        throw "Fail to get agent list!"
+    }
+}
+
 async function startSetInterval() {
     await getTasks()
     setInterval(async () => {
@@ -241,7 +269,31 @@ async function startSetInterval() {
     }, 2000)
 }
 
-watch([() => currentPage.value, () => pageSize.value], async () => await startSetInterval())
+async function handleDelete(id: string | number) {
+    ElMessageBox.confirm('Are you sure to delete this task?')
+        .then(async () => {
+            await deleteTask(id)
+            ElMessage.success('Delete task successfully!')
+            await getTasks()
+        })
+        .catch(() => {
+            // catch error
+        })
+}
+
+async function handleAddtask() {
+    await getAgentList()
+    addTaskDialogVisible.value = true
+}
+
+async function handleEdit(taskItem: Task) {
+    task.value = taskItem
+    await getAgentList()
+    editTaskDialogVisible.value = true
+}
+
+async function handleView() {
+}
 
 </script>
 
