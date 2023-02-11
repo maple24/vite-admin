@@ -5,6 +5,7 @@
                 <Log />
             </el-tab-pane>
             <el-tab-pane label="Terminal" name="terminal">
+                <!-- why not use store directly in subcomponent, why props if using global state??? -->
                 <Terminal :agent="store.hostname" />
             </el-tab-pane>
         </el-tabs>

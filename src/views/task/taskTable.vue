@@ -150,13 +150,10 @@
         </div>
 
         <!-- dialog -->
-        <el-dialog v-model="addTaskDialogVisible" title="Add a task" width="30%" align-center draggable>
-            <add-task :agents="agents"></add-task>
+        <el-dialog v-model="dialogVisible" :title="dialogTitle" width="30%" align-center draggable destroy-on-close>
+            <task-form :task="taskItem"></task-form>
         </el-dialog>
 
-        <el-dialog v-model="editTaskDialogVisible" title="Edit task" width="30%" align-center draggable>
-            <edit-task :task="task"></edit-task>
-        </el-dialog>
     </div>
 </template>
 
@@ -165,14 +162,12 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { Task } from '@/types/agents'
 import { statusColor } from '@/utils/color'
-import addTask from './addTask.vue'
-import editTask from './editTask.vue'
-import { fetchTaskList, deleteTask, fetchAgentList } from '@/api/agent'
-import { Agent } from '@/types/agents'
+import taskForm from './taskForm.vue'
+import { fetchTaskList, deleteTask } from '@/api/agent'
 // import { tasks } from './mock' // mock data for development
 
-const addTaskDialogVisible = ref<boolean>(false)
-const editTaskDialogVisible = ref<boolean>(false)
+const dialogVisible = ref<boolean>(false)
+const dialogTitle = ref<string>()
 const search = ref<string>('')
 const loading = ref<boolean>(false)
 const currentSort = ref<keyof Task>('name')
@@ -181,8 +176,7 @@ const pageSize = ref<number>(5)
 const currentPage = ref<number>(1)
 const total = ref<number>(0)
 const tasks = ref<Task[]>()
-const agents = ref<Agent[]>()
-const task = ref<Task>()
+const taskItem = ref<Task>()
 
 onMounted(async () => await startSetInterval())
 
@@ -253,15 +247,6 @@ async function getTasks() {
     }
 }
 
-async function getAgentList() {
-    try {
-        const response = await fetchAgentList()
-        agents.value = response.data
-    } catch {
-        throw "Fail to get agent list!"
-    }
-}
-
 async function startSetInterval() {
     await getTasks()
     setInterval(async () => {
@@ -282,14 +267,15 @@ async function handleDelete(id: string | number) {
 }
 
 async function handleAddtask() {
-    await getAgentList()
-    addTaskDialogVisible.value = true
+    taskItem.value = undefined
+    dialogTitle.value = "Add a task"
+    dialogVisible.value = true
 }
 
-async function handleEdit(taskItem: Task) {
-    task.value = taskItem
-    await getAgentList()
-    editTaskDialogVisible.value = true
+async function handleEdit(task: Task) {
+    taskItem.value = task
+    dialogTitle.value = "Edit task"
+    dialogVisible.value = true
 }
 
 async function handleView() {

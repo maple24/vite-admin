@@ -43,7 +43,7 @@ export function getTask(id: number | string) {
     });
 }
 
-export function updateTask(id: string | null, data: Task) {
+export function updateTask(id: number | string, data: Task) {
     return request({
         url: `/api/v1/agent/task/${id}/` as string,
         method: 'put',
