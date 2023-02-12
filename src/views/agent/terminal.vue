@@ -22,14 +22,11 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { useUserStore } from '@/store/user';
-import { useAgentStore } from '@/store/agent';
-const agentStore = useAgentStore()
-const userStore = useUserStore()
 
 const inputFeild = ref<HTMLElement | null>()
 const props = defineProps<{
     agent: string
+    user: string
 }>()
 interface lineText {
     id: number
@@ -37,7 +34,7 @@ interface lineText {
     text: string
 }
 const loginName = computed(() => {
-    return userStore.name + "@" + props.agent + ":~$"
+    return props.user + "@" + props.agent + ":~$"
 })
 const inputValue = ref<string>('')
 const id = ref<number>(1)
@@ -50,7 +47,7 @@ const client = new WebSocket(
 )
 
 function handleSubmit() {
-    if (agentStore.hostname === '') {
+    if (props.agent === '') {
         lines.value.push({ id: id.value + 1, type: 'output', text: 'No host selected!' })
         inputValue.value = ''
         return
@@ -66,7 +63,7 @@ function handleSubmit() {
         client.send(JSON.stringify({
             purpose: 'terminal',
             message: {
-                hostname: agentStore.hostname,
+                hostname: props.agent,
                 command: inputValue.value
             }
         }))
@@ -77,29 +74,29 @@ function handleSubmit() {
 }
 
 watch(
-    () => agentStore.hostname,
+    () => props.agent,
     () => {
         lines.value = []
         inputValue.value = ''
-        if (agentStore.hostname === '') {
+        if (props.agent === '') {
             lines.value.push({ id: id.value + 1, type: 'output', text: 'No host selected!' })
         } else {
-            lines.value.push({ id: id.value + 1, type: 'output', text: `${agentStore.hostname} connected to the channel!` })
+            lines.value.push({ id: id.value + 1, type: 'output', text: `${props.agent} connected to the channel!` })
         }
     }
 );
 
 client.onopen = () => {
-    if (agentStore.hostname === '') {
+    if (props.agent === '') {
         lines.value.push({ id: id.value + 1, type: 'output', text: 'No host selected!' })
     } else {
-        lines.value.push({ id: id.value + 1, type: 'output', text: `${agentStore.hostname} connected to the channel!` })
+        lines.value.push({ id: id.value + 1, type: 'output', text: `${props.agent} connected to the channel!` })
     }
 }
 
 client.onmessage = ((event) => {
     const data = JSON.parse(event.data)
-    if (data.message.output && data.message.hostname === agentStore.hostname) {
+    if (data.message.output && data.message.hostname === props.agent) {
         lines.value.push({ id: id.value + 1, type: 'output', text: data.message.output })
         id.value += 1
     }

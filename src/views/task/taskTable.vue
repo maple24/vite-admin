@@ -151,7 +151,7 @@
 
         <!-- dialog -->
         <el-dialog v-model="dialogVisible" :title="dialogTitle" width="30%" align-center draggable destroy-on-close>
-            <task-form :task="taskItem"></task-form>
+            <task-form :task="taskItem" @closeDialog="dialogVisible = false"></task-form>
         </el-dialog>
 
     </div>

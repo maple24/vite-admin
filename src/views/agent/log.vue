@@ -9,10 +9,10 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useAgentStore } from '@/store/agent';
 // import { WS_log as client} from '@/api/ws'
-const store = useAgentStore()
-
+const props = defineProps<{
+    agent: string
+}>()
 const text = ref<string>('Welcome to agent log channel!')
 const textArea = ref<HTMLElement | null>(null);
 const client = new WebSocket(
@@ -23,17 +23,16 @@ const client = new WebSocket(
 )
 
 watch(
-    () => store.hostname,
+    () => props.agent,
     () => {
         text.value = 'Welcome to agent log channel!'
-        text.value += store.hostname === '' ? '\n' + 'No host selected!' : '\n' + `${store.hostname} connected to the channel!`
+        text.value += props.agent === '' ? '\n' + 'No host selected!' : '\n' + `${props.agent} connected to the channel!`
     }
 );
 
-
 client.onopen = () => {
     console.log("Connected to log channel.");
-    text.value += store.hostname === '' ? '\n' + 'No host selected!' : '\n' + `${store.hostname} connected to the channel!`
+    text.value += props.agent === '' ? '\n' + 'No host selected!' : '\n' + `${props.agent} connected to the channel!`
 }
 
 client.onclose = () => {
@@ -43,7 +42,7 @@ client.onclose = () => {
 
 client.onmessage = (event) => {
     const data = JSON.parse(event.data)
-    if (data.message.hostname === store.hostname) {
+    if (data.message.hostname === props.agent) {
         text.value += '\n' + data.message.content
         if (textArea.value?.scrollHeight) textArea.value.scrollTop = textArea.value?.scrollHeight;
     }

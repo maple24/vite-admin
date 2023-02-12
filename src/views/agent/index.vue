@@ -2,11 +2,11 @@
     <div>
         <el-tabs v-model="activeName" type="border-card" stretch @tab-click="handleClick">
             <el-tab-pane label="Log" name="log">
-                <Log />
+                <Log :agent="agentStore.hostname" />
             </el-tab-pane>
             <el-tab-pane label="Terminal" name="terminal">
                 <!-- why not use store directly in subcomponent, why props if using global state??? -->
-                <Terminal :agent="store.hostname" />
+                <Terminal :agent="agentStore.hostname" :user="userStore.name" />
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -18,7 +18,10 @@ import { useAgentStore } from '@/store/agent'
 import type { TabsPaneContext } from 'element-plus'
 import Terminal from './terminal.vue'
 import Log from './log.vue'
-const store = useAgentStore()
+import { useUserStore } from '@/store/user';
+
+const userStore = useUserStore()
+const agentStore = useAgentStore()
 
 const activeName = ref('log')
 

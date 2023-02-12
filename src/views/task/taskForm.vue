@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted, computed } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { createTask, fetchAgentList, updateTask } from '@/api/agent';
@@ -71,9 +71,13 @@ const ruleFormRef = ref<FormInstance>()
 const props = defineProps<{
     task: Task | undefined
 }>()
+const emit = defineEmits<{
+    (e: 'closeDialog'): void
+}>()
 
 // computed value cannot be v-model, since it is passive value and not gonna be changed
-// current solution: destroy dialog when closing, otherwise the props has to been watched to make changes
+// current solution: destroy dialog when closing, so every time a new dialog will be mounted
+// otherwise the props has to been watched to make changes
 const ruleForm = reactive({
     id: props.task?.id as number,
     name: props.task?.name as string,
@@ -84,19 +88,6 @@ const ruleForm = reactive({
     tags: [],
     comments: '',
 })
-
-// const ruleForm = computed(() => {
-//     return {
-//         id: props.task?.id as number,
-//         name: props.task?.name as string,
-//         executor: props.task?.executor as number | undefined,
-//         date1: '',
-//         date2: '',
-//         is_scheduled: false,
-//         tags: [],
-//         comments: '',
-//     }
-// })
 
 onMounted(async () => await getAgentList())
 
@@ -165,8 +156,8 @@ const submitForm = async (formEl: FormInstance | undefined, id: string | number 
                     }
                     id === undefined ? await createTask(data) : await updateTask(id, data)
                     ElMessage.success('Create/Update task successfully!')
-                    window.location.reload()
-                    // TD: emit to close dialog
+                    emit("closeDialog")
+                    // window.location.reload()
                 })
                 .catch(() => {
                     // catch error
