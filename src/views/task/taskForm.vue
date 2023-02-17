@@ -11,6 +11,12 @@
             </el-select>
         </el-form-item>
 
+        <el-form-item label="Target" prop="target">
+            <el-select v-model="ruleForm.target" placeholder="Target">
+                <el-option v-for="item in targets" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+        </el-form-item>
+
 
         <el-form-item label="Is scheduled?" prop="is_scheduled">
             <el-switch v-model="ruleForm.is_scheduled" />
@@ -63,10 +69,11 @@
 import { reactive, ref, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { createTask, fetchAgentList, updateTask } from '@/api/agent';
-import { Agent, Task } from '@/types/agents'
+import { createTask, fetchAgentList, updateTask, fetchTargetList } from '@/api/agent';
+import { Agent, Task, Target } from '@/types/agents'
 
 const agents = ref<Agent[]>()
+const targets = ref<Target[]>()
 const ruleFormRef = ref<FormInstance>()
 const props = defineProps<{
     task: Task | undefined
@@ -82,6 +89,7 @@ const ruleForm = reactive({
     id: props.task?.id as number,
     name: props.task?.name as string,
     executor: props.task?.executor as number | undefined,
+    target: props.task?.target as number | undefined,
     date1: '',
     date2: '',
     is_scheduled: false,
@@ -89,14 +97,16 @@ const ruleForm = reactive({
     comments: '',
 })
 
-onMounted(async () => await getAgentList())
+onMounted(async () => await getList())
 
-async function getAgentList() {
+async function getList() {
     try {
-        const response = await fetchAgentList()
-        agents.value = response.data
+        const agentList = await fetchAgentList()
+        agents.value = agentList.data
+        const targetList = await fetchTargetList()
+        targets.value = targetList.data
     } catch {
-        throw "Fail to get agent list!"
+        throw "Fail to get agent&target list!"
     }
 }
 
@@ -152,7 +162,8 @@ const submitForm = async (formEl: FormInstance | undefined, id: string | number 
                         name: ruleForm.name,
                         status: 'Idling', // default
                         executor: ruleForm.executor,
-                        comments: ruleForm.comments
+                        comments: ruleForm.comments,
+                        target: ruleForm.target
                     }
                     id === undefined ? await createTask(data) : await updateTask(id, data)
                     ElMessage.success('Create/Update task successfully!')

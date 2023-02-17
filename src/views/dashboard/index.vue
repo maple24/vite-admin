@@ -30,12 +30,12 @@
             <div class="flex justify-between">
               <div>
                 <font-awesome-icon icon="fa-solid fa-server" class="mr-2" />
-                <button class="underline hover:text-blue-500" @click="handleClick(item.name)">
+                <button class="underline hover:text-blue-500" @click="">
                   <span>{{ item.name }}</span>
                 </button>
               </div>
               <el-tooltip content="Agent Center" placement="top">
-                <button @click="hanldeDownload(item.id)">
+                <button @click="handleClick(item.name)">
                   <font-awesome-icon icon="fa-solid fa-desktop" :class="{ 'text-blue-500': item.online === true }" />
                 </button>
               </el-tooltip>
@@ -70,10 +70,8 @@ import { fetchAgentList } from '@/api/agent'
 import { onMounted, computed } from 'vue';
 import { Agent } from '@/types/agents'
 import { useRouter } from 'vue-router';
-import { useAgentStore } from '@/store/agent'
 import { RDPURL } from '@/api/agent';
 import { downloadbyURL } from '@/utils/common';
-const store = useAgentStore()
 const router = useRouter()
 const loading = ref<boolean>(true)
 const agents = ref<Agent[]>()
@@ -107,8 +105,7 @@ async function startSetInterval() {
 }
 
 function handleClick(hostname: string) {
-  router.push({ name: 'agent' })
-  store.hostname = hostname
+  router.push({ name: 'agent', query: { agent: hostname } })
 }
 
 function hanldeDownload(ip: string | number) {

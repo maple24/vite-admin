@@ -42,6 +42,7 @@
                         </p>
                     </th>
                     <th scope="col" class="px-6 py-4 font-bold text-gray-900">Bench</th>
+                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Target</th>
                     <th scope="col" class="px-6 py-4 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Start time
@@ -80,8 +81,10 @@
                                 :class="{ 'bg-green-400': item.executor_online === true, 'bg-gray-400': item.executor_online === false, hidden: item.executor_ip === undefined }"></span>
                         </div>
                     </td>
+                    <!-- target -->
+                    <td class="px-6 py-4">{{ item.target_name }}</td>
                     <!-- start time -->
-                    <td class="px-6 py-4">{{ item.start_time }}</td>
+                    <td class="px-6 py-4">{{ item.start_time?.replace("T", " ") }}</td>
                     <!-- duration -->
                     <td class="px-6 py-4">{{ item.duration }}</td>
                     <!-- tags -->
@@ -107,9 +110,9 @@
                     </td>
                     <!-- actions -->
                     <td class="px-6 py-4">
-                        <button type="button"
+                        <button type="button" @click="hanldeRun(item.id)"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Run</button>
-                        <button type="button"
+                        <button type="button" @click="handleStop(item.id)"
                             class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Stop</button>
                     </td>
                     <!-- task management -->
@@ -163,7 +166,7 @@ import { ElMessageBox, ElMessage } from 'element-plus'
 import { Task } from '@/types/agents'
 import { statusColor } from '@/utils/color'
 import taskForm from './taskForm.vue'
-import { fetchTaskList, deleteTask } from '@/api/agent'
+import { fetchTaskList, deleteTask, executeTask, stopTask } from '@/api/agent'
 // import { tasks } from './mock' // mock data for development
 
 const dialogVisible = ref<boolean>(false)
@@ -279,6 +282,24 @@ async function handleEdit(task: Task) {
 }
 
 async function handleView() {
+}
+
+async function hanldeRun(id: number | string) {
+    try {
+        await executeTask(id)
+        ElMessage.success('Publish task successfully!')
+    } catch {
+        throw "Fail to execute this task!"
+    }
+}
+
+async function handleStop(id: number | string) {
+    try {
+        await stopTask(id)
+        ElMessage.success('Stop task successfully!')
+    } catch {
+        throw "Fail to stop this task!"
+    }
 }
 
 </script>

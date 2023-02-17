@@ -25,7 +25,7 @@ import { ref, computed, watch } from 'vue'
 
 const inputFeild = ref<HTMLElement | null>()
 const props = defineProps<{
-    agent: string
+    agent: string | undefined | null
     user: string
 }>()
 interface lineText {
@@ -47,7 +47,7 @@ const client = new WebSocket(
 )
 
 function handleSubmit() {
-    if (props.agent === '') {
+    if (props.agent === null) {
         lines.value.push({ id: id.value + 1, type: 'output', text: 'No host selected!' })
         inputValue.value = ''
         return
@@ -62,7 +62,8 @@ function handleSubmit() {
     else {
         client.send(JSON.stringify({
             purpose: 'terminal',
-            message: {
+            method: '',
+            args: {
                 hostname: props.agent,
                 command: inputValue.value
             }
@@ -78,7 +79,7 @@ watch(
     () => {
         lines.value = []
         inputValue.value = ''
-        if (props.agent === '') {
+        if (props.agent === null) {
             lines.value.push({ id: id.value + 1, type: 'output', text: 'No host selected!' })
         } else {
             lines.value.push({ id: id.value + 1, type: 'output', text: `${props.agent} connected to the channel!` })
@@ -87,7 +88,7 @@ watch(
 );
 
 client.onopen = () => {
-    if (props.agent === '') {
+    if (props.agent === null) {
         lines.value.push({ id: id.value + 1, type: 'output', text: 'No host selected!' })
     } else {
         lines.value.push({ id: id.value + 1, type: 'output', text: `${props.agent} connected to the channel!` })
@@ -95,9 +96,9 @@ client.onopen = () => {
 }
 
 client.onmessage = ((event) => {
-    const data = JSON.parse(event.data)
-    if (data.message.output && data.message.hostname === props.agent) {
-        lines.value.push({ id: id.value + 1, type: 'output', text: data.message.output })
+    const message = JSON.parse(event.data)
+    if (message.args.output && message.args.hostname === props.agent) {
+        lines.value.push({ id: id.value + 1, type: 'output', text: message.args.output })
         id.value += 1
     }
 })

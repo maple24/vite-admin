@@ -11,7 +11,7 @@
 import { ref, watch } from 'vue'
 // import { WS_log as client} from '@/api/ws'
 const props = defineProps<{
-    agent: string
+    agent: string | undefined | null
 }>()
 const text = ref<string>('Welcome to agent log channel!')
 const textArea = ref<HTMLElement | null>(null);
@@ -26,13 +26,13 @@ watch(
     () => props.agent,
     () => {
         text.value = 'Welcome to agent log channel!'
-        text.value += props.agent === '' ? '\n' + 'No host selected!' : '\n' + `${props.agent} connected to the channel!`
+        text.value += props.agent === null ? '\n' + 'No host selected!' : '\n' + `${props.agent} connected to the channel!`
     }
 );
 
 client.onopen = () => {
     console.log("Connected to log channel.");
-    text.value += props.agent === '' ? '\n' + 'No host selected!' : '\n' + `${props.agent} connected to the channel!`
+    text.value += props.agent === null ? '\n' + 'No host selected!' : '\n' + `${props.agent} connected to the channel!`
 }
 
 client.onclose = () => {
@@ -41,9 +41,9 @@ client.onclose = () => {
 }
 
 client.onmessage = (event) => {
-    const data = JSON.parse(event.data)
-    if (data.message.hostname === props.agent) {
-        text.value += '\n' + data.message.content
+    const message = JSON.parse(event.data)
+    if (message.args.hostname === props.agent) {
+        text.value += '\n' + message.args.content
         if (textArea.value?.scrollHeight) textArea.value.scrollTop = textArea.value?.scrollHeight;
     }
 }

@@ -10,6 +10,13 @@ interface Agent {
     location?: string
 }
 
+interface Target {
+    id: number,
+    name: string,
+    comments?: string,
+    is_deleted?: boolean
+}
+
 interface Task {
     id: number,
     name: string,
@@ -19,7 +26,9 @@ interface Task {
     scheduled_time?: string | null,
     comments?: string | null,
     executor?: number | null,
+    target?: number | null,
 
+    target_name?: string | null,
     duration?: string | null,
     creation_time?: string | null,
     created_by?: number | null,
@@ -29,4 +38,4 @@ interface Task {
     executor_online?: boolean,
 }
 
-export type { Agent, Task }
+export type { Agent, Task, Target }

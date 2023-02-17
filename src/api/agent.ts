@@ -9,6 +9,13 @@ export function fetchAgentList() {
     });
 }
 
+export function fetchTargetList() {
+    return request({
+        url: '/api/v1/agent/target' as string,
+        method: 'get',
+    });
+}
+
 export const RDPURL = (ip: string | number) => {
     return `/api/v1/agent/executor/${ip}/rdp`
 }
@@ -48,5 +55,19 @@ export function updateTask(id: number | string, data: Task) {
         url: `/api/v1/agent/task/${id}/` as string,
         method: 'put',
         data
+    });
+}
+
+export function executeTask(id: number | string) {
+    return request({
+        url: `/api/v1/agent/task/${id}/execute_task/` as string,
+        method: 'post',
+    });
+}
+
+export function stopTask(id: number | string) {
+    return request({
+        url: `/api/v1/agent/task/${id}/stop_task/` as string,
+        method: 'post',
     });
 }
