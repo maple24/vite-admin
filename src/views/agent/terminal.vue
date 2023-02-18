@@ -61,8 +61,7 @@ function handleSubmit() {
     }
     else {
         client.send(JSON.stringify({
-            purpose: 'terminal',
-            method: '',
+            method: 'terminal',
             args: {
                 hostname: props.agent,
                 command: inputValue.value
@@ -105,6 +104,4 @@ client.onmessage = ((event) => {
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

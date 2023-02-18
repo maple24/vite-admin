@@ -1,9 +1,13 @@
 <template>
     <div>
         <textarea ref="textArea" rows="30"
-            class="w-full overflow-y-auto border border-gray-800 rounded-lg p-2 text-white bg-gray-900 font-mono text-sm resize-none focus:outline-none">
-            {{ text }}
-        </textarea>
+            class="w-full overflow-y-auto border border-gray-800 rounded-lg p-2 text-white bg-gray-900 font-mono text-sm resize-none focus:outline-none">{{ text }}</textarea>
+        <div>
+            <button @click="text = ''"
+                class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                Clear
+            </button>
+        </div>
     </div>
 </template>
 
@@ -25,7 +29,6 @@ const client = new WebSocket(
 watch(
     () => props.agent,
     () => {
-        text.value = 'Welcome to agent log channel!'
         text.value += props.agent === null ? '\n' + 'No host selected!' : '\n' + `${props.agent} connected to the channel!`
     }
 );
@@ -44,12 +47,10 @@ client.onmessage = (event) => {
     const message = JSON.parse(event.data)
     if (message.args.hostname === props.agent) {
         text.value += '\n' + message.args.content
-        if (textArea.value?.scrollHeight) textArea.value.scrollTop = textArea.value?.scrollHeight;
+        // auto scroll
+        // if (textArea.value?.scrollHeight) textArea.value.scrollTop = textArea.value?.scrollHeight;
     }
 }
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

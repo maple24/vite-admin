@@ -38,7 +38,7 @@ export function createTask(data: Task) {
 
 export function deleteTask(id: number | string) {
     return request({
-        url: `/api/v1/agent/task/${id}` as string,
+        url: `/api/v1/agent/task/${id}/delete_task` as string,
         method: 'delete',
     });
 }

@@ -45,15 +45,14 @@ const client = new WebSocket(
 client.onopen = () => {
     console.log("connected to the server")
     client.send(JSON.stringify({
-        'purpose': 'chat',
-        'message': `(${store.name}): Entered room`
+        'method': 'chat',
+        'args': `(${store.name}): Entered room`
     }))
 }
 
 client.onmessage = (event) => {
-    console.log(event.data)
     const data = JSON.parse(event.data)
-    text.value += data.message + '\n'
+    text.value += data.args + '\n'
 }
 
 function onSubmit() {
@@ -62,8 +61,8 @@ function onSubmit() {
     const cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
     const dateTime = cDate + ' ' + cTime;
     client.send(JSON.stringify({
-        'purpose': 'chat',
-        'message': `${dateTime} (${store.name}): ${message.value}`
+        'method': 'chat',
+        'args': `${dateTime} (${store.name}): ${message.value}`
     }))
     message.value = ''
     if (textArea.value?.scrollHeight) textArea.value.scrollTop = textArea.value?.scrollHeight;

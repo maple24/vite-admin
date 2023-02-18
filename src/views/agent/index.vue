@@ -32,6 +32,4 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
