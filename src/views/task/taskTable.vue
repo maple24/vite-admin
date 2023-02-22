@@ -55,6 +55,18 @@
                     <th scope="col" class="px-2 py-4 font-bold text-gray-900">Target</th>
                     <th scope="col" class="px-2 py-4 font-bold text-gray-900">
                         <p class="inline-flex items-center">
+                            Schedule time
+                            <button @click="sort('schedule_time')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true"
+                                    fill="currentColor" viewBox="0 0 320 512">
+                                    <path
+                                        d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
+                                </svg>
+                            </button>
+                        </p>
+                    </th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
+                        <p class="inline-flex items-center">
                             Start time
                             <button @click="sort('start_time')">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true"
@@ -67,7 +79,6 @@
                     </th>
                     <th scope="col" class="px-2 py-4 font-bold text-gray-900">Duration</th>
                     <!-- <th scope="col" class="px-2 py-4 font-bold text-gray-900">Tags</th> -->
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Comments</th>
                     <th scope="col" class="px-2 py-4 font-bold text-gray-900">Created by</th>
                     <th scope="col" class="px-2 py-4 font-bold text-gray-900">Status</th>
                     <th scope="col" class="px-2 py-4 font-bold text-gray-900">Action</th>
@@ -93,12 +104,12 @@
                     </td>
                     <!-- target -->
                     <td class="px-2 py-4">{{ item.target_name }}</td>
+                    <!-- schedule time -->
+                    <td class="px-2 py-4">{{ item.schedule_time?.replace("T", " ") }}</td>
                     <!-- start time -->
                     <td class="px-2 py-4">{{ item.start_time?.replace("T", " ") }}</td>
                     <!-- duration -->
                     <td class="px-2 py-4">{{ item.duration }}</td>
-                    <!-- comments -->
-                    <td class="px-2 py-4">{{ item.comments }}</td>
                     <!-- created by -->
                     <td class="px-2 py-4">{{ item.created_by_account }}</td>
                     <!-- status -->
@@ -282,8 +293,8 @@ async function handleDelete(id: string | number) {
     ElMessageBox.confirm('Are you sure to delete this task?')
         .then(async () => {
             await deleteTask(id)
-            ElMessage.success('Delete task successfully!')
             window.location.reload()
+            ElMessage.success('Delete task successfully!')
         })
         .catch(() => {
             // catch error

@@ -39,9 +39,9 @@ export const statusColor = (status: string) => {
             bbgColor = 'bg-blue-50'
             break;
         case "Published":
-            fontColor = 'text-orange-500'
-            bgColor = 'bg-orange-500'
-            bbgColor = 'bg-orange-50'
+            fontColor = 'text-purple-500'
+            bgColor = 'bg-purple-500'
+            bbgColor = 'bg-purple-50'
             break;
         case "Canceled":
             fontColor = 'text-gray-500'

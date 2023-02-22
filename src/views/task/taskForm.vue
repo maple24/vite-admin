@@ -17,6 +17,16 @@
             </el-select>
         </el-form-item>
 
+        <el-form-item label="Script" prop="script">
+            <el-select v-model="ruleForm.script" placeholder="Script">
+                <el-option v-for="item in scripts" :key="item.name" :label="item.name" :value="item.name"></el-option>
+            </el-select>
+        </el-form-item>
+
+        <el-form-item label="Params" prop="params">
+            <el-input v-model="ruleForm.params" type="text" />
+            <p class="text-gray-400 text-sm">eg. "-f log.txt -v 1"</p>
+        </el-form-item>
 
         <el-form-item label="Is scheduled?" prop="is_scheduled">
             <el-switch v-model="ruleForm.is_scheduled" />
@@ -54,7 +64,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, computed } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { createTask, fetchAgentList, updateTask, fetchTargetList } from '@/api/agent';
@@ -70,6 +80,9 @@ const emit = defineEmits<{
     (e: 'closeDialog'): void
 }>()
 
+const scripts = computed(() => {
+    if (agents.value && ruleForm.executor) return JSON.parse(agents.value[ruleForm.executor - 1].scripts!)
+})
 // computed value cannot be v-model, since it is passive value and not gonna be changed
 // current solution: destroy dialog when closing, so every time a new dialog will be mounted
 // otherwise the props has to been watched to make changes
@@ -82,7 +95,9 @@ const ruleForm = reactive({
     time: undefined,
     is_scheduled: props.task?.is_scheduled,
     tags: [],
-    comments: undefined,
+    comments: props.task?.comments,
+    script: props.task?.script,
+    params: props.task?.params
 })
 
 onMounted(async () => await getList())
@@ -98,6 +113,50 @@ async function getList() {
     }
 }
 
+const submitForm = async (formEl: FormInstance | undefined, id: string | number | undefined = undefined) => {
+    if (!formEl) return
+    await formEl.validate(async (valid, fields) => {
+        if (valid) {
+            ElMessageBox.confirm('Are you sure to create/update this task?')
+                .then(async () => {
+                    const data = {
+                        id: ruleForm.id,
+                        name: ruleForm.name,
+                        status: 'Idling', // default
+                        executor: ruleForm.executor,
+                        comments: ruleForm.comments,
+                        target: ruleForm.target,
+                        is_scheduled: ruleForm.is_scheduled,
+                        schedule_time: (ruleForm.date && ruleForm.time) ? (ruleForm.date + ' ' + ruleForm.time) : undefined,
+                        script: ruleForm.script,
+                        params: ruleForm.params
+                    }
+                    id === undefined ? await createTask(data) : await updateTask(id, data)
+                    ElMessage.success('Create/Update task successfully!')
+                    emit("closeDialog")
+                    // window.location.reload()
+                })
+                .catch(() => {
+                    // catch error
+                })
+            console.log('submit!')
+        } else {
+            console.log('error submit!', fields)
+        }
+    })
+}
+
+const resetForm = (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    formEl.resetFields()
+}
+
+const options = Array.from({ length: 10000 }).map((_, idx) => ({
+    value: `${idx + 1}`,
+    label: `${idx + 1}`,
+}))
+
+
 const rules = reactive<FormRules>({
     name: [
         { required: true, message: 'Please input task name', trigger: 'blur' },
@@ -107,6 +166,20 @@ const rules = reactive<FormRules>({
         {
             required: true,
             message: 'Please select agent',
+            trigger: 'change',
+        },
+    ],
+    target: [
+        {
+            required: true,
+            message: 'Please select target',
+            trigger: 'change',
+        },
+    ],
+    script: [
+        {
+            required: true,
+            message: 'Please select script',
             trigger: 'change',
         },
     ],
@@ -138,46 +211,4 @@ const rules = reactive<FormRules>({
         { required: false, message: 'Please input comments', trigger: 'blur' },
     ],
 })
-
-const submitForm = async (formEl: FormInstance | undefined, id: string | number | undefined = undefined) => {
-    if (!formEl) return
-    await formEl.validate(async (valid, fields) => {
-        if (valid) {
-            ElMessageBox.confirm('Are you sure to create/update this task?')
-                .then(async () => {
-                    const data = {
-                        id: ruleForm.id,
-                        name: ruleForm.name,
-                        status: 'Idling', // default
-                        executor: ruleForm.executor,
-                        comments: ruleForm.comments,
-                        target: ruleForm.target,
-                        is_scheduled: ruleForm.is_scheduled,
-                        start_time: (ruleForm.date && ruleForm.time) ? (ruleForm.date + ' ' + ruleForm.time) : undefined
-                    }
-                    id === undefined ? await createTask(data) : await updateTask(id, data)
-                    ElMessage.success('Create/Update task successfully!')
-                    emit("closeDialog")
-                    // window.location.reload()
-                })
-                .catch(() => {
-                    // catch error
-                })
-            console.log('submit!')
-        } else {
-            console.log('error submit!', fields)
-        }
-    })
-}
-
-const resetForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.resetFields()
-}
-
-const options = Array.from({ length: 10000 }).map((_, idx) => ({
-    value: `${idx + 1}`,
-    label: `${idx + 1}`,
-}))
-
 </script>

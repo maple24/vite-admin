@@ -7,7 +7,8 @@ interface Agent {
     creation_time: string,
     last_online_time?: string,
     comments?: string,
-    location?: string
+    location?: string,
+    scripts?: string
 }
 
 interface Target {
@@ -28,6 +29,9 @@ interface Task {
     target?: number | null,
     reason?: string,
     is_scheduled?: boolean,
+    schedule_time?: string | null,
+    script?: string,
+    params?: string,
 
     target_name?: string | null,
     duration?: string | null,
