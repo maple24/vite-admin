@@ -23,10 +23,11 @@ interface Task {
     status: string,
     start_time?: string | null,
     end_time?: string | null,
-    scheduled_time?: string | null,
     comments?: string | null,
     executor?: number | null,
     target?: number | null,
+    reason?: string,
+    is_scheduled?: boolean,
 
     target_name?: string | null,
     duration?: string | null,

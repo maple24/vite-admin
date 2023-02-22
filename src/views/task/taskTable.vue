@@ -28,7 +28,7 @@
             <!-- table head -->
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Task
                             <button @click="sort('name')">
@@ -40,9 +40,20 @@
                             </button>
                         </p>
                     </th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Bench</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Target</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
+                        <p class="inline-flex items-center">
+                            Machine
+                            <button @click="sort('executor_ip')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true"
+                                    fill="currentColor" viewBox="0 0 320 512">
+                                    <path
+                                        d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
+                                </svg>
+                            </button>
+                        </p>
+                    </th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Target</th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Start time
                             <button @click="sort('start_time')">
@@ -54,24 +65,24 @@
                             </button>
                         </p>
                     </th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Duration</th>
-                    <!-- <th scope="col" class="px-6 py-4 font-bold text-gray-900">Tags</th> -->
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Comments</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Created by</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Status</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900">Action</th>
-                    <th scope="col" class="px-6 py-4 font-bold text-gray-900"></th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Duration</th>
+                    <!-- <th scope="col" class="px-2 py-4 font-bold text-gray-900">Tags</th> -->
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Comments</th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Created by</th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Status</th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Action</th>
+                    <th scope="col" class="px-2 py-4 font-bold text-gray-900"></th>
                 </tr>
             </thead>
             <!-- table body -->
             <tbody class="divide-y divide-gray-100 border-t border-gray-100">
                 <tr class="hover:bg-gray-50" v-for="item in filteredTasks" :key="filteredTasks?.indexOf(item)">
                     <!-- name -->
-                    <td class="px-6 py-4 font-normal text-gray-900">
+                    <td class="px-2 py-4 font-normal" :class="{ 'text-purple-500': item.is_scheduled === true }">
                         {{ item.name }}
                     </td>
                     <!-- bench -->
-                    <td class="px-6 py-4">
+                    <td class="px-2 py-4">
                         <div class="relative">
                             <p class="p-1">
                                 {{ item.executor_ip }}
@@ -81,31 +92,33 @@
                         </div>
                     </td>
                     <!-- target -->
-                    <td class="px-6 py-4">{{ item.target_name }}</td>
+                    <td class="px-2 py-4">{{ item.target_name }}</td>
                     <!-- start time -->
-                    <td class="px-6 py-4">{{ item.start_time?.replace("T", " ") }}</td>
+                    <td class="px-2 py-4">{{ item.start_time?.replace("T", " ") }}</td>
                     <!-- duration -->
-                    <td class="px-6 py-4">{{ item.duration }}</td>
+                    <td class="px-2 py-4">{{ item.duration }}</td>
                     <!-- comments -->
-                    <td class="px-6 py-4">{{ item.comments }}</td>
+                    <td class="px-2 py-4">{{ item.comments }}</td>
                     <!-- created by -->
-                    <td class="px-6 py-4">{{ item.created_by_account }}</td>
+                    <td class="px-2 py-4">{{ item.created_by_account }}</td>
                     <!-- status -->
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-base font-semibold"
-                            :class="[statusColor(item.status).fontColor, statusColor(item.status).bbgColor]">
-                            {{ item.status }}
-                        </span>
+                    <td class="px-2 py-4">
+                        <el-tooltip :content="item.reason" placement="top" :disabled="item.reason === null">
+                            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-base font-semibold"
+                                :class="[statusColor(item.status).fontColor, statusColor(item.status).bbgColor]">
+                                {{ item.status }}
+                            </span>
+                        </el-tooltip>
                     </td>
                     <!-- actions -->
-                    <td class="px-6 py-4">
+                    <td class="px-2 py-4">
                         <button type="button" @click="hanldeRun(item.id)"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Run</button>
                         <button type="button" @click="handleStop(item.id)"
                             class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Stop</button>
                     </td>
                     <!-- task management -->
-                    <td class="px-6 py-4">
+                    <td class="px-2 py-4">
                         <div class="flex justify-end gap-4">
                             <button x-data="{ tooltip: 'View' }" class="text-black" @click="handleView(item.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -114,6 +127,15 @@
                                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                            <button disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-file-text" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z" />
+                                    <path
+                                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
                                 </svg>
                             </button>
                             <button x-data="{ tooltip: 'Edite' }" class="text-blue-500" @click="handleEdit(item)">
@@ -222,17 +244,19 @@ const sortedTasks = computed(() => {
 
 const filteredTasks = computed(() => {
     return sortedTasks?.value?.filter(task => {
-        const name = task.name.toString().toLowerCase();
-        const bench = task.executor_ip?.toLowerCase();
+        const name = task.name.toString().toLowerCase()
+        const bench = task.executor_ip?.toLowerCase()
         const created_by = task.created_by_account?.toLowerCase()
         const status = task.status.toLowerCase()
         const comments = task.comments?.toLowerCase()
-        const searchTerm = search.value.toLowerCase();
+        const target_name = task.target_name?.toLowerCase()
+        const searchTerm = search.value.toLowerCase()
 
         return name.includes(searchTerm) ||
             status.includes(searchTerm) ||
             bench?.includes(searchTerm) ||
             created_by?.includes(searchTerm) ||
+            target_name?.includes(searchTerm) ||
             comments?.includes(searchTerm);
     })
 })
@@ -259,7 +283,7 @@ async function handleDelete(id: string | number) {
         .then(async () => {
             await deleteTask(id)
             ElMessage.success('Delete task successfully!')
-            await getTasks()
+            window.location.reload()
         })
         .catch(() => {
             // catch error

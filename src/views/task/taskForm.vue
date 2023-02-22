@@ -22,23 +22,11 @@
             <el-switch v-model="ruleForm.is_scheduled" />
         </el-form-item>
 
-        <!-- <el-form-item label="Plan" required>
-            <el-col :span="11">
-                <el-form-item prop="date1">
-                    <el-date-picker v-model="ruleForm.date1" type="date" label="Pick a date" placeholder="Pick a date"
-                        style="width: 100%" />
-                </el-form-item>
-            </el-col> -->
-        <!-- <el-col class="text-center" :span="2">
-                <span class="text-gray-500">-</span>
-            </el-col>
-            <el-col :span="11">
-                <el-form-item prop="date2">
-                    <el-time-picker v-model="ruleForm.date2" label="Pick a time" placeholder="Pick a time"
-                        style="width: 100%" />
-                </el-form-item>
-            </el-col> -->
-        <!-- </el-form-item> -->
+        <el-form-item label="Plan" v-show="ruleForm.is_scheduled">
+            <input type="date" v-model="ruleForm.date" class="border rounded-md">
+            <span class="text-gray-500 mx-6">-</span>
+            <input type="time" v-model="ruleForm.time" class="border rounded-md">
+        </el-form-item>
 
         <el-form-item label="Comments" prop="comments">
             <el-input v-model="ruleForm.comments" type="textarea" />
@@ -90,11 +78,11 @@ const ruleForm = reactive({
     name: props.task?.name as string,
     executor: props.task?.executor as number | undefined,
     target: props.task?.target as number | undefined,
-    date1: '',
-    date2: '',
-    is_scheduled: false,
+    date: undefined,
+    time: undefined,
+    is_scheduled: props.task?.is_scheduled,
     tags: [],
-    comments: '',
+    comments: undefined,
 })
 
 onMounted(async () => await getList())
@@ -122,7 +110,7 @@ const rules = reactive<FormRules>({
             trigger: 'change',
         },
     ],
-    date1: [
+    date: [
         {
             type: 'date',
             required: true,
@@ -130,7 +118,7 @@ const rules = reactive<FormRules>({
             trigger: 'change',
         },
     ],
-    date2: [
+    time: [
         {
             type: 'date',
             required: true,
@@ -163,7 +151,9 @@ const submitForm = async (formEl: FormInstance | undefined, id: string | number 
                         status: 'Idling', // default
                         executor: ruleForm.executor,
                         comments: ruleForm.comments,
-                        target: ruleForm.target
+                        target: ruleForm.target,
+                        is_scheduled: ruleForm.is_scheduled,
+                        start_time: (ruleForm.date && ruleForm.time) ? (ruleForm.date + ' ' + ruleForm.time) : undefined
                     }
                     id === undefined ? await createTask(data) : await updateTask(id, data)
                     ElMessage.success('Create/Update task successfully!')

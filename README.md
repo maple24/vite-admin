@@ -50,6 +50,7 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 - Tailwindcss: v3.2.1
 - Font awesome: v6.2.0
 - Heroicon: v2.0.0
+- [SVG icon](https://icons.getbootstrap.com/)
 - Element-plus
 - Plugins:
   tailwindcss-forms
