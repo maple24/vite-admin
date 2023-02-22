@@ -10,7 +10,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     volumes:
-      - ../vite-admin-backend:/backend
+      - ../vite-admin-backend:/usr/src/backend/
     ports:
       - 8000:8000
     depends_on:
@@ -20,7 +20,7 @@ services:
     build: ../vite-admin-backend
     command: celery -A backend.backendviteadmin worker -l info --pool=solo
     volumes:
-      - ../vite-admin-backend:/backend
+      - ../vite-admin-backend:/usr/src/backend/
     environment:
       - DEBUG=1
       - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
@@ -31,7 +31,7 @@ services:
     build: ../vite-admin-backend
     command: celery -A backend.backendviteadmin beat -l info
     volumes:
-      - ../vite-admin-backend:/backend
+      - ../vite-admin-backend:/usr/src/backend/
     environment:
       - DEBUG=1
       - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
