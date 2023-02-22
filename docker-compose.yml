@@ -4,17 +4,37 @@ services:
   backend:
     restart: always
     build: ../vite-admin-backend
-    # command: daphne backendviteadmin.asgi:application -b 0.0.0.0 -p 8000
-    # build: ../fastapi
+    # command: daphne core.asgi:application -b 0.0.0.0 -p 8000
     container_name: backend
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     volumes:
-      # - ../fastapi:/backend
       - ../vite-admin-backend:/backend
     ports:
       - 8000:8000
+    depends_on:
+      - redis
+
+  celery:
+    build: ../vite-admin-backend
+    command: celery -A backend.backendviteadmin worker -l info --pool=solo
+    volumes:
+      - ../vite-admin-backend:/backend
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
+    depends_on:
+      - redis
+  
+  celery-beat:
+    build: ../vite-admin-backend
+    command: celery -A backend.backendviteadmin beat -l info
+    volumes:
+      - ../vite-admin-backend:/backend
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=dbaa1_i7%*3r9-=z-+_mz4r-!qeed@(-a_r(g@k8jo8y3r27%m
     depends_on:
       - redis
 
@@ -35,3 +55,28 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    container_name: zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka
+    container_name: kafka
+    restart: always
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
