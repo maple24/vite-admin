@@ -27,7 +27,7 @@ interface Task {
     comments?: string | null,
     executor?: number | null,
     target?: number | null,
-    reason?: string,
+    reason?: string | null,
     is_scheduled?: boolean,
     schedule_time?: string | null,
     script?: string,
