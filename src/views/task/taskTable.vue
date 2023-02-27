@@ -202,7 +202,7 @@ const logDialog = ref<boolean>(false)
 const search = ref<string>('')
 const loading = ref<boolean>(false)
 const currentSort = ref<keyof Task>('name')
-const currentSortDir = ref<string>('asc')
+const currentSortDir = ref<string>('desc')
 const pageSize = ref<number>(5)
 const currentPage = ref<number>(1)
 const total = ref<number>(0)
@@ -223,7 +223,7 @@ const taskQuery = computed(() => {
         location: undefined,
         online: undefined,
         is_deleted: false,
-        ordering: 'id'
+        ordering: '-creation_time'
     }
 })
 
