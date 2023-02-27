@@ -91,9 +91,8 @@ async function getAgentList() {
   try {
     const response = await fetchAgentList()
     agents.value = response.data
-  } catch {
-    throw "Fail to get agent list!"
-  } finally {
+  }
+  finally {
     loading.value = false
   }
 }
@@ -114,6 +113,4 @@ function hanldeDownload(ip: string | number) {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -144,23 +144,20 @@ const handleDelete = (index: number, row: TableUser) => {
 
 const handleUpdate = async () => {
     dialogVisible.value = false
-    try {
-        // foreach does not support await since it does not return value
-        loading.value = true
+    // foreach does not support await since it does not return value
+    loading.value = true
 
-        if (form.value.role && form.value.id) {
-            for (const ro of form.value.role) {
-                let obj = form.value.roles.find(e => e.role === ro);
-                obj === undefined ? await createUserRole({ 'user': form.value.id, 'role': ro }) : console.log('role exists');
-            }
-            for (const e of form.value.roles) {
-                form.value.role.indexOf(e.role) === -1 ? await deleteUserRole(e.id) : console.log('role exists');
-            }
-            window.location.reload()
+    if (form.value.role && form.value.id) {
+        for (const ro of form.value.role) {
+            let obj = form.value.roles.find(e => e.role === ro);
+            obj === undefined ? await createUserRole({ 'user': form.value.id, 'role': ro }) : console.log('role exists');
         }
-    } catch (e) {
-        console.log(e);
+        for (const e of form.value.roles) {
+            form.value.role.indexOf(e.role) === -1 ? await deleteUserRole(e.id) : console.log('role exists');
+        }
+        window.location.reload()
     }
+
 }
 
 </script>

@@ -103,14 +103,10 @@ const ruleForm = reactive({
 onMounted(async () => await getList())
 
 async function getList() {
-    try {
-        const agentList = await fetchAgentList()
-        agents.value = agentList.data
-        const targetList = await fetchTargetList()
-        targets.value = targetList.data
-    } catch {
-        throw "Fail to get agent&target list!"
-    }
+    const agentList = await fetchAgentList()
+    agents.value = agentList.data
+    const targetList = await fetchTargetList()
+    targets.value = targetList.data
 }
 
 const submitForm = async (formEl: FormInstance | undefined, id: string | number | undefined = undefined) => {

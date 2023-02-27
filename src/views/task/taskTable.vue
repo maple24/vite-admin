@@ -273,13 +273,9 @@ const filteredTasks = computed(() => {
 })
 
 async function getTasks() {
-    try {
-        const response = await fetchTaskList(taskQuery.value)
-        tasks.value = response.data.results
-        total.value = response.data.count
-    } catch {
-        throw 'Fail to get task list!'
-    }
+    const response = await fetchTaskList(taskQuery.value)
+    tasks.value = response.data.results
+    total.value = response.data.count
 }
 
 async function startSetInterval() {
@@ -319,21 +315,13 @@ async function handleView(id: number | string) {
 }
 
 async function hanldeRun(id: number | string) {
-    try {
-        await executeTask(id)
-        ElMessage.success('Publish task successfully!')
-    } catch {
-        throw "Fail to execute this task!"
-    }
+    await executeTask(id)
+    ElMessage.success('Publish task successfully!')
 }
 
 async function handleStop(id: number | string) {
-    try {
-        await stopTask(id)
-        ElMessage.success('Stop task successfully!')
-    } catch {
-        throw "Fail to stop this task!"
-    }
+    await stopTask(id)
+    ElMessage.success('Stop task successfully!')
 }
 
 </script>

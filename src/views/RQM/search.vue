@@ -115,8 +115,6 @@ async function fetchRQM(resourceType: string) {
             total.value = data.value['number']
             tableData.value = data.value['data'].slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
         }
-    } catch {
-        throw 'Fail to get resource'
     } finally {
         loading.value = false
     }
@@ -140,8 +138,6 @@ const handleEdit = async (index: number, row: resource) => {
         formData.scripts = [...response.data.scripts]
         tmp.title = response.data.title.slice()
         tmp.scripts = cloneDeep(response.data.scripts)
-    } catch {
-        throw 'Fail to get testscript!'
     } finally {
         loading.value = false
     }
@@ -168,8 +164,6 @@ const handleUpdate = async () => {
     try {
         await updateTestscript(formData.id, data)
         dialogVisible.value = false
-    } catch {
-        throw 'Fail to update testscript!'
     } finally {
         await fetchRQM('testcase')
     }

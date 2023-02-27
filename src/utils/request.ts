@@ -19,14 +19,14 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
     // async (config) => {
-      //   if (isTokenExpired('access_token')) {
-        //     const response = await getRefreshToken();
-        //     await refreshAccessToken(response);
-        //   }
+    //   if (isTokenExpired('access_token')) {
+    //     const response = await getRefreshToken();
+    //     await refreshAccessToken(response);
+    //   }
     const token = getToken()
     config.headers
-        ? (config.headers.Authorization = `Bearer ${token}`)
-        : (config.headers = { Authorization: `Bearer ${token}` });
+      ? (config.headers.Authorization = `Bearer ${token}`)
+      : (config.headers = { Authorization: `Bearer ${token}` });
     // config.headers = config.headers ?? {}
     // config.headers.Authorization = `Bearer ${token}`
     return config
@@ -46,7 +46,7 @@ service.interceptors.response.use(
       ElMessage({
         message: response.data.message || 'Error',
         type: 'error',
-        duration: 5 * 1000
+        duration: 6 * 1000
       })
       return Promise.reject(new Error(response.data.message || 'Error'))
     } else {
@@ -61,9 +61,9 @@ service.interceptors.response.use(
       window.location.reload()
     }
     ElMessage({
-      message: error.message,
+      message: error.response.data.reason || error.message,
       type: 'error',
-      duration: 5 * 1000
+      duration: 6 * 1000
     })
 
     return Promise.reject(error)
