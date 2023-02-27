@@ -114,7 +114,8 @@
                     <td class="px-2 py-4">{{ item.created_by_account }}</td>
                     <!-- status -->
                     <td class="px-2 py-4">
-                        <el-tooltip :content="item.reason!" placement="top" :disabled="item.reason === null">
+                        <el-tooltip :content="item.reason!" placement="top"
+                            :disabled="item.reason === null || item.reason === undefined">
                             <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-base font-semibold"
                                 :class="[statusColor(item.status).fontColor, statusColor(item.status).bbgColor]">
                                 {{ item.status }}
