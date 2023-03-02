@@ -51,7 +51,7 @@
               <li>
                 IP:
                 <el-tooltip content="Remote Desktop" placement="top">
-                  <button @click="hanldeDownload(item.id)" :disabled="!item.is_active">
+                  <button @click="hanldeDownload(item.id)" :disabled="item.is_active">
                     <span class="font-sans font-bold hover:text-blue-500 underline">{{
                       item.ip
                     }}</span>
