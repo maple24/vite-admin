@@ -8,7 +8,8 @@ interface Agent {
     last_online_time?: string,
     comments?: string,
     location?: string,
-    scripts?: string
+    scripts?: string,
+    is_active: boolean
 }
 
 interface Target {

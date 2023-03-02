@@ -34,11 +34,16 @@
                   <span>{{ item.name }}</span>
                 </button>
               </div>
-              <el-tooltip content="Agent Center" placement="top">
-                <button @click="handleClick(item.name)">
-                  <font-awesome-icon icon="fa-solid fa-desktop" :class="{ 'text-blue-500': item.online === true }" />
-                </button>
-              </el-tooltip>
+              <div>
+                <el-tooltip content="In Use!" placement="top">
+                  <font-awesome-icon icon="fa-solid fa-ban" class="mx-2 text-red-600" v-show="item.is_active" />
+                </el-tooltip>
+                <el-tooltip content="Agent Center" placement="top">
+                  <button @click="handleClick(item.name)">
+                    <font-awesome-icon icon="fa-solid fa-desktop" :class="{ 'text-blue-500': item.online === true }" />
+                  </button>
+                </el-tooltip>
+              </div>
             </div>
             <el-divider class="border-4"
               :class="{ 'border-green-500': item.online === true, 'border-red-700': item.online === false }"></el-divider>
@@ -46,7 +51,7 @@
               <li>
                 IP:
                 <el-tooltip content="Remote Desktop" placement="top">
-                  <button @click="hanldeDownload(item.id)">
+                  <button @click="hanldeDownload(item.id)" :disabled="!item.is_active">
                     <span class="font-sans font-bold hover:text-blue-500 underline">{{
                       item.ip
                     }}</span>
@@ -54,7 +59,7 @@
                 </el-tooltip>
               </li>
               <li>Location: <span class="font-sans font-bold">{{ item.location }}</span></li>
-              <li>Last seen: <span class="font-sans font-bold">{{ item.last_online_time }}</span></li>
+              <li>Last seen: <span class="font-sans font-bold">{{ item.last_online_time?.replace('T', ' ') }}</span></li>
               <li>Comments: <span class="font-sans font-bold">{{ item.comments }}</span></li>
             </ul>
           </el-card>
