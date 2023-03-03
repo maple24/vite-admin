@@ -101,7 +101,7 @@ onMounted(async () => await startSetInterval())
 
 async function getAgentList() {
   try {
-    const response = await fetchAgentList()
+    const response = await fetchAgentList({ ordering: 'location' })
     agents.value = response.data
   }
   finally {

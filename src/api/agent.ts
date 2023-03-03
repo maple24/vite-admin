@@ -2,10 +2,11 @@ import request from '@/utils/request';
 import { Agent, Task } from '@/types/agents'
 
 
-export function fetchAgentList() {
+export function fetchAgentList(query: {}) {
     return request({
         url: '/api/v1/agent/executor' as string,
         method: 'get',
+        params: query
     });
 }
 
