@@ -1,11 +1,19 @@
 import request from '@/utils/request';
-import { Task } from '@/types/agents'
+import { Agent, Task } from '@/types/agents'
 
 
 export function fetchAgentList() {
     return request({
         url: '/api/v1/agent/executor' as string,
         method: 'get',
+    });
+}
+
+export function updateAgent(id: string | number, data: Agent) {
+    return request({
+        url: `/api/v1/agent/executor/${id}/` as string,
+        method: 'patch',
+        data
     });
 }
 

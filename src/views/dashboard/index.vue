@@ -30,13 +30,14 @@
             <div class="flex justify-between">
               <div>
                 <font-awesome-icon icon="fa-solid fa-server" class="mr-2" />
-                <button class="underline hover:text-blue-500" @click="">
+                <button class="underline hover:text-blue-500" @click="handleEdit(item)">
                   <span>{{ item.name }}</span>
                 </button>
               </div>
               <div>
                 <el-tooltip content="In Use!" placement="top">
-                  <font-awesome-icon icon="fa-solid fa-ban" class="mx-2 text-red-600" v-show="item.is_active" />
+                  <font-awesome-icon icon="fa-solid fa-ban" class="mx-2 text-red-600"
+                    v-show="item.is_active && item.online" />
                 </el-tooltip>
                 <el-tooltip content="Agent Center" placement="top">
                   <button @click="handleClick(item.name)">
@@ -66,6 +67,9 @@
         </el-col>
       </el-row>
     </div>
+    <el-dialog v-model="dialogVisible" title="Agent" width="30%" align-center draggable destroy-on-close>
+      <agent-form :agent="agentItem" @closeDialog="dialogVisible = false"></agent-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -77,9 +81,12 @@ import { Agent } from '@/types/agents'
 import { useRouter } from 'vue-router';
 import { RDPURL } from '@/api/agent';
 import { downloadbyURL } from '@/utils/common';
+import agentForm from './agentForm.vue'
 const router = useRouter()
+const dialogVisible = ref<boolean>(false)
 const loading = ref<boolean>(true)
 const agents = ref<Agent[]>()
+const agentItem = ref<Agent>()
 const total = computed(() => agents.value ? agents.value.length : 0)
 const onlines = computed(() => {
   let count = 0
@@ -115,6 +122,11 @@ function handleClick(hostname: string) {
 function hanldeDownload(ip: string | number) {
   const url = RDPURL(ip)
   downloadbyURL(url, `${ip}.rdp`)
+}
+
+function handleEdit(agent: Agent) {
+  agentItem.value = agent
+  dialogVisible.value = true
 }
 </script>
 

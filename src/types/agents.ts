@@ -1,15 +1,15 @@
 interface Agent {
     id: number,
-    online: boolean,
+    online?: boolean,
     name: string,
-    hostname: string,
-    ip: string,
-    creation_time: string,
+    hostname?: string,
+    ip?: string,
+    creation_time?: string,
     last_online_time?: string,
     comments?: string,
     location?: string,
     scripts?: string,
-    is_active: boolean
+    is_active?: boolean
 }
 
 interface Target {
