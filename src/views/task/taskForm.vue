@@ -103,7 +103,7 @@ const ruleForm = reactive({
 onMounted(async () => await getList())
 
 async function getList() {
-    const agentList = await fetchAgentList()
+    const agentList = await fetchAgentList({ 'ordering': '-creation_time' })
     agents.value = agentList.data
     const targetList = await fetchTargetList()
     targets.value = targetList.data
