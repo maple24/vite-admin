@@ -9,7 +9,8 @@ interface Agent {
     comments?: string,
     location?: string,
     scripts?: string,
-    is_active?: boolean
+    is_active?: boolean,
+    last_seen?: string
 }
 
 interface Target {

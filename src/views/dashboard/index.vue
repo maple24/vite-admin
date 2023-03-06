@@ -60,7 +60,7 @@
                 </el-tooltip>
               </li>
               <li>Location: <span class="font-sans font-bold">{{ item.location }}</span></li>
-              <li>Last seen: <span class="font-sans font-bold">{{ item.last_online_time?.replace('T', ' ') }}</span></li>
+              <li>Last seen: <span class="font-sans font-bold">{{ item.last_seen }}</span></li>
               <li>Comments: <span class="font-sans font-bold">{{ item.comments }}</span></li>
             </ul>
           </el-card>
