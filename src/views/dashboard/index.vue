@@ -30,9 +30,11 @@
             <div class="flex justify-between">
               <div>
                 <font-awesome-icon icon="fa-solid fa-server" class="mr-2" />
-                <button class="underline hover:text-blue-500" @click="handleEdit(item)">
-                  <span>{{ item.name }}</span>
-                </button>
+                <el-tooltip content="Edit" placement="top">
+                  <button class="underline hover:text-blue-500" @click="handleEdit(item)">
+                    <span>{{ item.name }}</span>
+                  </button>
+                </el-tooltip>
               </div>
               <div>
                 <el-tooltip content="In Use!" placement="top">
