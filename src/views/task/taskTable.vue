@@ -180,7 +180,7 @@
             <task-form :task="taskItem" @closeDialog="formDialog = false"></task-form>
         </el-dialog>
 
-        <el-dialog v-model="logDialog" title="Log" width="50%" align-center draggable destroy-on-close>
+        <el-dialog v-model="logDialog" title="Log" width="70%" align-center draggable destroy-on-close>
             <task-log :taskID="taskID" @closeDialog="logDialog = false"></task-log>
         </el-dialog>
 
