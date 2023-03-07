@@ -42,6 +42,7 @@ interface Task {
     tags?: string[],
     created_by_account?: string | null,
     executor_ip?: string | null,
+    executor_hostname?: string | null,
     executor_online?: boolean,
 }
 

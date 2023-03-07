@@ -43,7 +43,7 @@
                     <th scope="col" class="px-2 py-4 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Machine
-                            <button @click="sort('executor_ip')">
+                            <button @click="sort('executor_hostname')">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true"
                                     fill="currentColor" viewBox="0 0 320 512">
                                     <path
@@ -96,10 +96,10 @@
                     <td class="px-2 py-4">
                         <div class="relative">
                             <p class="p-1">
-                                {{ item.executor_ip }}
+                                {{ item.executor_hostname }}
                             </p>
                             <span class="absolute left-0 top-0 h-2 w-2 rounded-full ring ring-white"
-                                :class="{ 'bg-green-400': item.executor_online === true, 'bg-gray-400': item.executor_online === false, hidden: item.executor_ip === undefined }"></span>
+                                :class="{ 'bg-green-400': item.executor_online === true, 'bg-gray-400': item.executor_online === false, hidden: item.executor_hostname === undefined }"></span>
                         </div>
                     </td>
                     <!-- target -->
@@ -257,7 +257,7 @@ const sortedTasks = computed(() => {
 const filteredTasks = computed(() => {
     return sortedTasks?.value?.filter(task => {
         const name = task.name.toString().toLowerCase()
-        const bench = task.executor_ip?.toLowerCase()
+        const bench = task.executor_hostname?.toLowerCase()
         const created_by = task.created_by_account?.toLowerCase()
         const status = task.status.toLowerCase()
         const comments = task.comments?.toLowerCase()
