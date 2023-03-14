@@ -15,9 +15,9 @@ interface Agent {
 
 interface Target {
     id: number,
-    name: string,
-    comments?: string,
-    is_deleted?: boolean
+    device_name: string,
+    executor: number,
+    device: number
 }
 
 interface Task {

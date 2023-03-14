@@ -13,7 +13,8 @@
 
         <el-form-item label="Target" prop="target">
             <el-select v-model="ruleForm.target" placeholder="Target">
-                <el-option v-for="item in targets" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                <el-option v-for="item in targetsOption" :key="item.id" :label="item.device_name"
+                    :value="item.id"></el-option>
             </el-select>
         </el-form-item>
 
@@ -82,6 +83,14 @@ const emit = defineEmits<{
 
 const scripts = computed(() => {
     if (agents.value && ruleForm.executor) return JSON.parse(agents.value[ruleForm.executor - 1].scripts!)
+})
+
+const targetsOption = computed(() => {
+    if (targets.value && ruleForm.executor) {
+        return targets.value.filter((currentValue) => {
+            return currentValue.executor === ruleForm.executor
+        })
+    }
 })
 // computed value cannot be v-model, since it is passive value and not gonna be changed
 // current solution: destroy dialog when closing, so every time a new dialog will be mounted
