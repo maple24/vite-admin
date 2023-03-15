@@ -20,7 +20,7 @@
             <div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="handleAddtask">
                     <span>+</span>
-                    Add task
+                    Create new task
                 </button>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <!-- table head -->
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
+                    <th scope="col" class="py-2 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Task
                             <button @click="sort('name')">
@@ -40,7 +40,7 @@
                             </button>
                         </p>
                     </th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
+                    <th scope="col" class="py-2 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Machine
                             <button @click="sort('executor_hostname')">
@@ -52,8 +52,8 @@
                             </button>
                         </p>
                     </th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Target</th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
+                    <th scope="col" class="py-2 font-bold text-gray-900">Target</th>
+                    <th scope="col" class="py-2 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Schedule time
                             <button @click="sort('schedule_time')">
@@ -65,7 +65,7 @@
                             </button>
                         </p>
                     </th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">
+                    <th scope="col" class="py-2 font-bold text-gray-900">
                         <p class="inline-flex items-center">
                             Start time
                             <button @click="sort('start_time')">
@@ -77,23 +77,23 @@
                             </button>
                         </p>
                     </th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Duration</th>
-                    <!-- <th scope="col" class="px-2 py-4 font-bold text-gray-900">Tags</th> -->
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Created by</th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Status</th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900">Action</th>
-                    <th scope="col" class="px-2 py-4 font-bold text-gray-900"></th>
+                    <th scope="col" class="py-2 font-bold text-gray-900">Duration</th>
+                    <!-- <th scope="col" class="py-2 font-bold text-gray-900">Tags</th> -->
+                    <th scope="col" class="py-2 font-bold text-gray-900">Created by</th>
+                    <th scope="col" class="py-2 font-bold text-gray-900">Status</th>
+                    <th scope="col" class="py-2 font-bold text-gray-900">Action</th>
+                    <th scope="col" class="py-2 font-bold text-gray-900"></th>
                 </tr>
             </thead>
             <!-- table body -->
             <tbody class="divide-y divide-gray-100 border-t border-gray-100">
                 <tr class="hover:bg-gray-50" v-for="item in filteredTasks" :key="filteredTasks?.indexOf(item)">
                     <!-- name -->
-                    <td class="px-2 py-4 font-normal" :class="{ 'text-purple-500': item.is_scheduled === true }">
+                    <td class="py-2 font-normal" :class="{ 'text-purple-500': item.is_scheduled === true }">
                         {{ item.name }}
                     </td>
                     <!-- bench -->
-                    <td class="px-2 py-4">
+                    <td class="py-2">
                         <div class="relative">
                             <p class="p-1">
                                 {{ item.executor_hostname }}
@@ -103,17 +103,17 @@
                         </div>
                     </td>
                     <!-- target -->
-                    <td class="px-2 py-4">{{ item.target_name }}</td>
+                    <td class="py-2">{{ item.target_name }}</td>
                     <!-- schedule time -->
-                    <td class="px-2 py-4">{{ item.schedule_time?.replace("T", " ") }}</td>
+                    <td class="py-2">{{ item.schedule_time?.replace("T", " ") }}</td>
                     <!-- start time -->
-                    <td class="px-2 py-4">{{ item.start_time?.replace("T", " ") }}</td>
+                    <td class="py-2">{{ item.start_time?.replace("T", " ") }}</td>
                     <!-- duration -->
-                    <td class="px-2 py-4">{{ item.duration }}</td>
+                    <td class="py-2">{{ item.duration }}</td>
                     <!-- created by -->
-                    <td class="px-2 py-4">{{ item.created_by_account }}</td>
+                    <td class="py-2">{{ item.created_by_account }}</td>
                     <!-- status -->
-                    <td class="px-2 py-4">
+                    <td class="py-2">
                         <el-tooltip :content="item.reason!" placement="top"
                             :disabled="item.reason === null || item.reason === undefined">
                             <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-base font-semibold"
@@ -123,14 +123,14 @@
                         </el-tooltip>
                     </td>
                     <!-- actions -->
-                    <td class="px-2 py-4">
+                    <td class="py-2">
                         <button type="button" @click="hanldeRun(item.id)"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Run</button>
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Run</button>
                         <button type="button" @click="handleStop(item.id)"
-                            class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Stop</button>
+                            class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Stop</button>
                     </td>
                     <!-- task management -->
-                    <td class="px-2 py-4">
+                    <td class="py-2">
                         <div class="flex justify-end gap-4">
                             <button x-data="{ tooltip: 'View' }" class="text-black" @click="handleView(item.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

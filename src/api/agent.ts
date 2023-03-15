@@ -18,10 +18,11 @@ export function updateAgent(id: string | number, data: Agent) {
     });
 }
 
-export function fetchTargetList() {
+export function fetchTargetList(query: {}) {
     return request({
         url: '/api/v1/agent/target' as string,
         method: 'get',
+        params: query
     });
 }
 
@@ -78,5 +79,27 @@ export function stopTask(id: number | string) {
     return request({
         url: `/api/v1/agent/task/${id}/stop_task/` as string,
         method: 'post',
+    });
+}
+
+export function fetchDeviceList() {
+    return request({
+        url: '/api/v1/agent/device' as string,
+        method: 'get',
+    });
+}
+
+export function createDevice(data: Task) {
+    return request({
+        url: '/api/v1/agent/device/' as string,
+        method: 'post',
+        data
+    });
+}
+
+export function deleteDevice(id: number | string) {
+    return request({
+        url: `/api/v1/agent/device/${id}/` as string,
+        method: 'delete',
     });
 }

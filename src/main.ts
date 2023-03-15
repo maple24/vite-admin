@@ -34,9 +34,10 @@ import {
   faCheck,
   faBookOpen,
   faServer,
-  faComputer,
+  faTabletScreenButton,
   faDesktop,
-  faBan
+  faBan,
+  faListCheck
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faTwitter, faGithub, faRocketchat } from '@fortawesome/free-brands-svg-icons';
@@ -61,9 +62,10 @@ library.add(
   faCheck,
   faBookOpen,
   faServer,
-  faComputer,
+  faTabletScreenButton,
   faDesktop,
   faBan,
+  faListCheck
 );
 
 /* import element-plus */

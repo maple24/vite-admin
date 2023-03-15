@@ -53,6 +53,22 @@ export const asyncRoutes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/device',
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/device/index',
+    meta: {
+      roles: ['visitor'],
+      title: 'device',
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'device',
+        component: () => import('@/views/device/index.vue'),
+      },
+    ],
+  },
+  {
     path: '/task',
     component: () => import('@/views/layout/index.vue'),
     redirect: '/task/index',

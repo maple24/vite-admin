@@ -114,7 +114,7 @@ onMounted(async () => await getList())
 async function getList() {
     const agentList = await fetchAgentList({ 'ordering': 'id' })
     agents.value = agentList.data
-    const targetList = await fetchTargetList()
+    const targetList = await fetchTargetList({})
     targets.value = targetList.data
 }
 
