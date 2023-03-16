@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { Agent, Task } from '@/types/agents'
+import { Agent, Task, Device, Target } from '@/types/agents'
 
 
 export function fetchAgentList(query: {}) {
@@ -25,6 +25,30 @@ export function fetchTargetList(query: {}) {
         params: query
     });
 }
+
+export function createTarget(data: Target) {
+    return request({
+        url: '/api/v1/agent/target/' as string,
+        method: 'post',
+        data
+    });
+}
+
+export function updateTarget(id: number | string, data: Target) {
+    return request({
+        url: `/api/v1/agent/target/${id}/` as string,
+        method: 'put',
+        data
+    });
+}
+
+export function deleteTarget(id: number | string) {
+    return request({
+        url: `/api/v1/agent/target/${id}/` as string,
+        method: 'delete',
+    });
+}
+
 
 export const RDPURL = (ip: string | number) => {
     return `/api/v1/agent/executor/${ip}/rdp`
@@ -89,10 +113,18 @@ export function fetchDeviceList() {
     });
 }
 
-export function createDevice(data: Task) {
+export function createDevice(data: Device) {
     return request({
         url: '/api/v1/agent/device/' as string,
         method: 'post',
+        data
+    });
+}
+
+export function updateDevice(id: number | string, data: Device) {
+    return request({
+        url: `/api/v1/agent/device/${id}/` as string,
+        method: 'put',
         data
     });
 }

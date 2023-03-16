@@ -15,9 +15,11 @@ interface Agent {
 
 interface Target {
     id: number,
-    device_name: string,
+    device_name?: string,
     executor: number,
-    device: number
+    device: number,
+    executor_name?: string,
+    status?: string
 }
 
 interface Task {
@@ -46,4 +48,11 @@ interface Task {
     executor_online?: boolean,
 }
 
-export type { Agent, Task, Target }
+interface Device {
+    id: number | string
+    name: string
+    comments: string
+    type: string
+}
+
+export type { Agent, Task, Target, Device }

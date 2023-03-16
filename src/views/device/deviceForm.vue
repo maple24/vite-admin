@@ -8,17 +8,29 @@
             <el-input v-model="ruleForm.comments" type="textarea" />
         </el-form-item>
 
-        <el-form-item label="Location" prop="location">
-            <el-select v-model="ruleForm.location" placeholder="location">
-                <el-option value="Sgh"></el-option>
-                <el-option value="Szh"></el-option>
-                <el-option value="Wx"></el-option>
+        <el-form-item label="Type" prop="type">
+            <el-select v-model="ruleForm.type" placeholder="type">
+                <el-option value="Web Camera"></el-option>
+                <el-option value="Data Acquisition Device"></el-option>
+                <el-option value="Switch Box"></el-option>
+                <el-option value="Digital Cockpit Head Unit"></el-option>
+                <el-option value="Phone"></el-option>
+                <el-option value="Machine"></el-option>
+                <el-option value="Others"></el-option>
             </el-select>
         </el-form-item>
 
-        <div>
+        <div :class="{ hidden: props.device !== undefined }">
             <el-form-item>
-                <el-button type="primary" @click="submitForm(ruleFormRef, props.agent!.id)">
+                <el-button type="primary" @click="submitForm(ruleFormRef)">
+                    Create
+                </el-button>
+                <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+            </el-form-item>
+        </div>
+        <div :class="{ hidden: props.device === undefined }">
+            <el-form-item>
+                <el-button type="primary" @click="submitForm(ruleFormRef, props.device!.id)">
                     Update
                 </el-button>
                 <el-button @click="resetForm(ruleFormRef)">
@@ -33,12 +45,12 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { updateAgent } from '@/api/agent'
-import { Agent } from '@/types/agents'
+import { createDevice, updateDevice } from '@/api/agent'
+import { Device } from '@/types/agents'
 
 const ruleFormRef = ref<FormInstance>()
 const props = defineProps<{
-    agent: Agent | undefined
+    device: Device | undefined
 }>()
 const emit = defineEmits<{
     (e: 'closeDialog'): void
@@ -48,28 +60,29 @@ const emit = defineEmits<{
 // current solution: destroy dialog when closing, so every time a new dialog will be mounted
 // otherwise the props has to been watched to make changes
 const ruleForm = reactive({
-    id: props.agent?.id,
-    name: props.agent?.name,
-    comments: props.agent?.comments,
-    location: props.agent?.location,
+    id: props.device?.id as number,
+    name: props.device?.name as string,
+    comments: props.device?.comments as string,
+    type: props.device?.type as string,
 })
 
-const submitForm = async (formEl: FormInstance | undefined, id: string | number) => {
+const submitForm = async (formEl: FormInstance | undefined, id: string | number | undefined = undefined) => {
     if (!formEl) return
     await formEl.validate(async (valid, fields) => {
         if (valid) {
-            ElMessageBox.confirm('Are you sure to update this agent?')
+            ElMessageBox.confirm('Are you sure to update this device?')
                 .then(async () => {
                     if (ruleForm) {
                         const data = {
-                            id: ruleForm.id as number,
-                            name: ruleForm.name as string,
+                            id: ruleForm.id,
+                            name: ruleForm.name,
                             comments: ruleForm.comments,
-                            location: ruleForm.location
+                            type: ruleForm.type
                         }
-                        await updateAgent(id, data)
-                        ElMessage.success('Update agent successfully!')
+                        id === undefined ? await createDevice(data) : await updateDevice(id, data)
+                        ElMessage.success('Update/Create device successfully!')
                         emit("closeDialog")
+                        window.location.reload()
                     }
                     else {
                         console.log("No data avaliable!");
