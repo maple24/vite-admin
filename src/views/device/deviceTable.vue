@@ -11,7 +11,7 @@
                 <el-table-column label="Comments" prop="comments" width="200" />
                 <el-table-column align="comments" width="200">
                     <template #header>
-                        <el-input v-model="search" size="small" placeholder="Type to search" />
+                        <el-input v-model="search" size="small" placeholder="Type name to search" />
                     </template>
                     <template #default="scope">
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>

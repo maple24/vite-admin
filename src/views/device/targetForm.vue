@@ -51,7 +51,7 @@ const agents = ref<Agent[]>()
 const devices = ref<Device[]>()
 
 onMounted(async () => {
-    const agentList = await fetchAgentList()
+    const agentList = await fetchAgentList({})
     agents.value = agentList.data
     const deviceList = await fetchDeviceList()
     devices.value = deviceList.data

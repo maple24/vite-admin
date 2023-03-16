@@ -14,7 +14,7 @@
                 <el-table-column label="Status" prop="status" width="200" />
                 <el-table-column align="comments" width="200">
                     <template #header>
-                        <el-input v-model="search" size="small" placeholder="Type to search" />
+                        <el-input v-model="search" size="small" placeholder="Type device to search" />
                     </template>
                     <template #default="scope">
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
@@ -46,7 +46,7 @@ const search = ref('')
 onMounted(async () => {
     const agentList = await fetchAgentList({})
     agents.value = agentList.data
-    const targetList = await fetchTargetList({})
+    const targetList = await fetchTargetList({ 'ordering': 'executor' })
     tableData.value = targetList.data
 })
 
