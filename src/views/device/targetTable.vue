@@ -32,9 +32,10 @@
   
 <script lang="ts" setup>
 import { computed, ref, onMounted, watch } from 'vue'
-import { fetchAgentList, fetchTargetList } from '@/api/agent'
-import { Agent, Target } from '@/types/agents';
-import targetForm from './targetForm.vue';
+import { fetchAgentList, fetchTargetList, deleteTarget } from '@/api/agent'
+import { ElMessageBox, ElMessage } from 'element-plus'
+import { Agent, Target } from '@/types/agents'
+import targetForm from './targetForm.vue'
 
 const tableData = ref<Target[]>()
 const executor = ref('')
@@ -67,7 +68,15 @@ const handleEdit = (index: number, row: Target) => {
     dialogVisible.value = true
 }
 const handleDelete = (index: number, row: Target) => {
-    console.log(index, row)
+    ElMessageBox.confirm('Are you sure to delete this target?')
+        .then(async () => {
+            await deleteTarget(row.id)
+            window.location.reload()
+            ElMessage.success('Delete target successfully!')
+        })
+        .catch(() => {
+            // catch error
+        })
 }
 const handleCreate = () => {
     targetItem.value = undefined
