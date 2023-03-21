@@ -135,7 +135,10 @@ const submitForm = async (formEl: FormInstance | undefined, id: string | number 
                         schedule_time: (ruleForm.date && ruleForm.time) ? (ruleForm.date + ' ' + ruleForm.time) : undefined,
                         script: ruleForm.script,
                         params: ruleForm.params,
-                        reason: null
+                        reason: null,
+                        start_time: null,
+                        end_time: null,
+                        duration: null,
                     }
                     id === undefined ? await createTask(data) : await updateTask(id, data)
                     ElMessage.success('Create/Update task successfully!')
