@@ -6,6 +6,10 @@
         </RouterLink>
       </li>
       <li class="siderbar-icon">
+        <RouterLink to="/"><font-awesome-icon icon="fa-solid fa-chart-simple" class="text-5xl" />
+        </RouterLink>
+      </li>
+      <li class="siderbar-icon">
         <RouterLink to="/task"><font-awesome-icon icon="fa-solid fa-list-check" class="text-5xl text-red-700" />
         </RouterLink>
       </li>

@@ -37,7 +37,8 @@ import {
   faTabletScreenButton,
   faDesktop,
   faBan,
-  faListCheck
+  faListCheck,
+  faChartSimple
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faTwitter, faGithub, faRocketchat } from '@fortawesome/free-brands-svg-icons';
@@ -65,7 +66,8 @@ library.add(
   faTabletScreenButton,
   faDesktop,
   faBan,
-  faListCheck
+  faListCheck,
+  faChartSimple
 );
 
 /* import element-plus */

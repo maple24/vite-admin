@@ -73,6 +73,21 @@ export const constantRoutes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/graph',
+    component: () => import('@/views/layout/index.vue'),
+    redirect: '/graph/index',
+    meta: {
+      title: 'graph',
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'graph',
+        component: () => import('@/views/graph/index.vue'),
+      },
+    ],
+  },
+  {
     name: '404',
     path: '/404',
     component: () => import('@/views/errorpage/404.vue'),

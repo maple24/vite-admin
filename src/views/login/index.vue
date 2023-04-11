@@ -68,6 +68,4 @@ const isValid = computed(() => {
   //   );
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

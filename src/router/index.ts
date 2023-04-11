@@ -21,13 +21,14 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const store = useUserStore(); // pinia cannot be used outside a component, so store can not be initialized outside
-  const isAuthenticated: string | undefined = getToken();
+  console.log(import.meta.env);
+  const isAuthenticated: string | undefined = getToken() || import.meta.env.VITE_TOKEN;
   if (isAuthenticated) {
     if (to.path === '/login') {
       next({ path: '/' });
     }
 
-    const hasRoles = store.roles.length > 0;
+    const hasRoles = store.roles.length > 0 || import.meta.env.MODE === 'development';
     // need a next() to letgo, if hasrole, dynamical route has registered
     if (hasRoles) {
       next();
