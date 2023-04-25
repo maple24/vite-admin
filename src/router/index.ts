@@ -5,7 +5,6 @@ import { NavigationFailureType, isNavigationFailure } from 'vue-router';
 import { asyncRoutes } from './asyncRoutes';
 import { generateRoutes } from '@/utils/route';
 import { useUserStore } from '@/store/user';
-import { extraRoutes } from './extraRoutes';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -21,14 +20,13 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const store = useUserStore(); // pinia cannot be used outside a component, so store can not be initialized outside
-  console.log(import.meta.env);
-  const isAuthenticated: string | undefined = getToken() || import.meta.env.VITE_TOKEN;
+  const isAuthenticated: string | undefined = getToken();
   if (isAuthenticated) {
     if (to.path === '/login') {
       next({ path: '/' });
     }
 
-    const hasRoles = store.roles.length > 0 || import.meta.env.MODE === 'development';
+    const hasRoles = store.roles.length > 0;
     // need a next() to letgo, if hasrole, dynamical route has registered
     if (hasRoles) {
       next();

@@ -4,7 +4,7 @@ import { Agent, Task, Device, Target } from '@/types/agents'
 
 export function fetchAgentList(query: {}) {
     return request({
-        url: '/api/v1/agent/executor' as string,
+        url: '/api/v1/agent/executor/' as string,
         method: 'get',
         params: query
     });
@@ -20,7 +20,7 @@ export function updateAgent(id: string | number, data: Agent) {
 
 export function fetchTargetList(query: {}) {
     return request({
-        url: '/api/v1/agent/target' as string,
+        url: '/api/v1/agent/target/' as string,
         method: 'get',
         params: query
     });
@@ -51,12 +51,12 @@ export function deleteTarget(id: number | string) {
 
 
 export const RDPURL = (ip: string | number) => {
-    return `/api/v1/agent/executor/${ip}/rdp`
+    return `/api/v1/agent/executor/${ip}/rdp/`
 }
 
 export function fetchTaskList(query: {}) {
     return request({
-        url: '/api/v1/agent/task' as string,
+        url: '/api/v1/agent/task/' as string,
         method: 'get',
         params: query
     });
@@ -72,14 +72,14 @@ export function createTask(data: Task) {
 
 export function deleteTask(id: number | string) {
     return request({
-        url: `/api/v1/agent/task/${id}/delete_task` as string,
+        url: `/api/v1/agent/task/${id}/delete_task/` as string,
         method: 'delete',
     });
 }
 
 export function getTask(id: number | string) {
     return request({
-        url: `/api/v1/agent/task/${id}` as string,
+        url: `/api/v1/agent/task/${id}/` as string,
         method: 'get',
     });
 }
@@ -108,7 +108,7 @@ export function stopTask(id: number | string) {
 
 export function fetchDeviceList() {
     return request({
-        url: '/api/v1/agent/device' as string,
+        url: '/api/v1/agent/device/' as string,
         method: 'get',
     });
 }

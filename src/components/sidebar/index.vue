@@ -6,16 +6,15 @@
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/"><font-awesome-icon icon="fa-solid fa-chart-simple" class="text-5xl" />
+        <RouterLink to="/graph"><font-awesome-icon icon="fa-solid fa-chart-simple" class="text-5xl text-red-500" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/task"><font-awesome-icon icon="fa-solid fa-list-check" class="text-5xl text-red-700" />
+        <RouterLink to="/task"><font-awesome-icon icon="fa-solid fa-list-check" class="text-5xl text-purple-700" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">
-        <RouterLink to="/device"><font-awesome-icon icon="fa-solid fa-tablet-screen-button"
-            class="text-5xl text-gray-500" />
+        <RouterLink to="/device"><font-awesome-icon icon="fa-solid fa-tablet-screen-button" class="text-5xl" />
         </RouterLink>
       </li>
       <li class="siderbar-icon">
